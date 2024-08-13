@@ -14,7 +14,7 @@ export default function HomePage() {
             </h1>
             <div className="flex w-full items-center justify-center space-x-4 py-4 md:pb-6">
               <Button variant="default" asChild>
-                <Link href="/offices/dashboard">
+                <Link href="/login">
                   Commencer
                   <ArrowRightIcon className="ml-2" />
                 </Link>

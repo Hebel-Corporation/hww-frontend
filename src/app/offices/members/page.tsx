@@ -29,6 +29,10 @@ export default function MembersPage() {
           <h1 className="text-xl">Un titre</h1>
           <p className="font-extralight">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
         </div>
+
+        {/* 
+          * Search section
+         */}
         <div className="flex gap-3 flex-wrap justify-between items-center">
           <div className="sm:w-2/4 w-full flex items-center">
             <Input type="text" placeholder="Recherche"

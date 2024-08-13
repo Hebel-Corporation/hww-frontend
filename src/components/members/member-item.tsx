@@ -5,7 +5,7 @@ import React from 'react'
 
 const MemberItem = () => {
     return (
-        <Link href={''} className="flex items-center justify-between text-sm py-2 border-b duration-500 hover:bg-gray-100 dark:hover:bg-gray-950">
+        <Link href={'/offices/members/23'} className="flex items-center justify-between text-sm py-2 border-b duration-500 hover:bg-gray-100 dark:hover:bg-gray-950">
             <div className="flex gap-3 items-center">
                 <Avatar fallback={ <>NK</>
                 } className='h-[3.1rem] w-[3.1rem]' />

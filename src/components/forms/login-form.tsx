@@ -2,16 +2,18 @@
 
 import { Button, Input } from '@nextui-org/react'
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const LoginForm = () => {
 
     const [isVisible, setIsVisible] = React.useState(false);
 
+    const router = useRouter()
     const toggleVisibility = () => setIsVisible(!isVisible);
 
     return (
-        <div className='w-1/2 flex flex-col gap-8 border px-5 py-8 rounded-md'>
+        <div className='w-full sm:w-3/4 md:w-2/3 lg:w-1/2 flex flex-col gap-8 sm:border px-5 py-8 rounded-md'>
             <h1 className='text-xl font-semibold text-center'>Connexion</h1>
             <div className='w-full flex flex-col gap-4'>
                 <Input
@@ -42,7 +44,9 @@ const LoginForm = () => {
                     className='w-full'
                 />
             </div>
-            <Button radius='sm'>Se connecter</Button>
+            <Button radius='sm' onPress={() => {
+                router.push('/offices/dashboard')
+            }}>Se connecter</Button>
         </div>
     )
 }
