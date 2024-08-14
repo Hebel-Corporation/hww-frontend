@@ -1,13 +1,11 @@
-import { getServerSession } from '@/_utils/user';
 import axios from 'axios';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { endpointList } from './api-endpoint-list';
-import { setServerCookie } from '@/_actions/actions';
-import customCookies from './customCookies';
+import { getServerSession } from '@/utils/server-auth-utils';
+import { ApiEndpoints } from './api-endpoints';
 
 const serverApi = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_INSTITUTION_API_BASE_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 // Function to refresh the access token
@@ -18,7 +16,7 @@ const refreshAccessToken = async () => {
 
         if (session) {
 
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_INSTITUTION_API_BASE_URL}${endpointList.AUTH.REFRESH_TOKEN}`,
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}${ApiEndpoints.AUTH.REFRESH_TOKEN}`,
                 { refresh: session.refreshToken }
             );
 
@@ -79,7 +77,7 @@ serverApi.interceptors.response.use(
                     headers: {
                       Authorization: `Bearer ${data_access.access}`,
                     },
-                    baseURL: process.env.NEXT_PUBLIC_INSTITUTION_API_BASE_URL,
+                    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
                   });
 
                   axiosInstance.defaults.headers.common['Cookie'] = `Authorization=${data_access.access}; Path=/; MaxAge=${Date.now() + Number(data_access.token_duration.access) * 1000}`;

@@ -1,6 +1,5 @@
+import clientCookie from "@/lib/client-cookie";
 import { SignJWT, jwtVerify } from "jose";
-import customCookies from "@/lib/customCookies"
-import { Group } from "@/_types/collaborators";
 
 
 const jwt = require('jsonwebtoken');
@@ -25,7 +24,7 @@ export async function decrypt(input: string): Promise<any> {
 
 
 export function getClientSession() {
-    const session = customCookies.get('session')
+    const session = clientCookie.get('session')
     if (!session) return null;
 
     try {
@@ -40,7 +39,7 @@ export function getClientSession() {
 
 export const getUserInfo = async () => {
 
-    const session = customCookies.get('session')
+    const session = clientCookie.get('session')
     if (!session) return;
 
     const parsed = await decrypt(session);
@@ -56,7 +55,7 @@ export const getUserGroups = (sessionParams?: any) => {
     if (sessionParams) {
         session = sessionParams
     } else {
-        session = customCookies.get('session')
+        session = clientCookie.get('session')
     }
     const decodedToken = jwt.decode(session, { complete: true });
     if (decodedToken) {
@@ -80,35 +79,6 @@ export function hasAuthorization(arr: string[], session?: any) {
 
 }
 
-
-
-export function canUnassignFile({
-    session,
-    assignGroupName
-} : {
-    session?: any,
-    assignGroupName: string
-}) {
-
-    let userGroups : string[]
-    if (session) {
-        userGroups = session.collaborator.user.groups.map((grp: Group) => { return grp.name })
-    }else {
-        userGroups = getUserGroups()
-    }
-
-    switch (assignGroupName) {
-        case 'Vérificateur':
-            return userGroups.includes('Administrateur');
-
-        case 'Analyste':
-            return userGroups.includes('Vérificateur');
-    
-        default:
-            return false;
-    }
-
-}
 
 
 

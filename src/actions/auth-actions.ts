@@ -1,23 +1,20 @@
 'use server'
 
-import { encrypt } from "@/_utils/utils";
-import { endpointList } from "@/lib/api-endpoint-list";
+
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-// import jwt from 'jsonwebtoken';
-import { Group } from "@/_types/collaborators";
-import { getFullPathname } from "@/_utils/function-utils";
-import { getServerSession } from "@/_utils/user";
 import serverApi from "@/lib/axios-server-instance";
 import { cache } from "react";
+import { encrypt } from "@/utils/client-utils";
+import { ApiEndpoints } from "@/lib/api-endpoints";
 
 
-export async function login(formData: any) {
+export async function userLogin(formData: any) {
 
     try {
         const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_INSTITUTION_API_BASE_URL}${endpointList.AUTH.LOGIN}`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}${ApiEndpoints.AUTH.LOGIN}`,
             {
                 username: formData.email,
                 password: formData.password
@@ -57,7 +54,7 @@ export async function login(formData: any) {
 }
 
 
-export async function logout() {
+export async function userLogout() {
     cookies().delete('session');
     cookies().delete('Authorization');
 }
@@ -66,7 +63,7 @@ export async function logout() {
 
 export const getUserApiGroups = cache(async () => {
     try {
-        const result = await serverApi.get(`${endpointList.AUTH.USER_GROUPS}`)
+        const result = await serverApi.get(`${ApiEndpoints.AUTH.GET_USER_GROUPS}`)
         const data = result.data
         return data.results;
     } catch (e: any) {
