@@ -2,7 +2,7 @@ import AddMemberModal from '@/components/add-member-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
-import MemberItem from '@/components/members/member-item'
+import MemberItem from '@/components/member-item'
 import { Avatar, Button, Pagination, ScrollShadow } from '@nextui-org/react'
 import { Filter, PlusCircle } from 'lucide-react'
 import React from 'react'
@@ -66,12 +66,6 @@ const MemberDetails = ({
                             <SearchBar />
                         </div>
                         <div className="flex gap-3 items-center">
-                            <AddMemberModal>
-                                <span className="flex items-center gap-3">
-                                    <PlusCircle />
-                                    Ajouter un membre
-                                </span>
-                            </AddMemberModal>
                             <Button radius="sm" startContent={
                                 <Filter />
                             }>Filtrer</Button>

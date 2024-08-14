@@ -1,8 +1,9 @@
 
 import AddMemberModal from "@/components/add-member-modal";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
+import SearchBar from "@/components/common/search-bar";
 import CustomBreadcrumb from "@/components/custom-breadcrumb";
-import MemberItem from "@/components/members/member-item";
+import MemberItem from "@/components/member-item";
 import { Input } from "@/components/ui/input";
 import { Button, Pagination, ScrollShadow } from "@nextui-org/react";
 import { Filter, PlusCircle, Search } from "lucide-react";
@@ -35,12 +36,7 @@ export default function MembersPage() {
          */}
         <div className="flex gap-3 flex-wrap justify-between items-center">
           <div className="sm:w-2/4 w-full flex items-center">
-            <Input type="text" placeholder="Recherche"
-              className="w-full !rounded-none !rounded-s-md placeholder:text-slate-300"
-            />
-            <Button className="!rounded-none !rounded-e-md">
-              <Search />
-            </Button>
+            <SearchBar />
           </div>
           <div className="flex gap-3 items-center">
             <AddMemberModal>
