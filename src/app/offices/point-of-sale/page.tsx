@@ -2,7 +2,7 @@ import AddOfficeModal from '@/components/add-office-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
-import OfficItem from '@/components/office-item'
+import OfficeItem from '@/components/office-item'
 import { Button, Pagination, ScrollShadow } from '@nextui-org/react'
 import { Filter, PlusCircle } from 'lucide-react'
 
@@ -52,19 +52,19 @@ const PointOfSalePage = () => {
         </div>
 
         <ScrollShadow className="flex flex-wrap gap-5 h-[calc(100vh-37vh)]">
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
-          <OfficItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
+          <OfficeItem />
         </ScrollShadow>
 
         <Pagination showControls total={5} />
