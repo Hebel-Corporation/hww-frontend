@@ -68,12 +68,12 @@ const MemberDetails = ({
                         <div className="sm:w-2/4 w-full flex items-center">
                             <SearchBar />
                         </div>
-                        <div className="flex gap-3 items-center">
+                        <div className="flex flex-wrap gap-3 items-center">
                             <Button radius="sm" variant='light' color='warning' endContent={
                                     <ArrowRight />
                                 }
                             >
-                                Détails ducompte
+                                Détails du compte
                             </Button>
                             <Button radius="sm" variant='flat' startContent={
                                     <EyeIcon />

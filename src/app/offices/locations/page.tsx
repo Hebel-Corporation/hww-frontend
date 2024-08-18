@@ -2,7 +2,8 @@ import AddLocationModal from '@/components/add-location-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
-import { Button } from '@nextui-org/react'
+import LocationItem from '@/components/location-item'
+import { Button, Pagination, ScrollShadow } from '@nextui-org/react'
 import { Filter, PlusCircle } from 'lucide-react'
 import React from 'react'
 
@@ -50,6 +51,24 @@ const LocationPage = () => {
             }>Filtrer</Button>
           </div>
         </div>
+
+        <ScrollShadow className="flex flex-wrap gap-5 h-[calc(100vh-37vh)]">
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+          <LocationItem />
+        </ScrollShadow>
+
+        <Pagination showControls total={5} />
 
 
       </main>

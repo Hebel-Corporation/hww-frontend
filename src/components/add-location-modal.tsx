@@ -25,14 +25,10 @@ export default function AddLocationModal({
               <ModalBody className="transition duration-400 ease-in-out">
                 <div className="flex flex-col gap-8">
                   <div className="flex flex-col gap-3">
-                    <h1 className="text-sm font-light">Infos sur le bureau</h1>
-                    <Input type="text" radius="sm" size="sm" label="Initial du bureau" />
-                    <Input type="text" radius="sm" size="sm" label="Nom du bureau" />
-                    <Input type="text" radius="sm" size="sm" label="Emplacement" />
-                    <Input type="text" radius="sm" size="sm" label="Nom d'utilisateur" />
-                    <Input type="text" radius="sm" size="sm" label="Mot de passe" />
-                    <Input type="text" radius="sm" size="sm" label="Confimer le mot de passe" />
-                    <Input type="text" radius="sm" size="sm" label="Groupes d'utilisateur" />
+                    <h1 className="text-sm font-light">Infos sur l'emplacement</h1>
+                    <Input type="text" radius="sm" size="sm" label="Nom de l'emplacement" />
+                    <Input type="text" radius="sm" size="sm" label="Province" />
+                    <Input type="text" radius="sm" size="sm" label="Pays" />
                   </div>
                 </div>
               </ModalBody>

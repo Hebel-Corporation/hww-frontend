@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getServerSession } from '@/utils/server-auth-utils';
 import { ApiEndpoints } from './api-endpoints';
+import { getTokenValue } from '@/utils/utils-fonctions';
 
 const serverApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -12,27 +13,15 @@ const serverApi = axios.create({
 const refreshAccessToken = async () => {
     "use server"
     try {
-        const session = await getServerSession()
+        const session = await getServerSession({raw: true})
 
         if (session) {
 
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}${ApiEndpoints.AUTH.REFRESH_TOKEN}`,
-                { refresh: session.refreshToken }
+                { refresh: session }
             );
 
             const data = response.data
-            // console.log("REFREEEEEEESSSSSSSSSSSSSSSH ******************", data)
-            // setServerCookie('Authorization', data.access, data.token_duration.access)
-            // customCookies.set('Authorization', data.access, data.token_duration.access)
-
-            // cookies().set('Authorization', data.access, {
-            //     expires: new Date(Date.now() + data.token_duration.access * 1000),
-            //     path: '/',
-            //     secure: false,
-            //     httpOnly: false
-            // });
-
-            // response.headers['set-cookie'] = [`Authorization=${data.access}; Path=/; MaxAge=${Date.now() + Number(data.token_duration.access) * 1000}`];
 
             return data;
         } else {
@@ -41,7 +30,7 @@ const refreshAccessToken = async () => {
     } catch (err: any) {
         console.error('Failed to refresh access token In function:', err);
         if (err.response?.status == 406) {
-            redirect('/');
+            redirect('/login');
         }else {
             throw err
         }
@@ -71,7 +60,6 @@ serverApi.interceptors.response.use(
 
             try {
                 const data_access = await refreshAccessToken();
-                // originalRequest.headers['Authorization'] = `Bearer ${data_access.access}`;
 
                 const axiosInstance = axios.create({
                     headers: {
@@ -80,9 +68,9 @@ serverApi.interceptors.response.use(
                     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
                   });
 
-                  axiosInstance.defaults.headers.common['Cookie'] = `Authorization=${data_access.access}; Path=/; MaxAge=${Date.now() + Number(data_access.token_duration.access) * 1000}`;
+                  const accessTokenValue = getTokenValue(data_access.access)
+                  axiosInstance.defaults.headers.common['Cookie'] = `Authorization=${data_access.access}; Path=/; MaxAge=${new Date(accessTokenValue * 1000)}`;
                 
-                // return originalRequest;
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
                 console.error('Failed to refresh token:', refreshError);

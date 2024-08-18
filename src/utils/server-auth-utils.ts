@@ -1,43 +1,47 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { decrypt } from "./client-utils";
+import { getTokenValue } from "./utils-fonctions";
 
 
-const jwt = require('jsonwebtoken');
-
-export async function getServerSession() {
+export async function getServerSession({
+    raw
+} : {
+    raw: false | true
+}) {
     const session = cookies().get('session')?.value
     if (!session) return null;
 
-    try {
-        const sessionParsed = await decrypt(session)
-        return sessionParsed
-    } catch (error) {
-        return null
-    }
+    if (raw)
+        return session
+    else 
+        return getTokenValue(session)
 }
 
 
-export async function setServerCookie(name: string, value: string, exp: number) {
-    cookies().set(name, value, {
-        expires: new Date(Date.now() + exp * 1000),
+export async function setServerCookie(name: string, token: string) {
+
+    const tokenValue = getTokenValue(token)
+
+    cookies().set(name, token, {
+        expires: new Date(tokenValue.exp * 1000),
         path: '/',
         secure: false,
-        httpOnly: false
+        httpOnly: false,
+        sameSite: "strict"
     });
 }
 
 
 
 export async function updateSession(request: NextRequest) {
-    const session = await getServerSession()
+    const session = await getServerSession({raw: false})
 
     if (session) {
         const res = NextResponse.next();
         const authToken = request.cookies.get('session')?.value
 
         if (authToken) {
-            const expires = new Date(session.expires)
+            const expires = new Date(session.exp * 1000)
             res.cookies.set('session', `${authToken}`, {
                 expires,
                 httpOnly: false,
@@ -45,13 +49,13 @@ export async function updateSession(request: NextRequest) {
             });
         }
 
-        const token = request.cookies.get('Authorization')?.value
-        if (token) {
-            const decodedAuth = jwt.decode(token, { complete: true });
-            res.cookies.set('Authorization', `${token}`, {
+        const accessToken = request.cookies.get('Authorization')?.value
+        if (accessToken) {
+            const decodedAuth = getTokenValue(accessToken)
+            res.cookies.set('Authorization', `${accessToken}`, {
                 secure: false,
                 httpOnly: false,
-                expires: new Date(Number(decodedAuth.payload.exp) * 1000),
+                expires: new Date(session.exp * 1000),
                 path: '/',
                 sameSite: "strict"
             });
@@ -59,7 +63,7 @@ export async function updateSession(request: NextRequest) {
 
         return res;
     } else {
-        return NextResponse.redirect(new URL('/', request.url));
+        return NextResponse.redirect(new URL('/login', request.url));
     }
 }
 
