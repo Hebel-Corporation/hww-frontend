@@ -6,11 +6,16 @@ export const ApiEndpoints = {
             GET_USER_GROUPS: '/auth/groups/'
         },
 
+        LOCATION: {
+            GET_COUNTRIES: '/members/coutries/',
+            GET_LOCATIONS: '/members/locations/',
+        },
+
         OFFICES: {
 
         },
 
         MEMBERS: {
-
+            
         }
 }

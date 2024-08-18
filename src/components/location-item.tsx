@@ -4,9 +4,11 @@ import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger 
 import { MapPinnedIcon, MoreHorizontal } from 'lucide-react'
 import React from 'react'
 
-const LocationItem = () => {
+const LocationItem = ({
+  location
+} : any) => {
   return (
-    <div className='flex flex-col gap-3 w-full sm:odd:last:max-w-80 min-w-[19rem] flex-1 border rounded-md py-2.5 px-3.5 bg-zinc-100 dark:bg-zinc-800'>
+    <div className='flex flex-col gap-3 w-full sm:odd:last:max-w-80 min-w-[19rem] flex-1 h-max border rounded-md py-2.5 px-3.5 bg-zinc-100 dark:bg-zinc-800'>
       <div className='flex justify-between items-start'>
         <MapPinnedIcon size={35} />
         
@@ -29,7 +31,7 @@ const LocationItem = () => {
       </div>
       <div className='flex gap-3 items-center'>
         <div>
-          <h1>Kinshasa</h1>
+          <h1>{location.name}</h1>
           <span className='text-small font-light'>Taux d'enregistrement: 23%</span>
         </div>
         <Divider orientation='vertical' />

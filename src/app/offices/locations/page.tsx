@@ -1,3 +1,4 @@
+import { getLocations } from '@/actions/location-actions'
 import AddLocationModal from '@/components/add-location-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
@@ -19,7 +20,10 @@ const breadcrumbItems = [
   },
 ]
 
-const LocationPage = () => {
+const LocationPage = async () => {
+
+  const locations = await getLocations()
+
   return (
     <ContentLayout breadcrumb={
       <CustomBreadcrumb breadcrumbItems={breadcrumbItems} />
@@ -53,19 +57,11 @@ const LocationPage = () => {
         </div>
 
         <ScrollShadow className="flex flex-wrap gap-5 h-[calc(100vh-37vh)]">
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
-          <LocationItem />
+            {
+              locations?.map((location: any) => (
+                <LocationItem location={location} />
+              ))
+            }
         </ScrollShadow>
 
         <Pagination showControls total={5} />
