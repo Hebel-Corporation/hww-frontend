@@ -1,7 +1,9 @@
 import LoginForm from '@/components/forms/login-form'
-import React from 'react'
+import { getServerSession } from '@/utils/server-auth-utils'
+import { redirect } from 'next/navigation'
 
-const LoginPage = () => {
+const LoginPage = async() => {
+
   return (
     <div className='flex min-h-screen'>
         <div className='hidden sm:flex flex-1 items-center justify-center bg-blue-300'>

@@ -8,47 +8,48 @@ import serverApi from "@/lib/axios-server-instance";
 import { cache } from "react";
 import { encrypt } from "@/utils/client-utils";
 import { ApiEndpoints } from "@/lib/api-endpoints";
+import { setServerCookie } from "@/utils/server-auth-utils";
+import { getTokenValue } from "@/utils/utils-fonctions";
+import { redirect } from "next/navigation";
 
 
-export async function userLogin(formData: any) {
+
+export async function userLogin({
+    username,
+    password
+}: {
+    username: string,
+    password: string
+}) {
 
     try {
         const res = await axios.post(
             `${process.env.NEXT_PUBLIC_API_BASE_URL}${ApiEndpoints.AUTH.LOGIN}`,
             {
-                username: formData.email,
-                password: formData.password
+                username: username,
+                password: password
             }
         );
 
-        const login_data = res.data
+        const tokens = res.data
+        setServerCookie("Authorization", tokens.access)
+        setServerCookie("session", tokens.refresh)
 
-        const refreshToken = login_data.token.refresh
-        const collaborator = login_data.collaborator
-        const expires = new Date(Date.now() + Number(login_data.token_duration.refresh) * 1000)
-        const session = await encrypt({
-            collaborator,
-            expires,
-            refreshToken
-        }, expires);
+        const accessTokenValue = getTokenValue(tokens.access)
 
-        cookies().set("Authorization", login_data.token.access, {
-            secure: false,
-            httpOnly: true,
-            expires: new Date(Date.now() + Number(login_data.token_duration.access) * 1000),
-            path: '/',
-            sameSite: "strict"
-        })
-
-        cookies().set("session", session, {
-            expires,
-            httpOnly: true,
-            path: '/'
-        })
+        if (accessTokenValue.user.user_type === 'staff') {
+            return { redirectUrl: '/offices/dashboard', IsloggedIn: true };
+        } else if (accessTokenValue.user.user_type === 'member') {
+            return { redirectUrl: '/members/dashboard', IsloggedIn: true };
+        }
 
     } catch (e: any) {
-        console.error(e)
-        return e?.message || "Mot de passe ou nom d'utilisateur incorrect."
+        console.error("ERROR > : ", e)
+
+        if (e?.response?.status == 401)
+            return {mssg: "Mot de passe ou nom d'utilisateur incorrect.", IsloggedIn: false, redirectUrl: ''}
+
+        return {mssg: e?.message, IsloggedIn: false, redirectUrl: ''}
     }
 
 }
@@ -65,7 +66,8 @@ export const getUserApiGroups = cache(async () => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.AUTH.GET_USER_GROUPS}`)
         const data = result.data
-        return data.results;
+
+        return data;
     } catch (e: any) {
         console.error(e?.message)
         return e?.message;

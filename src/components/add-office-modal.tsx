@@ -26,7 +26,6 @@ export default function AddOfficeModal({
                 <div className="flex flex-col gap-8">
                   <div className="flex flex-col gap-3">
                     <h1 className="text-sm font-light">Infos sur le bureau</h1>
-                    <Input type="text" radius="sm" size="sm" label="Initial du bureau" />
                     <Input type="text" radius="sm" size="sm" label="Nom du bureau" />
                     <Input type="text" radius="sm" size="sm" label="Emplacement" />
                   </div>

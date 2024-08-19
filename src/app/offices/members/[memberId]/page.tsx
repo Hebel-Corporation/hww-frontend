@@ -1,10 +1,11 @@
+import AccountCardItem from '@/components/account-card-item'
 import AddMemberModal from '@/components/add-member-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import MemberItem from '@/components/member-item'
 import { Avatar, Button, Pagination, ScrollShadow } from '@nextui-org/react'
-import { Filter, PlusCircle } from 'lucide-react'
+import { ArrowRight, EyeIcon, Filter, MoreHorizontal, PlusCircle } from 'lucide-react'
 import React from 'react'
 
 
@@ -32,8 +33,8 @@ const MemberDetails = ({
         <ContentLayout breadcrumb={
             <CustomBreadcrumb breadcrumbItems={breadcrumbItems} />
         }>
-            <main className='flex flex-col gap-5'>
-                <div className='flex justify-between items-center'>
+            <main className='flex flex-col gap-3'>
+                <div className='flex flex-wrap gap-4 justify-between items-center'>
                     <div className="flex gap-3 items-center">
                         <Avatar size='lg' fallback={<>NK</>
                         } />
@@ -53,11 +54,13 @@ const MemberDetails = ({
                     </div>
                 </div>
 
-                <div className='flex flex-wrap justify-between items-center'>
-                    <div className='h-20 w-80 rounded-md bg-red-500'></div>
-                    <div className='h-20 w-80 rounded-md bg-red-500'></div>
-                    <div className='h-20 w-80 rounded-md bg-red-500'></div>
-                </div>
+                <ScrollShadow orientation='horizontal' className='flex flex-1 py-2 gap-6 items-center'>
+                    <AccountCardItem />
+                    <AccountCardItem />
+                    <AccountCardItem />
+                    <AccountCardItem />
+                    <AccountCardItem />
+                </ScrollShadow>
 
                 <div className='flex flex-col gap-3'>
                     <h1>Downlines</h1>
@@ -65,13 +68,25 @@ const MemberDetails = ({
                         <div className="sm:w-2/4 w-full flex items-center">
                             <SearchBar />
                         </div>
-                        <div className="flex gap-3 items-center">
+                        <div className="flex flex-wrap gap-3 items-center">
+                            <Button radius="sm" variant='light' color='warning' endContent={
+                                    <ArrowRight />
+                                }
+                            >
+                                Détails du compte
+                            </Button>
+                            <Button radius="sm" variant='flat' startContent={
+                                    <EyeIcon />
+                                }
+                            >
+                                Transactions
+                            </Button>
                             <Button radius="sm" startContent={
                                 <Filter />
                             }>Filtrer</Button>
                         </div>
                     </div>
-                    <ScrollShadow className="flex flex-col h-[calc(100vh-56vh)]">
+                    <ScrollShadow className="flex flex-col h-[calc(100vh-62vh)]">
                         <MemberItem />
                         <MemberItem />
                         <MemberItem />
