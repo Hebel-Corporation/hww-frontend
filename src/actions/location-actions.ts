@@ -12,7 +12,7 @@ export const getCountries = cache(async () => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.LOCATION.GET_COUNTRIES}`)
         const data = result.data
-        console.log("+++++++++>>>>>", data)
+        
         return data;
     } catch (e: any) {
         console.error(e?.message)
