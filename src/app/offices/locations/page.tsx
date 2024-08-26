@@ -56,12 +56,14 @@ const LocationPage = async () => {
           </div>
         </div>
 
-        <ScrollShadow className="flex flex-wrap gap-5 h-[calc(100vh-37vh)]">
+        <ScrollShadow className="h-[calc(100vh-37vh)]">
+          <div className='flex flex-wrap gap-5'>
             {
               locations?.map((location: any) => (
                 <LocationItem location={location} />
               ))
             }
+          </div>
         </ScrollShadow>
 
         <Pagination showControls total={5} />

@@ -8,7 +8,7 @@ const LocationItem = ({
   location
 } : any) => {
   return (
-    <div className='flex flex-col gap-3 w-full sm:odd:last:max-w-80 min-w-[19rem] flex-1 h-max border rounded-md py-2.5 px-3.5 bg-zinc-100 dark:bg-zinc-800'>
+    <div className='flex flex-col gap-3 w-full min-w-[19rem] flex-1 h-max border rounded-md py-2.5 px-3.5 bg-zinc-100 dark:bg-zinc-800'>
       <div className='flex justify-between items-start'>
         <MapPinnedIcon size={35} />
         

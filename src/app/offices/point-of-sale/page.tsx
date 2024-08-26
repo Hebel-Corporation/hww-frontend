@@ -51,20 +51,12 @@ const PointOfSalePage = () => {
           </div>
         </div>
 
-        <ScrollShadow className="flex flex-wrap gap-5 h-[calc(100vh-37vh)]">
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
-          <OfficeItem />
+        <ScrollShadow className="h-[calc(100vh-37vh)]">
+          <div className='flex flex-wrap gap-5'>
+            <OfficeItem />
+            <OfficeItem />
+            <OfficeItem />
+          </div>
         </ScrollShadow>
 
         <Pagination showControls total={5} />

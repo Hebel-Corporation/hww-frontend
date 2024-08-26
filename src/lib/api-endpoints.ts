@@ -12,7 +12,7 @@ export const ApiEndpoints = {
         },
 
         OFFICES: {
-
+            GET_OFFICES : '/members/offices/'
         },
 
         MEMBERS: {

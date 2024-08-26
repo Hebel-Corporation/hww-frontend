@@ -1,17 +1,11 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
-import { Badge, Button, Checkbox, Chip, Popover, PopoverContent, PopoverTrigger, Select, SelectedItems, SelectItem } from "@nextui-org/react";
+import { Badge, Button, Checkbox, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import { Filter } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form"
-import { fetchTypeEntreprise } from "@/_actions/actions";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
-
-type TypeDossier = {
-    key: string,
-    label: string
-}
 
 
 type Status = {
@@ -23,24 +17,20 @@ type Status = {
 const FilterPopover = ({
     title,
     filterStatus,
-    asChild,
     propsParams
 }: {
     title: string,
     filterStatus: Status[],
-    asChild: true | false,
     propsParams: { [key: string]: string | string[] | undefined }
 }) => {
 
     const {
         formState: { isLoading, isSubmitting },
         register,
-        getValues,
-        setValue
+        getValues
     } = useForm()
 
 
-    const [types, setTypes] = useState<TypeDossier[]>([]);
     const [selectedType, setSelectedType] = useState<string[]>([]);
     const [visible, setVisible] = useState(false);
 
@@ -95,14 +85,6 @@ const FilterPopover = ({
 
     useEffect(() => {
 
-        fetchTypeEntreprise().then(res => {
-            if (res && Array.isArray(res)) {
-                setTypes(res.map((itm: any) => {
-                    return {key: itm.id, label: itm.sigle}
-                }))
-            }
-        })
-
         if (propsParams?.type) {
             const type = propsParams.type ? JSON.parse(propsParams.type as string) : []
             setSelectedType(type)
@@ -142,41 +124,6 @@ const FilterPopover = ({
                             ))}
                         </ul>
                     </div>
-                    {asChild &&
-                        <div className="flex flex-col gap-2">
-                            <h1>Par type :</h1>
-                            <ul className="flex flex-col gap-2">
-                                <Select size="sm"
-                                    items={types}
-                                    isMultiline={true}
-                                    selectionMode="multiple"
-                                    label=" "
-                                    placeholder="Selectionner un ou plisieurs types"
-                                    defaultSelectedKeys={selectedType}
-                                    onChange={(e) => {
-                                        setValue('type', e?.target.value)
-                                        setSelectedType([...selectedType, e?.target.value])
-                                    }}
-                                    renderValue={(items: SelectedItems<TypeDossier>) => {
-                                        return (
-                                            <div className="flex flex-wrap gap-2 justify-start text-[12px]">
-                                                {items.map((item) => (
-                                                    <Chip key={item.key}>{item.data?.label}</Chip>
-                                                ))}
-                                            </div>
-                                        );
-                                    }}
-                                    className="max-w-xs"
-                                >
-                                    {(type) => (
-                                        <SelectItem key={type.key} value={type.key} {...register(`type`)}>
-                                            {type.label}
-                                        </SelectItem>
-                                    )}
-                                </Select>
-                            </ul>
-                        </div>
-                    }
                     <Button size="sm" variant="faded" color="primary"
                         onPress={updateQueryParams}
                         isLoading={isSubmitting || isLoading}
