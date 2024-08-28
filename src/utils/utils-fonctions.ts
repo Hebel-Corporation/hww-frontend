@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-export function capitalize(str: string) {
+export function toCapitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 

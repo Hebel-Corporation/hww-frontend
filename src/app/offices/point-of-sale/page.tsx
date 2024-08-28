@@ -1,8 +1,10 @@
+import { getOffices } from '@/actions/office-actions'
 import AddOfficeModal from '@/components/add-office-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import OfficeItem from '@/components/office-item'
+import { Office } from '@/types'
 import { Button, Pagination, ScrollShadow } from '@nextui-org/react'
 import { Filter, PlusCircle } from 'lucide-react'
 
@@ -18,7 +20,10 @@ const breadcrumbItems = [
   },
 ]
 
-const PointOfSalePage = () => {
+const PointOfSalePage = async () => {
+
+  const offices = await getOffices()
+
   return (
     <ContentLayout breadcrumb={
       <CustomBreadcrumb breadcrumbItems={breadcrumbItems} />
@@ -53,9 +58,13 @@ const PointOfSalePage = () => {
 
         <ScrollShadow className="h-[calc(100vh-37vh)]">
           <div className='flex flex-wrap gap-5'>
-            <OfficeItem />
-            <OfficeItem />
-            <OfficeItem />
+            {
+              offices.map((office: Office) => (
+
+                <OfficeItem key={office.id} office={office} />
+
+              ))
+            }
           </div>
         </ScrollShadow>
 

@@ -11,6 +11,9 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { toast } from "sonner";
 import { EyeIcon, EyeOffIcon, LocateIcon, MapPinIcon } from "lucide-react";
 import { createOffice } from "@/actions/office-actions";
+import { getUserApiGroups } from "@/actions/auth-actions";
+import { UserGroup } from "@/types";
+import { toCapitalize } from "@/utils/utils-fonctions";
 
 
 const officeFormSchema = z.object({
@@ -50,6 +53,7 @@ export default function AddOfficeModal({
     value: string,
     label: string
   }[]>([]);
+  const [userGroups, setUserGroups] = React.useState<UserGroup[]>([]);
   const [isVisible, setIsVisible] = React.useState(false);
 
 
@@ -88,11 +92,11 @@ export default function AddOfficeModal({
       loading: 'Enregistrement en cours...',
       success: () => {
         onOpenChange()
-        setIsSubmitting(true)
+        setIsSubmitting(false)
         return `Bureau ajouté avec succès !`;
       },
       error: () => {
-        return `Erreur d'enregistrement`;
+        return `Erreur lors de l'enregistrement`;
       },
     }
     )
@@ -103,12 +107,20 @@ export default function AddOfficeModal({
     async function fetchLocations() {
       const locationList = await getLocations()
       if (locationList?.length) {
-        console.log(locationList)
-        setLocations([...locationList.map((itm: any) => { return { value: itm.id, label: itm.name } })])
+        setLocations([...locationList.map((itm: any) => {
+          return { value: itm.id, label: itm.name }
+        })])
       }
     }
 
+    async function fetchUserGroups() {
+      const groupList = await getUserApiGroups()
+      if (groupList?.length)
+        setUserGroups([...groupList])
+    }
+
     fetchLocations()
+    fetchUserGroups()
   }, [])
 
   return (
@@ -231,9 +243,9 @@ export default function AddOfficeModal({
                                 label="Favorite Animal"
                                 placeholder="Select an animal"
                               >
-                                {locations.map((location: any) => (
-                                  <SelectItem key={location.value}>
-                                    {location.label}
+                                {userGroups.map((group: UserGroup) => (
+                                  <SelectItem key={group.id}>
+                                    { toCapitalize(group.name) }
                                   </SelectItem>
                                 ))}
                               </Select>
@@ -248,10 +260,10 @@ export default function AddOfficeModal({
                   </div>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" radius="sm" variant="light" onPress={onClose}>
+                  <Button isDisabled={isSubmitting} color="danger" radius="sm" variant="light" onPress={onClose}>
                     Annuler
                   </Button>
-                  <Button type="submit" color="primary" radius="sm">
+                  <Button isDisabled={isSubmitting} isLoading={isSubmitting} type="submit" color="primary" radius="sm">
                     Enregistrer
                   </Button>
                 </ModalFooter>

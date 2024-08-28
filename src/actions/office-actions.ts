@@ -29,12 +29,17 @@ export const createOffice = async (formData : {
     staff: {
         username: string,
         password: string,
-        user_type?: 'staff',
         groups: string[]
     }
 }) => {
     try {
-        const result: any = await serverApi.post(`${ApiEndpoints.OFFICES.GET_OFFICES}`, formData)
+        const result: any = await serverApi.post(`${ApiEndpoints.OFFICES.GET_OFFICES}`, {
+            ...formData,
+            staff: {
+                ...formData.staff,
+                user_type: 'staff'
+            }
+        })
         const data = result.data
         
         return data;
