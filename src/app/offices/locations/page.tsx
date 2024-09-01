@@ -3,10 +3,9 @@ import AddLocationModal from '@/components/add-location-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
-import LocationItem from '@/components/location-item'
-import { Button, Pagination, ScrollShadow } from '@nextui-org/react'
+import LocationItemList from '@/components/location-item-list'
+import { Button, Pagination } from '@nextui-org/react'
 import { Filter, PlusCircle } from 'lucide-react'
-import React from 'react'
 
 
 const breadcrumbItems = [
@@ -56,15 +55,8 @@ const LocationPage = async () => {
           </div>
         </div>
 
-        <ScrollShadow className="h-[calc(100vh-37vh)]">
-          <div className='flex flex-wrap gap-5'>
-            {
-              locations?.map((location: Location) => (
-                <LocationItem location={location} />
-              ))
-            }
-          </div>
-        </ScrollShadow>
+        {/* Location list */}
+        <LocationItemList locations={locations} />
 
         <Pagination showControls total={5} />
 
