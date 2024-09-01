@@ -1,4 +1,5 @@
 import AccountCardItem from '@/components/account-card-item'
+import AddAccountModal from '@/components/add-account-modal'
 import AddMemberModal from '@/components/add-member-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
@@ -44,13 +45,7 @@ const MemberDetails = ({
                         </div>
                     </div>
                     <div>
-                        <Button radius="sm"
-                            startContent={
-                                <PlusCircle />
-                            }
-                        >
-                            Ajouter un compte
-                        </Button>
+                        <AddAccountModal />
                     </div>
                 </div>
 

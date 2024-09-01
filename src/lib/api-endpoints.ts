@@ -17,7 +17,7 @@ export const ApiEndpoints = {
         },
 
         MEMBERS: {
-            
+            UPLINE_VERIFICATION: ''
         }
 }
 

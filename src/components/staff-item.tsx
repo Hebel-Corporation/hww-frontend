@@ -21,7 +21,7 @@ const StaffItem = ({
                     </>
                 } className='h-[3.1rem] w-[3.1rem]' />
                 <div>
-                    <h1 className="text-base font-normal">
+                    <h1 className="text-base font-medium">
                         {staff?.first_name || '-'} {staff?.last_name || '-'}
                     </h1>
                     <span className="font-extralight text-small">
@@ -30,16 +30,24 @@ const StaffItem = ({
                 </div>
             </div>
             <div className='hidden sm:block'>
-                <h2>{staff?.office?.location?.name} - {staff?.office?.office_code}</h2>
+                <h1 className="text-base font-medium">
+                    Bureau - code
+                </h1>
+                <h2 className='font-extralight'>{staff?.office?.location?.name} - {staff?.office?.office_code}</h2>
             </div>
-            <div className='hidden sm:flex sm:gap-2'>
-                {
-                    staff.groups.map((group: UserGroup) => (
-                        <h2 key={group.id} className='px-2.5 text-small rounded-full font-light bg-slate-300 dark:bg-gray-500 '>
-                            {toCapitalize(group.name)}
-                        </h2>
-                    ))
-                }
+            <div className='hidden sm:block'>
+                <h1 className="text-base font-medium">
+                    Groupes d&apos;utilisateur
+                </h1>
+                <div className='flex gap-2'>
+                    {
+                        staff.groups.map((group: UserGroup) => (
+                            <h2 key={group.id} className='px-2.5 text-small rounded-full font-extralight bg-slate-300 dark:bg-gray-500 '>
+                                {toCapitalize(group.name)}
+                            </h2>
+                        ))
+                    }
+                </div>
             </div>
             <div className="flex items-center gap-5">
                 <Button radius='sm' className='min-w-0 p-1.5'>

@@ -66,7 +66,6 @@ export default function AddLocationModal({
     async function fetchCountries() {
       const countries = await getCountries()
       if (countries?.length) {
-        console.log(countries)
         setCountries([...countries.map((itm: any) => { return { value: itm.id, label: itm.name } })])
       }
     }

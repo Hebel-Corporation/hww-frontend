@@ -1,4 +1,5 @@
 import { getOfficeDetails } from '@/actions/office-actions'
+import AddStaffModal from '@/components/add-staff-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
@@ -69,13 +70,7 @@ const OfficeDetails = async ({
                             <SearchBar />
                         </div>
                         <div className="flex flex-wrap gap-3 items-center">
-                            <Button radius="sm"
-                                startContent={
-                                    <PlusCircle />
-                                }
-                            >
-                                Ajouter un utilisateur
-                            </Button>
+                            <AddStaffModal />
                             <Button radius="sm" startContent={
                                 <Filter />
                             }>Filtrer</Button>

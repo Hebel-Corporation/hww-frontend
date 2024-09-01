@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@internationalized/date": "^3.5.5",
     "@nextui-org/react": "^2.4.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-collapsible": "^1.0.3",
@@ -20,6 +21,7 @@
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@react-aria/i18n": "^3.12.2",
     "axios": "^1.7.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

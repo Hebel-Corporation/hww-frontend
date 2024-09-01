@@ -244,12 +244,12 @@ export default function AddOfficeModal({
                             <FormControl>
 
                               <Select {...field} isRequired selectionMode="multiple" radius="sm" size="sm"
-                                label="Favorite Animal"
-                                placeholder="Select an animal"
+                                label="Groups d'utilisateur"
+                                placeholder="Sellectionner un ou plus d'un group"
                               >
                                 {userGroups.map((group: UserGroup) => (
                                   <SelectItem key={group.id}>
-                                    { toCapitalize(group.name) }
+                                    {toCapitalize(group.name)}
                                   </SelectItem>
                                 ))}
                               </Select>
