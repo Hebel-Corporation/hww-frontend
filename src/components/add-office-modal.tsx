@@ -22,10 +22,10 @@ const officeFormSchema = z.object({
     message: "Veillez sellectioner l'emplacement.",
   }),
 
-  officeUsername: z.string().min(2, {
+  username: z.string().min(2, {
     message: "Veillez saisir le nom d'utilisateur.",
   }),
-  officePassword: z.string().min(6, 'Le mot de passe doit comporter au moins 6 caractères')
+  password: z.string().min(6, 'Le mot de passe doit comporter au moins 6 caractères')
     .regex(/[A-Z]/, 'Le mot de passe doit contenir au moins une lettre majuscule')
     .regex(/[a-z]/, 'Le mot de passe doit contenir au moins une lettre minuscule')
     .regex(/\d/, 'Le mot de passe doit contenir au moins un chiffre')
@@ -35,8 +35,10 @@ const officeFormSchema = z.object({
     .regex(/[a-z]/, 'Le mot de passe de confirmation doit contenir au moins une lettre minuscule.')
     .regex(/\d/, 'Confirm Password must contain at least one digit')
     .regex(/[@$!%*?&]/, 'Confirm Password must contain at least one special character'),
-  groups: z.string(), //.min(1, "Veillez sellectionner au moins un group !")
-}).refine(data => data.officePassword === data.confirmPassword, {
+  groups: z.string().min(1, {
+    message: 'Veillez sellectionner au moins un group !'
+  }),
+}).refine(data => data.password === data.confirmPassword, {
   message: "Les mots de passe ne correspondent pas",
   path: ['confirmPassword'],
 });
@@ -62,8 +64,8 @@ export default function AddOfficeModal({
     defaultValues: {
       name: "",
       location: "",
-      officeUsername: "",
-      officePassword: "",
+      username: "",
+      password: "",
       confirmPassword: "",
       groups: ""
     },
@@ -80,8 +82,8 @@ export default function AddOfficeModal({
         location: values.location
       },
       staff: {
-        username: values.officeUsername,
-        password: values.officePassword,
+        username: values.username,
+        password: values.password,
         groups: values.groups.split(',')
       }
     }
@@ -90,14 +92,16 @@ export default function AddOfficeModal({
     toast.promise(
       createOffice(formData), {
       loading: 'Enregistrement en cours...',
-      success: () => {
-        onOpenChange()
-        setIsSubmitting(false)
+      success: (data) => {
+        if (data) onOpenChange()
         return `Bureau ajouté avec succès !`;
       },
-      error: () => {
-        return `Erreur lors de l'enregistrement`;
+      error: (err: Error) => {
+        return `${err.message}`;
       },
+      finally: () => {
+        setIsSubmitting(false)
+      }
     }
     )
   }
@@ -184,11 +188,11 @@ export default function AddOfficeModal({
                       <h1 className="text-sm font-light">Infos sur l'utilisateur</h1>
                       <FormField
                         control={form.control}
-                        name="officeUsername"
+                        name="username"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} isRequired autoComplete="" type="text" radius="sm" size="sm" label="Nom d'utilisateur" />
+                              <Input {...field} isRequired autoComplete="" type="text" radius="sm" size="sm" aria-autocomplete="none" label="Nom d'utilisateur" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -197,11 +201,11 @@ export default function AddOfficeModal({
 
                       <FormField
                         control={form.control}
-                        name="officePassword"
+                        name="password"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} isRequired radius="sm" size="sm" label="Mot de passe"
+                              <Input {...field} isRequired radius="sm" size="sm" label="Mot de passe" aria-autocomplete="none"
                                 endContent={
                                   <button className="focus:outline-none" type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
                                     {isVisible ? (

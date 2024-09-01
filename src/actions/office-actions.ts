@@ -11,7 +11,7 @@ export const getOffices = async () => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICES}`)
         const data = result.data
-        
+
         return data;
     } catch (e: any) {
         console.error(e?.message)
@@ -21,7 +21,40 @@ export const getOffices = async () => {
 
 
 
-export const createOffice = async (formData : {
+export const getOfficeDetails = async ({
+    officeId
+} : {officeId: string}) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICES}${officeId}/`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
+
+export const getOfficeStaffs = async ({
+    officeId
+} : {officeId: string}) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_STAFFS.replace("officeID", officeId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
+export const createOffice = (formData: {
     office: {
         name?: string,
         location: string
@@ -31,25 +64,30 @@ export const createOffice = async (formData : {
         password: string,
         groups: string[]
     }
-}) => {
-    try {
-        const result: any = await serverApi.post(`${ApiEndpoints.OFFICES.GET_OFFICES}`, {
-            ...formData,
-            staff: {
-                ...formData.staff,
-                user_type: 'staff'
-            }
-        })
-        const data = result.data
-        
-        return data;
-    } catch (e: any) {
-        console.error(e?.message)
-        return e?.message;
-    } finally {
-        revalidatePath('/offices/point-of-sale')
-    }
-}
+}): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.post(`${ApiEndpoints.OFFICES.GET_OFFICES}`, {
+                ...formData,
+                staff: {
+                    ...formData.staff,
+                    user_type: 'staff'
+                }
+            });
+            const data = result.data;
+            resolve(data);
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            const match = errorString?.error.match(/string='([^']+)'/);
+            const errorMessage = match ? match[1] : `${errorString?.error || "Erreur lors de l'enregistrement"}`;
+            reject(new Error(errorMessage));
+        } finally {
+            revalidatePath('/offices/point-of-sale');
+        }
+    });
+};
+
 
 
 
@@ -68,7 +106,7 @@ export const editOffice = async ({
             location: locationID
         })
         const data = result.data
-        
+
         return data;
     } catch (e: any) {
         console.error(e?.message)

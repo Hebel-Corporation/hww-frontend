@@ -6,12 +6,12 @@ import React from 'react'
 
 const LocationItem = ({
   location
-} : any) => {
+}: any) => {
   return (
     <div className='flex flex-col gap-3 w-full min-w-[19rem] flex-1 h-max border rounded-md py-2.5 px-3.5 bg-zinc-100 dark:bg-zinc-800'>
       <div className='flex justify-between items-start'>
         <MapPinnedIcon size={35} />
-        
+
         <Dropdown>
           <DropdownTrigger>
             <Button radius='sm' size="sm" variant="light" className='min-w-0 p-1'>
@@ -32,12 +32,14 @@ const LocationItem = ({
       <div className='flex gap-3 items-center'>
         <div>
           <h1>{location.name}</h1>
-          <span className='text-small font-light'>Taux d'enregistrement: 23%</span>
+          <span className='text-small font-light'>
+            Taux d'inscription : {location.subscription_rate}%
+          </span>
         </div>
         <Divider orientation='vertical' />
         <div>
-          <h1 className='text-xl font-semibold'>2</h1>
-          <span className='text-small font-light'>Bureaux</span>
+          <h1 className='text-xl font-semibold'>{location.offices_count}</h1>
+          <span className='text-small font-light'>Bureau{location.offices_count > 1 ? 'x' : ''}</span>
         </div>
       </div>
     </div>

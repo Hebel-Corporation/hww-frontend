@@ -48,11 +48,14 @@ export default function AddLocationModal({
         loading: 'Enregistrement en cours...',
         success: () => {
           onOpenChange()
-          setIsSubmitting(true)
+          form.reset()
           return `Emplacement ajouté avec succès !`;
         },
         error: () => {
           return `Erreur d'enregistrement`;
+        },
+        finally() {
+          setIsSubmitting(false)
         },
       }
     )
@@ -93,7 +96,7 @@ export default function AddLocationModal({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} type="text" radius="sm" size="sm"
+                              <Input {...field} isRequired type="text" radius="sm" size="sm"
                                 label="Nom de l'emplacement"
                                 description="Ecrivez le nom d'une ville, un térritoire ou d'un endoit quelconque !"
                               />
@@ -109,7 +112,7 @@ export default function AddLocationModal({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Autocomplete {...field} radius="sm" size="sm"
+                              <Autocomplete {...field} isRequired radius="sm" size="sm"
                                 label="Pays"
                                 description="Sellectionner le pays dans lequel se trouve l'endoit que vous voulez enregistrer."
                                 onSelectionChange={(value) => {

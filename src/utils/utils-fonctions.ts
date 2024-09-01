@@ -13,8 +13,8 @@ export function getFirstChar(str: string) {
 }
 
 
-export function getInitialChar(first_name: string, last_name: string) {
-  const initialName = getFirstChar(first_name) + '' + getFirstChar(last_name)
+export function getInitialChar(names:{first_name: string, last_name: string}) {
+  const initialName = getFirstChar(names?.first_name) + '' + getFirstChar(names?.last_name)
   return initialName.toUpperCase();
 }
 
