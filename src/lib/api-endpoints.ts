@@ -13,12 +13,11 @@ export const ApiEndpoints = {
 
         OFFICES: {
             GET_OFFICES : '/members/offices/',
-            GET_OFFICE_STAFFS: "/members/offices/{{officeID}}/staffs"
+            GET_OFFICE_STAFFS: "/members/offices/{{officeID}}/staffs/",
+            CREATE_OFFICE_STAFF: "/members/offices/{{officeID}}/create-staff/",
         },
 
         MEMBERS: {
             UPLINE_VERIFICATION: ''
         }
 }
-
-//{{base_url}}members/offices/a9de9768-dbaa-4b02-924d-dc63bd46adfc/staffs

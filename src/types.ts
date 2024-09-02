@@ -2,6 +2,7 @@ export type User = {
     id: string,
     first_name: string,
     last_name: string,
+    gender: string,
     email: string,
     phone: string,
     groups: UserGroup[],

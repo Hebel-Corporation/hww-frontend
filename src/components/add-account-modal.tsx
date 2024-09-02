@@ -86,7 +86,7 @@ export default function AddAccountModal() {
       >
         Ajouter un compte
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
         <ModalContent>
           {(onClose) => (
             <Form {...form}>

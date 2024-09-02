@@ -6,7 +6,7 @@ import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import StaffItemList from '@/components/staff-item-list'
 import { Office } from '@/types'
 import { Avatar, Button, Pagination, Spinner } from '@nextui-org/react'
-import { Edit, Filter, PlusCircle } from 'lucide-react'
+import { Edit, Filter } from 'lucide-react'
 import { Suspense } from 'react'
 
 
@@ -42,14 +42,14 @@ const OfficeDetails = async ({
             <main className='flex flex-col gap-5'>
                 <div className='flex flex-wrap gap-4 justify-between items-center'>
                     <div className="flex gap-3 items-center">
-                        <Avatar size='lg' radius='md' fallback={<>{office.office_code}</>
+                        <Avatar size='lg' radius='md' fallback={<>{office?.office_code}</>
                         } />
                         <div>
                             <h1 className="text-lg font-normal">
-                                {office?.name || office.location.name} - {office.office_code}
+                                {office?.name || office?.location?.name} - {office?.office_code}
                             </h1>
                             <span className="font-extralight text-small">
-                                {office.members_count} membre{office.members_count > 1 ? 's' : ''} inscrit ( {office.subscription_rate}% )
+                                {office?.members_count} membre{office?.members_count > 1 ? 's' : ''} inscrit ( {office?.subscription_rate}% )
                             </span>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ const OfficeDetails = async ({
                             <SearchBar />
                         </div>
                         <div className="flex flex-wrap gap-3 items-center">
-                            <AddStaffModal />
+                            <AddStaffModal officeID={officeID} />
                             <Button radius="sm" startContent={
                                 <Filter />
                             }>Filtrer</Button>

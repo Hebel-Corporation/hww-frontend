@@ -16,7 +16,7 @@ const StaffItemList = async ({
                 staffList?.length ?
                     <div className='flex flex-col'>
                         {
-                            staffList.map((staff: User) => (
+                            staffList?.map((staff: User) => (
                                 <StaffItem key={staff.id} staff={staff} />
                             ))
                         }

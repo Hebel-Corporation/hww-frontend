@@ -9,7 +9,7 @@ const StaffItem = ({
 }: { staff: User }) => {
     return (
         <div className="flex items-center justify-between text-sm py-2 border-b duration-500 hover:bg-gray-100 dark:hover:bg-zinc-800">
-            <div className="flex gap-3 items-center">
+            <div className="sm:min-w-48 md:min-w-60 flex gap-3 items-center">
                 <Avatar fallback={
                     <>
                         {
@@ -21,7 +21,7 @@ const StaffItem = ({
                     </>
                 } className='h-[3.1rem] w-[3.1rem]' />
                 <div>
-                    <h1 className="text-base font-medium">
+                    <h1 className="text-base font-medium truncate">
                         {staff?.first_name || '-'} {staff?.last_name || '-'}
                     </h1>
                     <span className="font-extralight text-small">
@@ -31,15 +31,21 @@ const StaffItem = ({
             </div>
             <div className='hidden sm:block'>
                 <h1 className="text-base font-medium">
+                    Genre
+                </h1>
+                <h2 className='font-extralight'>{staff?.gender || '-'}</h2>
+            </div>
+            <div className='hidden md:block'>
+                <h1 className="text-base font-medium">
                     Bureau - code
                 </h1>
                 <h2 className='font-extralight'>{staff?.office?.location?.name} - {staff?.office?.office_code}</h2>
             </div>
-            <div className='hidden sm:block'>
+            <div className='min-w-48 md:max-w-48 lg:min-w-52 lg:max-w-52 hidden sm:block overflow-hidden'>
                 <h1 className="text-base font-medium">
                     Groupes d&apos;utilisateur
                 </h1>
-                <div className='flex gap-2'>
+                <div className='flex flex-wrap gap-2'>
                     {
                         staff.groups.map((group: UserGroup) => (
                             <h2 key={group.id} className='px-2.5 text-small rounded-full font-extralight bg-slate-300 dark:bg-gray-500 '>

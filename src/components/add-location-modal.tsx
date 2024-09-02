@@ -78,7 +78,7 @@ export default function AddLocationModal({
       <Button onPress={onOpen} radius="sm">
         {children}
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
         <ModalContent>
           {(onClose) => (
             <Form {...form}>

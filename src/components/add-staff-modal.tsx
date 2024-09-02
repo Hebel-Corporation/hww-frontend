@@ -1,16 +1,15 @@
 'use client'
 
 import React, { useEffect } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Autocomplete, AutocompleteItem, Select, SelectItem } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { useDisclosure } from '@nextui-org/react';
-import { getLocations } from "@/actions/location-actions";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { toast } from "sonner";
-import { EyeIcon, EyeOffIcon, LocateIcon, MapPinIcon, PlusCircle } from "lucide-react";
-import { createOffice } from "@/actions/office-actions";
+import { EyeIcon, EyeOffIcon, PlusCircle } from "lucide-react";
+import { createOfficeStaff } from "@/actions/office-actions";
 import { getUserApiGroups } from "@/actions/auth-actions";
 import { UserGroup } from "@/types";
 import { toCapitalize } from "@/utils/utils-fonctions";
@@ -23,7 +22,7 @@ const officeFormSchema = z.object({
   last_name: z.string().min(2, {
     message: "Le nom de famille est réquis",
   }),
-  gender: z.string().min(2, {
+  gender: z.string().min(1, {
     message: "Le genre du staff est réquis",
   }),
   username: z.string().min(2, {
@@ -47,14 +46,10 @@ const officeFormSchema = z.object({
   path: ['confirmPassword'],
 });
 
-export default function AddStaffModal() {
+export default function AddStaffModal({officeID}:{officeID: string}) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = React.useState(false)
-  const [locations, setLocations] = React.useState<{
-    value: string,
-    label: string
-  }[]>([]);
   const [userGroups, setUserGroups] = React.useState<UserGroup[]>([]);
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -83,21 +78,21 @@ export default function AddStaffModal() {
     }
 
     setIsSubmitting(true)
-    // toast.promise(
-    //   createStaff(formData), {
-    //   loading: 'Enregistrement en cours...',
-    //   success: (data) => {
-    //     if (data) onOpenChange()
-    //     return `Bureau ajouté avec succès !`;
-    //   },
-    //   error: (err: Error) => {
-    //     return `${err.message}`;
-    //   },
-    //   finally: () => {
-    //     setIsSubmitting(false)
-    //   }
-    // }
-    // )
+    toast.promise(
+      createOfficeStaff(formData, officeID), {
+      loading: 'Enregistrement en cours...',
+      success: (data) => {
+        if (data) onOpenChange()
+        return `Bureau ajouté avec succès !`;
+      },
+      error: (err: Error) => {
+        return `${err.message}`;
+      },
+      finally: () => {
+        setIsSubmitting(false)
+      }
+    }
+    )
   }
 
   useEffect(() => {
@@ -120,7 +115,7 @@ export default function AddStaffModal() {
       >
         Ajouter un utilisateur
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
         <ModalContent>
           {(onClose) => (
             <Form {...form}>
@@ -153,27 +148,27 @@ export default function AddStaffModal() {
                       )}
                     />
                     <FormField
-                        control={form.control}
-                        name="gender"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Select {...field} radius="sm" size="sm"
-                                label="Genre"
-                                className="w-full"
-                              >
-                                <SelectItem key={'F'}>
-                                  Femme
-                                </SelectItem>
-                                <SelectItem key={'M'}>
-                                  Homme
-                                </SelectItem>
-                              </Select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      control={form.control}
+                      name="gender"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Select {...field} radius="sm" size="sm"
+                              label="Genre"
+                              className="w-full"
+                            >
+                              <SelectItem key={'F'}>
+                                Féminin
+                              </SelectItem>
+                              <SelectItem key={'M'}>
+                                Masculin
+                              </SelectItem>
+                            </Select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                     <FormField
                       control={form.control}
                       name="username"
@@ -231,7 +226,7 @@ export default function AddStaffModal() {
                         <FormItem>
                           <FormControl>
 
-                            <Select {...field} isRequired selectionMode="multiple" radius="sm" size="sm"
+                            <Select {...field} selectionMode="multiple" radius="sm" size="sm"
                               label="Groups d'utilisateur"
                               placeholder="Sellectionner un ou plus d'un group"
                             >

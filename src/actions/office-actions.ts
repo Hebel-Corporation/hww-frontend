@@ -23,7 +23,7 @@ export const getOffices = async () => {
 
 export const getOfficeDetails = async ({
     officeId
-} : {officeId: string}) => {
+}: { officeId: string }) => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICES}${officeId}/`)
         const data = result.data
@@ -40,7 +40,7 @@ export const getOfficeDetails = async ({
 
 export const getOfficeStaffs = async ({
     officeId
-} : {officeId: string}) => {
+}: { officeId: string }) => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_STAFFS.replace("officeID", officeId)}`)
         const data = result.data
@@ -84,6 +84,37 @@ export const createOffice = (formData: {
             reject(new Error(errorMessage));
         } finally {
             revalidatePath('/offices/point-of-sale');
+        }
+    });
+};
+
+
+
+export const createOfficeStaff = (formData: {
+    first_name: string,
+    last_name: string,
+    gender: string,
+    username: string,
+    password: string,
+    groups: string[]
+}, officeId: string): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.post(
+                `${ApiEndpoints.OFFICES.CREATE_OFFICE_STAFF.replace("officeID", officeId)}`, {
+                ...formData,
+                user_type: 'staff'
+            });
+            const data = result.data;
+            resolve(data);
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            const match = errorString?.error.match(/string='([^']+)'/);
+            const errorMessage = match ? match[1] : `${errorString?.error || "Erreur lors de la création d'un staff."}`;
+            reject(new Error(errorMessage));
+        } finally {
+            revalidatePath(`/offices/point-of-sale/${officeId}`);
         }
     });
 };
