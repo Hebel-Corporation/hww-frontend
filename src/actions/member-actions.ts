@@ -2,41 +2,77 @@
 
 import { ApiEndpoints } from "@/lib/api-endpoints";
 import serverApi from "@/lib/axios-server-instance";
-import { isValid } from "zod";
+import { revalidatePath } from "next/cache";
 
 
 
 export const uplinesVerificationIDs = async ({
-    parrainID,
-    sponsorID
-}: { parrainID: string, sponsorID: string }) => {
+    parrainId,
+    sponsorId
+}: { parrainId: string, sponsorId: string }) => {
     try {
-        // const result = await serverApi.post(`${ApiEndpoints.MEMBERS.UPLINE_VERIFICATION}`, {
-        //     parrain_id: parrainID,
-        //     sponsor_id: sponsorID
-        // })
-        // const data = result.data
-        const data = {
-            parrain: {
-                isValid: false
-            },
-            sponsor: {
-                isValid: false
-            }
+        const result = await serverApi.post(`${ApiEndpoints.MEMBERS.CHECK_UPLINES_VALIDITY}`, {
+            referral_account: parrainId,
+            sponsor_account: sponsorId
+        })
+        const data = result.data
+
+        if (!data?.is_valid) {
+            return {
+                isValid: data?.is_valid,
+                path: data?.error_type?.split('_')?.map((word: string, index: number) =>
+                    index === 0
+                        ? word.toLowerCase()
+                        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                ).join(''),
+                message: data?.message
+            };
         }
 
-        if (!data?.parrain?.isValid) {
-            return { isValid: false, path: 'parrainID', message: "Le parrain ayant cet ID n'existe pas." };
-        }
-
-        if (!data?.sponsor?.isValid) {
-            return { isValid: false, path: 'sponsorID', message: "Ce sponsor a déjà atteint la limite des downslines direct." };
-        }
-
-        return { isValid: true };
+        return { isValid: data?.is_valid };
 
     } catch (e: any) {
         console.error(e?.message)
         return e?.message;
     }
 }
+
+
+
+export const memberRegister = (formData: {
+    uplines: {
+        referral_account: string,
+        sponsor_account: string
+    },
+    member: {
+        first_name: string,
+        last_name: string,
+        gender: string,
+        username: string,
+        password: string,
+        groups: string[]
+    }
+}, officeId: string): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.post(
+                `${ApiEndpoints.MEMBERS.MEMBER_REGISTER.replace("officeID", officeId)}`, {
+                ...formData,
+                member: {
+                    ...formData.member,
+                    user_type: 'member'
+                }
+            });
+            const data = result.data;
+            resolve(data);
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            const match = errorString?.error.match(/string='([^']+)'/);
+            const errorMessage = match ? match[1] : `${errorString?.error || "Erreur lors de la création d'un membre."}`;
+            reject(new Error(errorMessage));
+        } finally {
+            revalidatePath(`/offices/members/${officeId}`);
+        }
+    });
+};

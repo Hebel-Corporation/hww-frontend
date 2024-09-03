@@ -18,6 +18,7 @@ export const ApiEndpoints = {
         },
 
         MEMBERS: {
-            UPLINE_VERIFICATION: ''
+            CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',
+            MEMBER_REGISTER: ''
         }
 }

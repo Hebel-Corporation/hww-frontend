@@ -14,10 +14,10 @@ import { CalendarDate, DateValue, now, parseAbsoluteToLocal, parseDate } from "@
 
 
 const memberFormSchema = z.object({
-  parrainID: z.string().min(2, {
+  parrainId: z.string().min(2, {
     message: "Veillez entrer l'ID du parrain.",
   }),
-  sponsorID: z.string().min(2, {
+  sponsorId: z.string().min(2, {
     message: "Veillez entrer l'ID du sponsor.",
   }),
   first_name: z.string().min(2, {
@@ -37,24 +37,22 @@ const memberFormSchema = z.object({
   phone: z.string().min(2, {
     message: "Entrer le numéro de téléphone du membre.",
   }),
-})
-
-// .refine(async (data) => {
-//   const { isValid, path, message } = await uplinesVerificationIDs({
-//     parrainID: data.parrainID,
-//     sponsorID: data.sponsorID
-//   })
-//   if (!isValid) {
-//     throw new z.ZodError([
-//       {
-//         path: [path],
-//         message: message,
-//         code: z.ZodIssueCode.custom
-//       }
-//     ]);
-//   }
-//   return isValid;
-// });
+}).refine(async (data) => {
+  const { isValid, path, message } = await uplinesVerificationIDs({
+    parrainId: data.parrainId,
+    sponsorId: data.sponsorId
+  })
+  if (!isValid) {
+    throw new z.ZodError([
+      {
+        path: [path],
+        message: message,
+        code: z.ZodIssueCode.custom
+      }
+    ]);
+  }
+  return isValid;
+});
 
 
 export default function AddMemberModal({
@@ -71,8 +69,8 @@ export default function AddMemberModal({
   const form = useForm<z.infer<typeof memberFormSchema>>({
     resolver: zodResolver(memberFormSchema),
     defaultValues: {
-      parrainID: "",
-      sponsorID: "",
+      parrainId: "",
+      sponsorId: "",
       first_name: "",
       last_name: "",
       gender: "",
@@ -86,7 +84,7 @@ export default function AddMemberModal({
     form.reset()
     setDate(undefined)
     onOpenChange()
-    // setIsSubmitting(true)
+    setIsSubmitting(true)
     // toast.promise(
     //   CreateLocation({name: values.name, countryID: values.country}), {
     //     loading: 'Enregistrement en cours...',
@@ -123,11 +121,11 @@ export default function AddMemberModal({
                       <h1 className="text-sm font-light">Infos sur les uplines</h1>
                       <FormField
                         control={form.control}
-                        name="parrainID"
+                        name="parrainId"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} isRequired type="text" radius="sm" size="sm" label="ID du parrain" />
+                              <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="ID du parrain" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -136,11 +134,11 @@ export default function AddMemberModal({
 
                       <FormField
                         control={form.control}
-                        name="sponsorID"
+                        name="sponsorId"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} isRequired type="text" radius="sm" size="sm" label="ID du sponsor" />
+                              <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="ID du sponsor" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -156,7 +154,7 @@ export default function AddMemberModal({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} isRequired type="text" radius="sm" size="sm" label="Prénom" />
+                              <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Prénom" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -168,7 +166,7 @@ export default function AddMemberModal({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} isRequired type="text" radius="sm" size="sm" label="Nom de famille" />
+                              <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Nom de famille" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -180,7 +178,7 @@ export default function AddMemberModal({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Select {...field} radius="sm" size="sm"
+                              <Select {...field} isDisabled={isSubmitting} radius="sm" size="sm"
                                 label="Genre"
                                 className="w-full"
                               >
@@ -202,7 +200,7 @@ export default function AddMemberModal({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <DatePicker {...field} isRequired showMonthAndYearPickers size="sm"
+                              <DatePicker {...field} isRequired isDisabled={isSubmitting} showMonthAndYearPickers size="sm"
                                 granularity="day"
                                 value={date}
                                 onChange={(value) => {
@@ -223,7 +221,7 @@ export default function AddMemberModal({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} isRequired type="text" radius="sm" size="sm" label="Numéro de téléphone" />
+                              <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Numéro de téléphone" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
