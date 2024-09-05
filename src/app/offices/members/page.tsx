@@ -39,12 +39,7 @@ export default function MembersPage() {
             <SearchBar />
           </div>
           <div className="flex gap-3 items-center">
-            <AddMemberModal>
-              <span className="flex items-center gap-3">
-                <PlusCircle />
-                Ajouter un membre
-              </span>
-            </AddMemberModal>
+            <AddMemberModal />
             <Button radius="sm" startContent={
               <Filter />
             }>Filtrer</Button>

@@ -6,6 +6,21 @@ import { revalidatePath } from "next/cache";
 
 
 
+export const isFirstNodeCheck = async () => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.MEMBERS.CHECK_FIRST_NODE}`)
+        const data = result.data
+
+        return data?.is_first_node;
+
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
 export const uplinesVerificationIDs = async ({
     parrainId,
     sponsorId
@@ -48,9 +63,8 @@ export const memberRegister = (formData: {
         first_name: string,
         last_name: string,
         gender: string,
-        username: string,
-        password: string,
-        groups: string[]
+        birthday: Date,
+        phone: string
     }
 }, officeId: string): Promise<any> => {
     return new Promise(async (resolve, reject) => {
