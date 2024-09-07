@@ -70,7 +70,7 @@ export const memberRegister = (formData: {
     return new Promise(async (resolve, reject) => {
         try {
             const result: any = await serverApi.post(
-                `${ApiEndpoints.MEMBERS.MEMBER_REGISTER.replace("officeID", officeId)}`, {
+                `${ApiEndpoints.MEMBERS.MEMBER_REGISTER.replace("{{officeID}}", officeId)}`, {
                 ...formData,
                 member: {
                     ...formData.member,

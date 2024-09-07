@@ -101,11 +101,9 @@ export default function AddMemberModal() {
 
     console.log("DATA =====>>", realValues)
 
-    form.reset()
-    setDate(undefined)
-    onOpenChange()
+
     toast.promise(
-      memberRegister({ 
+      memberRegister({
         uplines: {
           referral_account: realValues?.parrainId || '',
           sponsor_account: realValues?.sponsorId || ''
@@ -122,6 +120,7 @@ export default function AddMemberModal() {
       success: () => {
         onOpenChange()
         form.reset()
+        setDate(undefined)
         return `Emplacement ajouté avec succès !`;
       },
       error: () => {

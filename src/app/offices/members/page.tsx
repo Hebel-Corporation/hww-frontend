@@ -48,14 +48,6 @@ export default function MembersPage() {
 
         <ScrollShadow className="flex flex-col h-[calc(100vh-37vh)]">
           <MemberItem />
-          <MemberItem />
-          <MemberItem />
-          <MemberItem />
-          <MemberItem />
-          <MemberItem />
-          <MemberItem />
-          <MemberItem />
-          <MemberItem />
         </ScrollShadow>
 
         <Pagination showControls total={5} />

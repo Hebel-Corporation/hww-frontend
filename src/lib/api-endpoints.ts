@@ -19,7 +19,7 @@ export const ApiEndpoints = {
 
         MEMBERS: {
             CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',
-            MEMBER_REGISTER: '',
-            CHECK_FIRST_NODE: ''
+            MEMBER_REGISTER: '/members/offices/{{officeID}}/member-registration/',
+            CHECK_FIRST_NODE: '/members/accounts/is-first-node/'
         }
 }
