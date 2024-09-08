@@ -1,6 +1,7 @@
 
 import AddMemberModal from "@/components/add-member-modal";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
+import PageTitle from "@/components/common/page-title";
 import SearchBar from "@/components/common/search-bar";
 import CustomBreadcrumb from "@/components/custom-breadcrumb";
 import MemberItem from "@/components/member-item";
@@ -26,10 +27,11 @@ export default function MembersPage() {
     }>
 
       <div className="relative flex flex-col flex-1 gap-[19px]">
-        <div>
-          <h1 className="text-xl">Un titre</h1>
-          <p className="font-extralight">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-        </div>
+
+        <PageTitle
+          title='Enregistrement des membres'
+          description='Enregistrez les informations des membres de votre société.'
+        />
 
         {/* 
           * Search section

@@ -80,10 +80,11 @@ export default function AddStaffModal({officeID}:{officeID: string}) {
     setIsSubmitting(true)
     toast.promise(
       createOfficeStaff(formData, officeID), {
-      loading: 'Enregistrement en cours...',
-      success: (data) => {
-        if (data) onOpenChange()
-        return `Bureau ajouté avec succès !`;
+      loading: 'En cours de creation...',
+      success: () => {
+        onOpenChange()
+        form.reset()
+        return `Le staff a été ajouté avec succès !`;
       },
       error: (err: Error) => {
         return `${err.message}`;

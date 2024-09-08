@@ -37,7 +37,7 @@ export async function userLogin({
 
         const accessTokenValue = getTokenValue(tokens.access)
 
-        if (accessTokenValue.user.user_type === 'staff') {
+        if (accessTokenValue.user.user_type === 'staff' || accessTokenValue.user.user_type === 'admin') {
             return { redirectUrl: '/offices/dashboard', IsloggedIn: true };
         } else if (accessTokenValue.user.user_type === 'member') {
             return { redirectUrl: '/members/dashboard', IsloggedIn: true };

@@ -107,14 +107,28 @@ export const createOfficeStaff = (formData: {
             });
             const data = result.data;
             resolve(data);
+            
+            revalidatePath(`/offices/point-of-sale/${officeId}`);
         } catch (e: any) {
             const errorString = e?.response?.data;
-            console.error(errorString);
-            const match = errorString?.error.match(/string='([^']+)'/);
-            const errorMessage = match ? match[1] : `${errorString?.error || "Erreur lors de la création d'un staff."}`;
-            reject(new Error(errorMessage));
-        } finally {
-            revalidatePath(`/offices/point-of-sale/${officeId}`);
+            console.error("ERROR : ", errorString);
+            let message = ''
+            
+            if (errorString?.username) {
+                message = errorString.username[0];
+            } else if (errorString?.error) {
+                message = errorString.error;
+            } else if (errorString?.error?.match(/string='([^']+)'/)) {
+                message = errorString.error.match(/string='([^']+)'/)[1];
+            } else {
+                message = "Erreur lors de la création d'un staff.";
+            }
+
+            if (typeof message !== 'string') {
+                message = "Erreur inconnue.";
+            }
+
+            reject(new Error(message));
         }
     });
 };

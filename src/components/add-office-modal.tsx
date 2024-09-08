@@ -94,6 +94,7 @@ export default function AddOfficeModal({
       loading: 'Enregistrement en cours...',
       success: (data) => {
         if (data) onOpenChange()
+        form.reset()
         return `Bureau ajouté avec succès !`;
       },
       error: (err: Error) => {
