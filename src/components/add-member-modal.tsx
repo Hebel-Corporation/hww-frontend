@@ -121,10 +121,10 @@ export default function AddMemberModal() {
         onOpenChange()
         form.reset()
         setDate(undefined)
-        return `Emplacement ajouté avec succès !`;
+        return `Le membre a été ajouté avec succès !`;
       },
-      error: () => {
-        return `Erreur d'enregistrement`;
+      error: (err: Error) => {
+        return `${err?.message}`;
       },
       finally() {
         setIsSubmitting(false)

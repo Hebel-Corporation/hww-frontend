@@ -1,3 +1,4 @@
+import { hasOfficeAuthorization } from "@/utils/client-utils";
 import {
   LayoutGrid,
   MapPinnedIcon,
@@ -12,12 +13,14 @@ type Submenu = {
   href: string;
   label: string;
   active: boolean;
+  authorized?: boolean;
 };
 
 type Menu = {
   href: string;
   label: string;
   active: boolean;
+  authorized?: boolean;
   icon: any;
   submenus: Submenu[];
 };
@@ -36,6 +39,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/dashboard",
           label: "Accueil",
           active: pathname.includes("/offices/dashboard"),
+          authorized: true,
           icon: LayoutGrid,
           submenus: []
         }
@@ -48,6 +52,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/members",
           label: "Membres",
           active: pathname.includes("/offices/members"),
+          authorized: hasOfficeAuthorization(['head_office', 'sub_office']),
           icon: UsersRound,
           submenus: []
         },
@@ -55,6 +60,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/point-of-sale",
           label: "Points de vente / Bureaux",
           active: pathname.includes("/offices/point-of-sale"),
+          authorized: hasOfficeAuthorization(['head_office']),
           icon: StoreIcon,
           submenus: []
         },
@@ -62,6 +68,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/locations",
           label: "Emplacements",
           active: pathname.includes("/offices/locations"),
+          authorized: hasOfficeAuthorization(['head_office']),
           icon: MapPinnedIcon,
           submenus: []
         },
@@ -69,6 +76,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/rewards",
           label: "Rewards",
           active: pathname.includes("/offices/rewards"),
+          authorized: hasOfficeAuthorization(['head_office', 'sub_office']),
           icon: Tag,
           submenus: []
         }
@@ -81,6 +89,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/account",
           label: "Mon compte",
           active: pathname.includes("/offices/account"),
+          authorized: true,
           icon: User2Icon,
           submenus: []
         },
@@ -88,6 +97,7 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/settings",
           label: "Paramètres",
           active: pathname.includes("/offices/settings"),
+          authorized: true,
           icon: Settings,
           submenus: []
         }

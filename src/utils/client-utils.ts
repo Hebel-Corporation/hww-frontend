@@ -1,4 +1,5 @@
 import clientCookie from "@/lib/client-cookie";
+import { Office, UserGroup } from "@/types";
 import { SignJWT, jwtVerify } from "jose";
 
 
@@ -29,7 +30,7 @@ export function getClientSession() {
 
     try {
         const decodedSession = jwt.decode(session, { complete: true });
-        // const sessionParsed = await decrypt(session)
+        
         return decodedSession?.payload
     } catch (error) {
         return null
@@ -66,13 +67,40 @@ export const getUserGroups = (sessionParams?: any) => {
 }
 
 
-export function hasAuthorization(arr: string[], session?: any) {
+export function hasGroupAuthorization(arr: string[], groups?: UserGroup[]) {
 
     if (!arr.length) return false
 
     try {
-        const subarr = getUserGroups(session)
+
+        let group_instances: UserGroup[]
+        if (groups){
+            group_instances = groups
+        }else {
+            group_instances = getClientSession()?.user?.groups
+        }
+
+        const subarr = group_instances.map((g: UserGroup) => { return g?.name })
         return subarr.some((group: string) => arr.includes(group));
+    } catch (e) {
+        return false
+    }
+
+}
+
+
+export function hasOfficeAuthorization(arr: string[], office?: Office) {
+
+    if (!arr.length) return false
+
+    try {
+        let office_instance: Office
+        if (office){
+            office_instance = office
+        }else {
+            office_instance = getClientSession()?.user?.office
+        }
+        return arr.some((type: string) => type === office_instance?.office_type);
     } catch (e) {
         return false
     }

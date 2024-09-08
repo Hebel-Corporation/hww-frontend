@@ -6,6 +6,20 @@ import { revalidatePath } from "next/cache";
 
 
 
+export const getMembers = async () => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBERS}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
 export const isFirstNodeCheck = async () => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.MEMBERS.CHECK_FIRST_NODE}`)
@@ -79,14 +93,26 @@ export const memberRegister = (formData: {
             });
             const data = result.data;
             resolve(data);
+
+            revalidatePath(`/offices/members/${officeId}`);
         } catch (e: any) {
             const errorString = e?.response?.data;
             console.error(errorString);
-            const match = errorString?.error.match(/string='([^']+)'/);
-            const errorMessage = match ? match[1] : `${errorString?.error || "Erreur lors de la création d'un membre."}`;
-            reject(new Error(errorMessage));
-        } finally {
-            revalidatePath(`/offices/members/${officeId}`);
+            let message = ''
+            
+            if (errorString?.error) {
+                message = errorString.error;
+            } else if (errorString?.error?.match(/string='([^']+)'/)) {
+                message = errorString.error.match(/string='([^']+)'/)[1];
+            } else {
+                message = "Erreur lors de la création du membre.";
+            }
+
+            if (typeof message !== 'string') {
+                message = "Erreur inconnue.";
+            }
+
+            reject(new Error(message));
         }
     });
 };

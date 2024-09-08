@@ -8,7 +8,8 @@ export type User = {
     groups: UserGroup[],
     company_id: string,
     user_type: string,
-    office: Office
+    office: Office,
+    downline_count: number
 }
 
 export type UserGroup = {

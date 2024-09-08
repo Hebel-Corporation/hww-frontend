@@ -75,8 +75,8 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuItem className="hover:cursor-pointer"
           onClick={async () => {
-            userLogout()
-            router.refresh()
+            await userLogout()
+            router.push('/login')
           }}>
           <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
           Se déconnecter

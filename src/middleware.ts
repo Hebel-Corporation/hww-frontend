@@ -50,7 +50,7 @@ export const config = {
         '/offices/dashboard',
         '/offices/locations',
         '/offices/account',
-        '/offices/point-of-sale:path*',
+        '/offices/point-of-sale/:path*',
         '/offices/rewards',
         '/offices/members/:path*',
         '/offices/settings',

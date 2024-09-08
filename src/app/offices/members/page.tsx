@@ -1,13 +1,14 @@
 
+import { getMembers } from "@/actions/member-actions";
 import AddMemberModal from "@/components/add-member-modal";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
+import EmptyData from "@/components/common/empty-data";
 import PageTitle from "@/components/common/page-title";
 import SearchBar from "@/components/common/search-bar";
 import CustomBreadcrumb from "@/components/custom-breadcrumb";
 import MemberItem from "@/components/member-item";
-import { Input } from "@/components/ui/input";
 import { Button, Pagination, ScrollShadow } from "@nextui-org/react";
-import { Filter, PlusCircle, Search } from "lucide-react";
+import { Filter } from "lucide-react";
 
 const breadcrumbItems = [
   {
@@ -20,7 +21,10 @@ const breadcrumbItems = [
   },
 ]
 
-export default function MembersPage() {
+export default async function MembersPage() {
+
+  const members = await getMembers()
+
   return (
     <ContentLayout breadcrumb={
       <CustomBreadcrumb breadcrumbItems={breadcrumbItems} />
@@ -48,8 +52,19 @@ export default function MembersPage() {
           </div>
         </div>
 
-        <ScrollShadow className="flex flex-col h-[calc(100vh-37vh)]">
-          <MemberItem />
+        <ScrollShadow className="h-[calc(100vh-37vh)]">
+          {
+            members?.length ?
+              <div className='flex flex-col'>
+                {
+                  members?.map((member: any) => (
+                    <MemberItem member={member} />
+                  ))
+                }
+              </div>
+              :
+              <EmptyData description='Aucun membre enregistrer pour le moment.' />
+          }
         </ScrollShadow>
 
         <Pagination showControls total={5} />
