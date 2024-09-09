@@ -79,7 +79,7 @@ export default function AddAccountModal() {
 
   return (
     <>
-      <Button onPress={onOpen} radius="sm"
+      <Button onPress={onOpen} radius="sm" color="primary"
         startContent={
           <PlusCircle />
         }

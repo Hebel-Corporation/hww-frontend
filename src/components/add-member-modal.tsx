@@ -1,9 +1,9 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectItem, DatePicker, Spinner } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectItem, DatePicker, Spinner, Divider } from "@nextui-org/react";
 import { useDisclosure } from '@nextui-org/react';
-import { ChevronRight, PlusCircle, TriangleAlert } from "lucide-react";
+import { ChevronRight, CircleCheck, PlusCircle, TriangleAlert } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { isFirstNodeCheck, memberRegister, uplinesVerificationIDs } from "@/actions/member-actions";
 import { CalendarDate, DateValue, now, parseAbsoluteToLocal, parseDate } from "@internationalized/date";
 import { getClientSession } from "@/utils/client-utils";
+import PackageItem from "./package-item";
 
 
 const memberFormSchema = z.object({
@@ -148,142 +149,150 @@ export default function AddMemberModal() {
 
   return (
     <>
-      <Button onPress={onOpen} radius="sm" startContent={
+      <Button onPress={onOpen} radius="sm" color="primary" startContent={
         <PlusCircle />
       } >
         Ajouter un membre
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} size="3xl" scrollBehavior="inside">
         <ModalContent>
           {(onClose) => (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <ModalHeader className="flex flex-col gap-1">Ajout du membre</ModalHeader>
                 <ModalBody className="transition duration-400 ease-in-out">
-                  <div className="flex flex-col gap-5">
-                    {
-                      !isFirstNode ? (
-                        <div className="flex flex-col gap-2.5">
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <div className="md:w-[55%] sm:w-[55%]">
+                      <PackageItem />
+                    </div>
 
-                          <h1 className="text-sm font-light">Infos sur les uplines</h1>
-                          <FormField
-                            control={form.control}
-                            name="parrainId"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="ID du parrain" />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                    <Divider orientation="vertical" />
 
-                          <FormField
-                            control={form.control}
-                            name="sponsorId"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="ID du sponsor" />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                    <div className="flex flex-col gap-5">
+                      {
+                        !isFirstNode ? (
+                          <div className="flex flex-col gap-2.5">
 
-                        </div>
-                      ) : checkingFirstNode ?
-                        <div className="flex justify-center items-center">
-                          <Spinner />
-                        </div>
-                        :
-                        <div className="w-full flex gap-2 p-2.5 rounded-sm bg-yellow-50 text-yellow-500">
-                          <TriangleAlert />
-                          <span>Vous êtes au point d'enregistrer votre premier membre de la société !</span>
-                        </div>
-                    }
-                    <div className="flex flex-col gap-2.5">
-                      <h1 className="text-sm font-light">Infos sur le membre</h1>
-                      <FormField
-                        control={form.control}
-                        name="first_name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Prénom" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="last_name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Nom de famille" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="gender"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Select {...field} isDisabled={isSubmitting} radius="sm" size="sm"
-                                label="Genre"
-                                className="w-full"
-                              >
-                                <SelectItem key={'F'}>
-                                  Femme
-                                </SelectItem>
-                                <SelectItem key={'M'}>
-                                  Homme
-                                </SelectItem>
-                              </Select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="birthday"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <DatePicker {...field} isRequired isDisabled={isSubmitting} showMonthAndYearPickers size="sm"
-                                granularity="day"
-                                value={date}
-                                onChange={(value) => {
-                                  setDate(value)
-                                  form.setValue('birthday', new Date(value.toString()))
-                                }}
-                                label="Date de naissance"
-                                className="w-full"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Numéro de téléphone" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                            <h1 className="text-sm font-light">Infos sur les uplines</h1>
+                            <FormField
+                              control={form.control}
+                              name="parrainId"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="ID du parrain" />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={form.control}
+                              name="sponsorId"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormControl>
+                                    <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="ID du sponsor" />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                          </div>
+                        ) : checkingFirstNode ?
+                          <div className="flex justify-center items-center">
+                            <Spinner />
+                          </div>
+                          :
+                          <div className="w-full flex gap-2 p-2.5 rounded-sm bg-yellow-50 text-yellow-500">
+                            <TriangleAlert />
+                            <span>Vous êtes au point d'enregistrer votre premier membre de la société !</span>
+                          </div>
+                      }
+                      <div className="flex flex-col gap-2.5">
+                        <h1 className="text-sm font-light">Infos sur le membre</h1>
+                        <FormField
+                          control={form.control}
+                          name="first_name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Prénom" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="last_name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Nom de famille" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="gender"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Select {...field} isDisabled={isSubmitting} radius="sm" size="sm"
+                                  label="Genre"
+                                  className="w-full"
+                                >
+                                  <SelectItem key={'F'}>
+                                    Femme
+                                  </SelectItem>
+                                  <SelectItem key={'M'}>
+                                    Homme
+                                  </SelectItem>
+                                </Select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="birthday"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <DatePicker {...field} isRequired isDisabled={isSubmitting} showMonthAndYearPickers size="sm"
+                                  granularity="day"
+                                  value={date}
+                                  onChange={(value) => {
+                                    setDate(value)
+                                    form.setValue('birthday', new Date(value.toString()))
+                                  }}
+                                  label="Date de naissance"
+                                  className="w-full"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Numéro de téléphone" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                 </ModalBody>

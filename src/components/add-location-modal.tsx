@@ -75,7 +75,7 @@ export default function AddLocationModal({
 
   return (
     <>
-      <Button onPress={onOpen} radius="sm">
+      <Button onPress={onOpen} radius="sm" color="primary">
         {children}
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>

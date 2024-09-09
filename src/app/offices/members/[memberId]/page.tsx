@@ -81,7 +81,7 @@ const MemberDetails = ({
                             }>Filtrer</Button>
                         </div>
                     </div>
-                    <ScrollShadow className="flex flex-col h-[calc(100vh-62vh)]">
+                    <ScrollShadow className="flex flex-col flex-1 h-[calc(100vh-62vh)]">
                         <MemberItem />
                         <MemberItem />
                         <MemberItem />

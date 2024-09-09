@@ -72,14 +72,16 @@ export default function AddStaffModal({officeID}:{officeID: string}) {
 
   async function onSubmit(values: z.infer<typeof officeFormSchema>) {
 
-    const formData = {
-      ...values,
-      groups: values.groups.split(',')
-    }
-
     setIsSubmitting(true)
     toast.promise(
-      createOfficeStaff(formData, officeID), {
+      createOfficeStaff({
+        first_name: values.first_name,
+        last_name: values.last_name,
+        gender: values.gender,
+        groups: values.groups.split(','),
+        password: values.password,
+        username: values.username
+      }, officeID), {
       loading: 'En cours de creation...',
       success: () => {
         onOpenChange()
@@ -109,7 +111,7 @@ export default function AddStaffModal({officeID}:{officeID: string}) {
 
   return (
     <>
-      <Button onPress={onOpen} radius="sm"
+      <Button onPress={onOpen} radius="sm" color="primary"
         startContent={
           <PlusCircle />
         }

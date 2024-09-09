@@ -6,7 +6,7 @@ import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import StaffItemList from '@/components/staff-item-list'
 import { Office } from '@/types'
 import { Avatar, Button, Pagination, Spinner } from '@nextui-org/react'
-import { Edit, Filter } from 'lucide-react'
+import { Edit, Filter, View } from 'lucide-react'
 import { Suspense } from 'react'
 
 
@@ -39,7 +39,7 @@ const OfficeDetails = async ({
         <ContentLayout breadcrumb={
             <CustomBreadcrumb breadcrumbItems={breadcrumbItems} />
         }>
-            <main className='flex flex-col gap-5'>
+            <main className='flex flex-col flex-1 gap-5'>
                 <div className='flex flex-wrap gap-4 justify-between items-center'>
                     <div className="flex gap-3 items-center">
                         <Avatar size='lg' radius='md' fallback={<>{office?.office_code}</>
@@ -53,7 +53,13 @@ const OfficeDetails = async ({
                             </span>
                         </div>
                     </div>
-                    <div>
+                    <div className='flex gap-4 items-center'>
+                        <Button radius="sm" variant='light' color='primary' startContent={
+                            <View size={20} />
+                        }
+                        >
+                            2 Code d'inscriptions
+                        </Button>
                         <Button radius="sm" variant='flat' color='warning' startContent={
                             <Edit size={20} />
                         }
@@ -63,7 +69,7 @@ const OfficeDetails = async ({
                     </div>
                 </div>
 
-                <div className='flex flex-col gap-3'>
+                <div className='flex flex-col flex-1 gap-3'>
                     <h1>Utilisateurs</h1>
                     <div className="flex gap-3 flex-wrap justify-between items-center">
                         <div className="sm:w-2/4 w-full flex items-center">
