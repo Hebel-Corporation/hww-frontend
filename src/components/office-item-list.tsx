@@ -9,7 +9,7 @@ const OfficeItemList = async ({
 }: { offices: Office[] }) => {
 
     return (
-        <ScrollShadow className="flex flex-col h-[calc(100vh-37vh)]">
+        <ScrollShadow className="flex flex-col flex-1 h-[calc(100vh-37vh)]">
             {
                 offices?.length ?
                     <div className='flex flex-wrap gap-5'>

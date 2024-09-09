@@ -61,7 +61,6 @@ const LocationPage = async () => {
 
         <Pagination showControls total={5} />
 
-
       </main>
 
     </ContentLayout>

@@ -60,8 +60,8 @@ const LoginForm = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full sm:max-w-sm flex flex-col gap-12 sm:border px-5 py-8 rounded-md'>
-                <h1 className='text-xl font-semibold text-center'>Connexion</h1>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full sm:max-w-sm flex flex-col gap-12 sm:border p-8 rounded-md'>
+                <h1 className='text-xl lg:text-2xl font-semibold text-center'>Connexion</h1>
                 <div className='w-full flex flex-col gap-6'>
 
                     <FormField

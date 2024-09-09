@@ -7,7 +7,7 @@ export const ApiEndpoints = {
         },
 
         LOCATION: {
-            GET_COUNTRIES: '/members/coutries/',
+            GET_COUNTRIES: '/members/countries/',
             GET_LOCATIONS: '/members/locations/',
         },
 
@@ -18,7 +18,7 @@ export const ApiEndpoints = {
         },
 
         MEMBERS: {
-            GET_MEMBERS: '/members/all/',
+            GET_MEMBERS: '/members/users/members/',
             CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',
             MEMBER_REGISTER: '/members/offices/{{officeID}}/member-registration/',
             CHECK_FIRST_NODE: '/members/accounts/is-first-node/'
