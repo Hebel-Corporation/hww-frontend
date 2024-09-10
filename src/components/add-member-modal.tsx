@@ -1,18 +1,17 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectItem, DatePicker, Spinner, Divider } from "@nextui-org/react";
-import { useDisclosure } from '@nextui-org/react';
-import { ChevronRight, CircleCheck, PlusCircle, TriangleAlert } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
-import { toast } from "sonner";
-import { isFirstNodeCheck, memberRegister, uplinesVerificationIDs } from "@/actions/member-actions";
-import { CalendarDate, DateValue, now, parseAbsoluteToLocal, parseDate } from "@internationalized/date";
+import { memberRegister, uplinesVerificationIDs } from "@/actions/member-actions";
 import { getClientSession } from "@/utils/client-utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarDate } from "@internationalized/date";
+import { Button, DatePicker, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import { PlusCircle, TriangleAlert } from "lucide-react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import PackageItem from "./package-item";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 
 
 const memberFormSchema = z.object({
@@ -45,6 +44,8 @@ const refineMemberFormSchema = memberFormSchema.refine(async (data) => {
     sponsorId: data.sponsorId
   })
 
+  console.log("VERIFICATIONS ======", isValid, path, message)
+
   if (!isValid) {
     throw new z.ZodError([
       {
@@ -58,12 +59,10 @@ const refineMemberFormSchema = memberFormSchema.refine(async (data) => {
 });
 
 
-export default function AddMemberModal() {
+export default function AddMemberModal({ isFirstNode }: { isFirstNode: boolean }) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = React.useState(false)
-  const [isFirstNode, setIsFirstNode] = React.useState(false)
-  const [checkingFirstNode, setCheckingFirstNode] = React.useState(true)
   const [date, setDate] = useState<CalendarDate | undefined>(undefined);
 
 
@@ -98,8 +97,7 @@ export default function AddMemberModal() {
       realValues = validationResult.data
     }
 
-    console.log("DATA =====>>", realValues)
-
+    console.log("DATA ======", realValues)
 
     toast.promise(
       memberRegister({
@@ -112,7 +110,7 @@ export default function AddMemberModal() {
           last_name: realValues.last_name,
           gender: realValues.gender,
           birthday: realValues.birthday,
-          phone: realValues.phone
+          phone: realValues?.phone || ''
         }
       }, session?.user?.office?.id), {
       loading: 'Enregistrement en cours...',
@@ -131,19 +129,6 @@ export default function AddMemberModal() {
     }
     )
   }
-
-
-  useEffect(() => {
-    async function getIsFirstNode() {
-      const data = await isFirstNodeCheck()
-      setIsFirstNode(data)
-      setCheckingFirstNode(false)
-    }
-
-    getIsFirstNode()
-
-  }, [])
-
 
   return (
     <>
@@ -165,10 +150,15 @@ export default function AddMemberModal() {
                     </div>
 
                     <Divider orientation="vertical" />
-
+                    
                     <div className="flex flex-col flex-1 gap-5">
                       {
                         !isFirstNode ? (
+                          <div className="w-full flex gap-2 p-2.5 rounded-sm bg-yellow-50 text-yellow-500">
+                            <TriangleAlert />
+                            <span>Vous êtes au point d'enregistrer votre premier membre de la société !</span>
+                          </div>
+                        ) :
                           <div className="flex flex-col gap-2.5">
 
                             <h1 className="text-sm font-light">Infos sur les uplines</h1>
@@ -198,15 +188,6 @@ export default function AddMemberModal() {
                               )}
                             />
 
-                          </div>
-                        ) : checkingFirstNode ?
-                          <div className="flex justify-center items-center">
-                            <Spinner />
-                          </div>
-                          :
-                          <div className="w-full flex gap-2 p-2.5 rounded-sm bg-yellow-50 text-yellow-500">
-                            <TriangleAlert />
-                            <span>Vous êtes au point d'enregistrer votre premier membre de la société !</span>
                           </div>
                       }
                       <div className="flex flex-col gap-2.5">
@@ -284,7 +265,7 @@ export default function AddMemberModal() {
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
-                                <Input {...field} isRequired isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Numéro de téléphone" />
+                                <Input {...field} isDisabled={isSubmitting} type="text" radius="sm" size="sm" label="Numéro de téléphone" />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
