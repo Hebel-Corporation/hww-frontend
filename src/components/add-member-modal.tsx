@@ -44,8 +44,6 @@ const refineMemberFormSchema = memberFormSchema.refine(async (data) => {
     sponsorId: data.sponsorId
   })
 
-  console.log("VERIFICATIONS ======", isValid, path, message)
-
   if (!isValid) {
     throw new z.ZodError([
       {
@@ -97,8 +95,6 @@ export default function AddMemberModal({ isFirstNode }: { isFirstNode: boolean }
       realValues = validationResult.data
     }
 
-    console.log("DATA ======", realValues)
-
     toast.promise(
       memberRegister({
         uplines: {
@@ -137,7 +133,7 @@ export default function AddMemberModal({ isFirstNode }: { isFirstNode: boolean }
       } >
         Ajouter un membre
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} size="3xl" scrollBehavior="inside">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} size="3xl">
         <ModalContent>
           {(onClose) => (
             <Form {...form}>
@@ -153,7 +149,7 @@ export default function AddMemberModal({ isFirstNode }: { isFirstNode: boolean }
                     
                     <div className="flex flex-col flex-1 gap-5">
                       {
-                        !isFirstNode ? (
+                        isFirstNode ? (
                           <div className="w-full flex gap-2 p-2.5 rounded-sm bg-yellow-50 text-yellow-500">
                             <TriangleAlert />
                             <span>Vous êtes au point d'enregistrer votre premier membre de la société !</span>

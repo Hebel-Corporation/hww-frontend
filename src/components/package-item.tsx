@@ -4,7 +4,7 @@ import React from 'react'
 const PackageItem = () => {
     return (
         <div className="w-full">
-            <input type="radio" id="standard_package" name="package" value="standard_package" className="hidden peer" required checked />
+            <input type="radio" id="standard_package" name="package" value="standard_package" className="hidden peer" required checked readOnly />
             <label htmlFor="standard_package" className="relative inline-flex items-center justify-between w-full text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                 <div className="w-full p-2 bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-800 dark:border-gray-700">
                     <h5 className="mb-3 text-lg font-medium text-gray-500 dark:text-gray-400">Plan standard</h5>

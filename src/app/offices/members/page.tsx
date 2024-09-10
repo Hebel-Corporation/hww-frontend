@@ -45,7 +45,7 @@ export default async function MembersPage() {
             <SearchBar />
           </div>
           <div className="flex gap-3 items-center">
-            <AddMemberModal isFirstNode={members?.length > 0 ? true : false} />
+            <AddMemberModal isFirstNode={members?.length > 0 ? false : true} />
             <Button radius="sm" startContent={
               <Filter />
             }>Filtrer</Button>
