@@ -19,6 +19,7 @@ export const ApiEndpoints = {
 
         MEMBERS: {
             GET_MEMBERS: '/members/users/members/',
+            GET_MEMBER_DETAILS: '/members/users/{{memberID}}/member-details/',
             CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',
             MEMBER_REGISTER: '/members/offices/{{officeID}}/member-registration/',
             CHECK_FIRST_NODE: '/members/accounts/is-first-node/'

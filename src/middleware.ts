@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession, updateSession } from "./utils/server-auth-utils";
-import { hasAuthorization } from "./utils/client-utils";
+// import { hasAuthorization } from "./utils/client-utils";
 
 
 export async function middleware(request: NextRequest) {

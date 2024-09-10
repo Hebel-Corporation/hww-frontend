@@ -36,9 +36,7 @@ const memberFormSchema = z.object({
   }).refine(date => !isNaN(date.getTime()), {
     message: "La date de naissance n'est pas valide.",
   }),
-  phone: z.string().min(2, {
-    message: "Entrer le numéro de téléphone du membre.",
-  }),
+  phone: z.string().optional()
 })
 
 const refineMemberFormSchema = memberFormSchema.refine(async (data) => {
@@ -162,13 +160,13 @@ export default function AddMemberModal() {
                 <ModalHeader className="flex flex-col gap-1">Ajout du membre</ModalHeader>
                 <ModalBody className="transition duration-400 ease-in-out">
                   <div className="flex flex-col sm:flex-row gap-2">
-                    <div className="md:w-[55%] sm:w-[55%]">
+                    <div className="md:w-[37%] sm:w-[55%]">
                       <PackageItem />
                     </div>
 
                     <Divider orientation="vertical" />
 
-                    <div className="flex flex-col gap-5">
+                    <div className="flex flex-col flex-1 gap-5">
                       {
                         !isFirstNode ? (
                           <div className="flex flex-col gap-2.5">

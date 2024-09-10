@@ -1,3 +1,4 @@
+import { getMemberDettails } from '@/actions/member-actions'
 import AccountCardItem from '@/components/account-card-item'
 import AddAccountModal from '@/components/add-account-modal'
 import AddMemberModal from '@/components/add-member-modal'
@@ -10,26 +11,31 @@ import { ArrowRight, EyeIcon, Filter, MoreHorizontal, PlusCircle } from 'lucide-
 import React from 'react'
 
 
-const breadcrumbItems = [
-    {
-        label: 'Accueil',
-        path: '/offices/dashboard'
-    },
-    {
-        label: 'Membres',
-        path: '/offices/members'
-    },
-    {
-        label: 'Nom du membre',
-        path: ''
-    },
-]
 
-const MemberDetails = ({
+
+const MemberDetails = async ({
     params
 }: {
     params: { memberId: string }
 }) => {
+
+    const member = await getMemberDettails({ memberId: params.memberId })
+
+    const breadcrumbItems = [
+        {
+            label: 'Accueil',
+            path: '/offices/dashboard'
+        },
+        {
+            label: 'Membres',
+            path: '/offices/members'
+        },
+        {
+            label: `${member?.first_name} ${member?.last_name}`,
+            path: ''
+        },
+    ]
+
     return (
         <ContentLayout breadcrumb={
             <CustomBreadcrumb breadcrumbItems={breadcrumbItems} />
@@ -40,8 +46,12 @@ const MemberDetails = ({
                         <Avatar size='lg' fallback={<>NK</>
                         } />
                         <div>
-                            <h1 className="text-lg font-normal">Nelson Kayisirirya</h1>
-                            <span className="font-extralight text-small">nelsonkayisirirya5@gmail.com</span>
+                            <h1 className="text-lg font-normal">
+                                {member?.first_name} {member?.last_name}
+                            </h1>
+                            <span className="font-extralight text-small">
+                                ID: {member?.company_id}
+                            </span>
                         </div>
                     </div>
                     <div>
@@ -50,14 +60,19 @@ const MemberDetails = ({
                 </div>
 
                 <ScrollShadow orientation='horizontal' className='flex flex-1 py-2 gap-6 items-center'>
-                    <AccountCardItem />
-                    <AccountCardItem />
-                    <AccountCardItem />
-                    <AccountCardItem />
-                    <AccountCardItem />
+                    {
+                        member?.accounts?.map((account: any) => (
+                            <AccountCardItem key={account?.id}
+                                companyId={account?.company_id}
+                                ownerFullName={`${member?.first_name} ${member?.last_name}`}
+                                downlineCount={0}
+                                accountBalance={34}
+                            />
+                        ))
+                    }
                 </ScrollShadow>
 
-                <div className='flex flex-col gap-3'>
+                <div className='flex flex-col flex-1 gap-3'>
                     <h1>Downlines</h1>
                     <div className="flex gap-3 flex-wrap justify-between items-center">
                         <div className="sm:w-2/4 w-full flex items-center">
@@ -65,14 +80,14 @@ const MemberDetails = ({
                         </div>
                         <div className="flex flex-wrap gap-3 items-center">
                             <Button radius="sm" variant='light' color='warning' endContent={
-                                    <ArrowRight />
-                                }
+                                <ArrowRight />
+                            }
                             >
                                 Détails du compte
                             </Button>
                             <Button radius="sm" variant='flat' startContent={
-                                    <EyeIcon />
-                                }
+                                <EyeIcon />
+                            }
                             >
                                 Transactions
                             </Button>
@@ -81,7 +96,7 @@ const MemberDetails = ({
                             }>Filtrer</Button>
                         </div>
                     </div>
-                    <ScrollShadow className="flex flex-col flex-1 h-[calc(100vh-62vh)]">
+                    <ScrollShadow className="flex flex-col flex-1 h-[calc(100vh-72vh)]">
                         <MemberItem />
                         <MemberItem />
                         <MemberItem />

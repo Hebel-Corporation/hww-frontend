@@ -20,6 +20,22 @@ export const getMembers = async () => {
 
 
 
+export const getMemberDettails = async ({
+    memberId
+}: {memberId: string}) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBER_DETAILS.replace("{{memberID}}", memberId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
 export const isFirstNodeCheck = async () => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.MEMBERS.CHECK_FIRST_NODE}`)
@@ -78,7 +94,7 @@ export const memberRegister = (formData: {
         last_name: string,
         gender: string,
         birthday: Date,
-        phone: string
+        phone?: string
     }
 }, officeId: string): Promise<any> => {
     return new Promise(async (resolve, reject) => {
