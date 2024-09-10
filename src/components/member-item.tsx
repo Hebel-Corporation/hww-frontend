@@ -10,7 +10,7 @@ const MemberItem = ({ member }: { member: User }) => {
             <div className="flex gap-3 items-center">
                 <Avatar fallback={<>NK</>
                 } className='h-[3.1rem] w-[3.1rem]' />
-                <div>
+                <div className='sm:min-w-60'>
                     <h1 className="text-base font-medium">
                         {member?.first_name} {member?.last_name}
                     </h1>
