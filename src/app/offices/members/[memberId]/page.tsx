@@ -5,6 +5,7 @@ import AddMemberModal from '@/components/add-member-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
+import MemberDownlineList from '@/components/member-downline-list'
 import MemberItem from '@/components/member-item'
 import { Avatar, Button, Pagination, ScrollShadow } from '@nextui-org/react'
 import { ArrowRight, EyeIcon, Filter, MoreHorizontal, PlusCircle } from 'lucide-react'
@@ -40,37 +41,40 @@ const MemberDetails = async ({
         <ContentLayout breadcrumb={
             <CustomBreadcrumb breadcrumbItems={breadcrumbItems} />
         }>
-            <main className='flex flex-col gap-3'>
-                <div className='flex flex-wrap gap-4 justify-between items-center'>
-                    <div className="flex gap-3 items-center">
-                        <Avatar size='lg' fallback={<>NK</>
-                        } />
+            <main className='flex flex-col flex-1 gap-3'>
+
+                <div className='flex flex-col gap-3'>
+                    <div className='flex flex-wrap gap-4 justify-between items-center'>
+                        <div className="flex gap-3 items-center">
+                            <Avatar size='lg' fallback={<>NK</>
+                            } />
+                            <div>
+                                <h1 className="text-lg font-normal">
+                                    {member?.first_name} {member?.last_name}
+                                </h1>
+                                <span className="font-extralight text-small">
+                                    ID: {member?.company_id}
+                                </span>
+                            </div>
+                        </div>
                         <div>
-                            <h1 className="text-lg font-normal">
-                                {member?.first_name} {member?.last_name}
-                            </h1>
-                            <span className="font-extralight text-small">
-                                ID: {member?.company_id}
-                            </span>
+                            <AddAccountModal />
                         </div>
                     </div>
-                    <div>
-                        <AddAccountModal />
-                    </div>
-                </div>
 
-                <ScrollShadow orientation='horizontal' className='flex flex-1 py-2 gap-6 items-center'>
-                    {
-                        member?.accounts?.map((account: any) => (
-                            <AccountCardItem key={account?.id}
-                                companyId={account?.company_id}
-                                ownerFullName={`${member?.first_name} ${member?.last_name}`}
-                                downlineCount={0}
-                                accountBalance={34}
-                            />
-                        ))
-                    }
-                </ScrollShadow>
+                    <ScrollShadow orientation='horizontal' className='flex flex-1 py-2 gap-6 items-center'>
+                        {
+                            member?.accounts?.map((account: any) => (
+                                <AccountCardItem key={account?.id}
+                                    companyId={account?.company_id}
+                                    ownerFullName={`${member?.first_name} ${member?.last_name}`}
+                                    downlineCount={account?.downline_count}
+                                    accountBalance={account?.balance}
+                                />
+                            ))
+                        }
+                    </ScrollShadow>
+                </div>
 
                 <div className='flex flex-col flex-1 gap-3'>
                     <h1>Downlines</h1>
@@ -96,17 +100,9 @@ const MemberDetails = async ({
                             }>Filtrer</Button>
                         </div>
                     </div>
-                    <ScrollShadow className="flex flex-col flex-1 h-[calc(100vh-72vh)]">
-                        <MemberItem />
-                        <MemberItem />
-                        <MemberItem />
-                        <MemberItem />
-                        <MemberItem />
-                        <MemberItem />
-                        <MemberItem />
-                        <MemberItem />
-                        <MemberItem />
-                    </ScrollShadow>
+
+                    {/* Member downline list */}
+                    <MemberDownlineList />
 
                     <Pagination showControls total={5} />
                 </div>

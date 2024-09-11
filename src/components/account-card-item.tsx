@@ -14,7 +14,7 @@ const AccountCardItem = ({
 }) => {
     return (
         <Badge content={`$ ${accountBalance}`} color='primary' >
-            <div className="z-2 border first:border-blue-500 select-none overflow-hidden w-max sm:odd:last:max-w-sm min-w-80 h-max rounded-xl p-4 flex flex-col flex-1 gap-4 cursor-pointer bg-zinc-100 dark:bg-zinc-800">
+            <div className="z-2 border first:border-blue-500 select-none overflow-hidden w-max sm:odd:last:max-w-sm min-w-80 h-max rounded-xl p-3 flex flex-col flex-1 gap-3 cursor-pointer bg-zinc-100 dark:bg-zinc-800">
 
                 <div className="whitespace-nowrap text-lg font-semibold font-mono first:text-blue-500" >
                     {/* 4242&nbsp;4242&nbsp;4242&nbsp;4242 */}
