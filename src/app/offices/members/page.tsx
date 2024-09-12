@@ -58,7 +58,7 @@ export default async function MembersPage() {
               <div className='flex flex-col'>
                 {
                   members?.map((member: any) => (
-                    <MemberItem member={member} />
+                    <MemberItem key={member.id} member={member} />
                   ))
                 }
               </div>

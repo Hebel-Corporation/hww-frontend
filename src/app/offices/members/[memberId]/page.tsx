@@ -7,20 +7,30 @@ import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import MemberDownlineList from '@/components/member-downline-list'
 import MemberItem from '@/components/member-item'
+import { getInitialChar } from '@/utils/utils-fonctions'
 import { Avatar, Button, Pagination, ScrollShadow } from '@nextui-org/react'
 import { ArrowRight, EyeIcon, Filter, MoreHorizontal, PlusCircle } from 'lucide-react'
-import React from 'react'
+import { notFound, redirect } from 'next/navigation'
+import React, { Suspense } from 'react'
 
 
 
 
 const MemberDetails = async ({
-    params
+    params,
+    searchParams
 }: {
-    params: { memberId: string }
+    params: { memberId: string },
+    searchParams: { [key: string]: string | undefined }
 }) => {
 
+    const currentAccountId = searchParams.account || ''
     const member = await getMemberDettails({ memberId: params.memberId })
+    if (!member)
+        notFound()
+    if (!currentAccountId)
+        redirect(`?account=${member?.accounts[0].id}`)
+
 
     const breadcrumbItems = [
         {
@@ -46,7 +56,8 @@ const MemberDetails = async ({
                 <div className='flex flex-col gap-3'>
                     <div className='flex flex-wrap gap-4 justify-between items-center'>
                         <div className="flex gap-3 items-center">
-                            <Avatar size='lg' fallback={<>NK</>
+                            <Avatar size='lg' fallback={
+                                <>{getInitialChar({first_name: member?.first_name, last_name: member?.last_name})}</>
                             } />
                             <div>
                                 <h1 className="text-lg font-normal">
@@ -66,6 +77,8 @@ const MemberDetails = async ({
                         {
                             member?.accounts?.map((account: any) => (
                                 <AccountCardItem key={account?.id}
+                                    accountId={account?.id}
+                                    currentAccountId={currentAccountId}
                                     companyId={account?.company_id}
                                     ownerFullName={`${member?.first_name} ${member?.last_name}`}
                                     downlineCount={account?.downline_count}
@@ -102,7 +115,11 @@ const MemberDetails = async ({
                     </div>
 
                     {/* Member downline list */}
-                    <MemberDownlineList />
+                    <Suspense fallback={
+                        <>Loading...</>
+                    }>
+                        <MemberDownlineList accountId={currentAccountId} />
+                    </Suspense>
 
                     <Pagination showControls total={5} />
                 </div>

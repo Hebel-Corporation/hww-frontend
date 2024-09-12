@@ -35,6 +35,21 @@ export const getMemberDettails = async ({
 }
 
 
+export const getMemberAccountDownlines = async ({
+    accountId
+}: {accountId: string}) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_DOWNLINES.replace("{{accountID}}", accountId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
 
 export const isFirstNodeCheck = async () => {
     try {
