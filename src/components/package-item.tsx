@@ -32,18 +32,6 @@ const PackageItem = () => {
                                 30% de bonus sur achat de produits.
                             </span>
                         </li>
-                        <li className="flex">
-                            <CircleCheck size={17} className="text-blue-700 dark:text-blue-500" />
-                            <span className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-                                Maintenance prise en charge.
-                            </span>
-                        </li>
-                        <li className="flex line-through decoration-gray-500">
-                            <CircleCheck size={17} className="text-gray-400 dark:text-gray-500" />
-                            <span className="text-sm font-normal leading-tight text-gray-500 ms-3">
-                                Support 24×7 garanti.
-                            </span>
-                        </li>
                     </ul>
                 </div>
                 <CircleCheck size={23}

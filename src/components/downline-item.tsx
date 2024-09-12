@@ -1,9 +1,5 @@
-import { User } from '@/types'
 import { getInitialChar } from '@/utils/utils-fonctions'
-import { Avatar, Button } from '@nextui-org/react'
-import { ChevronRight, PenSquare } from 'lucide-react'
-import Link from 'next/link'
-import React from 'react'
+import { Avatar } from '@nextui-org/react'
 
 const DownlineItem = ({ downline }: { downline: any }) => {
     return (

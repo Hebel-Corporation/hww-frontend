@@ -1,45 +1,50 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectItem, DatePicker } from "@nextui-org/react";
-import { useDisclosure } from '@nextui-org/react';
-import { ChevronRight, PlusCircle } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { createMemberAccount, uplinesVerificationIDs } from "@/actions/member-actions";
+import { getClientSession } from "@/utils/client-utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import { PlusCircle } from "lucide-react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { uplinesVerificationIDs } from "@/actions/member-actions";
+import { z } from "zod";
+import PackageItem from "./package-item";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 
 
 const memberFormSchema = z.object({
-  parrainID: z.string().min(2, {
-    message: "Veillez entrer l'ID du parrain.",
+  parrainId: z.string().min(2, {
+    message: "Veillez entrer l'ID du compte parrain.",
   }),
-  sponsorID: z.string().min(2, {
-    message: "Veillez entrer l'ID du sponsor.",
+  sponsorId: z.string().min(2, {
+    message: "Veillez entrer l'ID du compte sponsor.",
   })
-})
-
-// .refine(async (data) => {
-//   const { isValid, path, message } = await uplinesVerificationIDs({
-//     parrainID: data.parrainID,
-//     sponsorID: data.sponsorID
-//   })
-//   if (!isValid) {
-//     throw new z.ZodError([
-//       {
-//         path: [path],
-//         message: message,
-//         code: z.ZodIssueCode.custom
-//       }
-//     ]);
-//   }
-//   return isValid;
-// });
+}).refine(async (data) => {
+  const { isValid, path, message } = await uplinesVerificationIDs({
+    parrainId: data.parrainId,
+    sponsorId: data.sponsorId
+  })
+  if (!isValid) {
+    throw new z.ZodError([
+      {
+        path: [path],
+        message: message,
+        code: z.ZodIssueCode.custom
+      }
+    ]);
+  }
+  return isValid;
+});
 
 
-export default function AddAccountModal() {
+export default function AddAccountModal({
+  accounts,
+  memberId
+}: {
+  accounts: string[],
+  memberId: string
+}) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = React.useState(false)
@@ -48,32 +53,37 @@ export default function AddAccountModal() {
   const form = useForm<z.infer<typeof memberFormSchema>>({
     resolver: zodResolver(memberFormSchema),
     defaultValues: {
-      parrainID: "",
-      sponsorID: ""
+      parrainId: "",
+      sponsorId: ""
     },
   })
 
 
   async function onSubmit(values: z.infer<typeof memberFormSchema>) {
-    form.reset()
-    onOpenChange()
-    // setIsSubmitting(true)
-    // toast.promise(
-    //   CreateLocation({name: values.name, countryID: values.country}), {
-    //     loading: 'Enregistrement en cours...',
-    //     success: () => {
-    //       onOpenChange()
-    //       form.reset()
-    //       return `Emplacement ajouté avec succès !`;
-    //     },
-    //     error: () => {
-    //       return `Erreur d'enregistrement`;
-    //     },
-    //     finally() {
-    //       setIsSubmitting(false)
-    //     },
-    //   }
-    // )
+    setIsSubmitting(true)
+
+    const session = await getClientSession()
+
+    toast.promise(
+      createMemberAccount({
+        referral_account: values?.parrainId,
+        sponsor_account: values?.sponsorId,
+        memberId: memberId
+      }, session?.user?.office?.id), {
+      loading: 'Enregistrement en cours...',
+      success: () => {
+        onOpenChange()
+        form.reset()
+        return `Le compte a été ajouté avec succès !`;
+      },
+      error: (err: Error) => {
+        return `${err?.message}`;
+      },
+      finally() {
+        setIsSubmitting(false)
+      },
+    }
+    )
   }
 
 
@@ -84,7 +94,7 @@ export default function AddAccountModal() {
           <PlusCircle />
         }
       >
-        Ajouter un compte
+        <span className="hidden sm:block">Ajouter un compte</span>
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
         <ModalContent>
@@ -94,11 +104,12 @@ export default function AddAccountModal() {
                 <ModalHeader className="flex flex-col gap-1">Ajout d'un nouveau compte au membre</ModalHeader>
                 <ModalBody className="transition duration-400 ease-in-out">
                   <div className="flex flex-col gap-5">
+                    <PackageItem />
                     <div className="flex flex-col gap-2.5">
                       <h1 className="text-sm font-light">Infos sur les uplines</h1>
                       <FormField
                         control={form.control}
-                        name="parrainID"
+                        name="parrainId"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
@@ -107,12 +118,13 @@ export default function AddAccountModal() {
                                 description="Sellectionner le compte du membre qui parraine le nouveau compte."
                                 className="w-full"
                               >
-                                <SelectItem key={'ACCOUNT-0001'}>
-                                  ACCOUNT-0001
-                                </SelectItem>
-                                <SelectItem key={'ACCOUNT-0002'}>
-                                  ACCOUNT-0002
-                                </SelectItem>
+                                {
+                                  accounts?.map(account => (
+                                    <SelectItem key={account} value={account}>
+                                      {account}
+                                    </SelectItem>
+                                  ))
+                                }
                               </Select>
                             </FormControl>
                             <FormMessage />
@@ -122,7 +134,7 @@ export default function AddAccountModal() {
 
                       <FormField
                         control={form.control}
-                        name="sponsorID"
+                        name="sponsorId"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>

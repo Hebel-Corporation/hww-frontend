@@ -12,7 +12,7 @@ export function Navbar({breadcrumb}: NavbarProps) {
       <div className="mx-4 sm:mx-[19px] flex h-14 items-center">
         <div className="flex items-center space-x-4 lg:space-x-0">
           <SheetMenu />
-          <>{breadcrumb}</>
+          <div className="hidden sm:block">{breadcrumb}</div>
         </div>
         <div className="flex flex-1 items-center space-x-2 justify-end">
           <ModeToggle />

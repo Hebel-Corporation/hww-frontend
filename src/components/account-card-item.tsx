@@ -19,9 +19,9 @@ const AccountCardItem = ({
 }) => {
     return (
         <Badge content={`$ ${accountBalance}`} color='primary' >
-            <Link href={`?account=${accountId}`} className={`z-2 border ${accountId===currentAccountId ? 'border-blue-500' : ''} select-none overflow-hidden w-max sm:odd:last:max-w-sm min-w-80 h-max rounded-xl p-3 flex flex-col flex-1 gap-3 cursor-pointer bg-zinc-100 dark:bg-zinc-800`}>
+            <Link href={`?account=${accountId}`} className={`z-2 border ${accountId===currentAccountId ? 'border-blue-500' : ''} duration-500 select-none overflow-hidden w-max sm:odd:last:max-w-sm min-w-80 h-max rounded-xl p-3 flex flex-col flex-1 gap-3 cursor-pointer bg-zinc-100 dark:bg-zinc-800`}>
 
-                <div className={`${accountId===currentAccountId ? 'text-blue-500' : ''} whitespace-nowrap text-lg font-semibold font-mono`} >
+                <div className={`${accountId===currentAccountId ? 'text-blue-500' : ''} duration-500 whitespace-nowrap text-lg font-semibold font-mono`} >
                     {/* 4242&nbsp;4242&nbsp;4242&nbsp;4242 */}
                     {companyId}
                 </div>

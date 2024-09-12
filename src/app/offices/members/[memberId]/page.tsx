@@ -8,7 +8,7 @@ import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import MemberDownlineList from '@/components/member-downline-list'
 import MemberItem from '@/components/member-item'
 import { getInitialChar } from '@/utils/utils-fonctions'
-import { Avatar, Button, Pagination, ScrollShadow } from '@nextui-org/react'
+import { Avatar, Button, Pagination, ScrollShadow, Spinner } from '@nextui-org/react'
 import { ArrowRight, EyeIcon, Filter, MoreHorizontal, PlusCircle } from 'lucide-react'
 import { notFound, redirect } from 'next/navigation'
 import React, { Suspense } from 'react'
@@ -69,7 +69,9 @@ const MemberDetails = async ({
                             </div>
                         </div>
                         <div>
-                            <AddAccountModal />
+                            <AddAccountModal memberId={member?.id} accounts={
+                                member?.accounts?.map((acc: any) => {return acc.company_id})
+                            } />
                         </div>
                     </div>
 
@@ -96,27 +98,25 @@ const MemberDetails = async ({
                             <SearchBar />
                         </div>
                         <div className="flex flex-wrap gap-3 items-center">
-                            <Button radius="sm" variant='light' color='warning' endContent={
-                                <ArrowRight />
+                            <Button radius="sm" variant='flat' color='warning' startContent={
+                                <EyeIcon />
                             }
                             >
                                 Détails du compte
                             </Button>
-                            <Button radius="sm" variant='flat' startContent={
-                                <EyeIcon />
-                            }
-                            >
-                                Transactions
-                            </Button>
                             <Button radius="sm" startContent={
                                 <Filter />
-                            }>Filtrer</Button>
+                            }
+                            >Filtrer</Button>
                         </div>
                     </div>
 
                     {/* Member downline list */}
                     <Suspense fallback={
-                        <>Loading...</>
+                        <div className='flex gap-2'>
+                            <Spinner size='md' />
+                            <span>Chargement...</span>
+                        </div>
                     }>
                         <MemberDownlineList accountId={currentAccountId} />
                     </Suspense>

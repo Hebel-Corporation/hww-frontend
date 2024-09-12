@@ -2,22 +2,28 @@ import { ScrollShadow } from '@nextui-org/react'
 import React from 'react'
 import DownlineItem from './downline-item'
 import { getMemberAccountDownlines } from '@/actions/member-actions'
+import EmptyData from './common/empty-data'
 
 const MemberDownlineList = async ({
     accountId
-}: {accountId: string}) => {
+}: { accountId: string }) => {
 
-    const downlines = await getMemberAccountDownlines({accountId: accountId})
+    const downlines = await getMemberAccountDownlines({ accountId: accountId })
 
     return (
         <ScrollShadow className="flex flex-col flex-1 max-h-[calc(100vh-43vh)]">
-            <div className='flex flex-col'>
-                {
-                    downlines?.map((downline: any) => (
-                        <DownlineItem key={downline.id} downline={downline} />
-                    ))
-                }
-            </div>
+            {
+                downlines?.length ?
+                    <div className='flex flex-col'>
+                        {
+                            downlines?.map((downline: any) => (
+                                <DownlineItem key={downline.id} downline={downline} />
+                            ))
+                        }
+                    </div>
+                    :
+                    <EmptyData description="Ce compte n'a pas encore de downline pour le moment." />
+            }
         </ScrollShadow>
     )
 }

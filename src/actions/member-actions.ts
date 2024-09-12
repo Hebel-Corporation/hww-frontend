@@ -22,7 +22,7 @@ export const getMembers = async () => {
 
 export const getMemberDettails = async ({
     memberId
-}: {memberId: string}) => {
+}: { memberId: string }) => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBER_DETAILS.replace("{{memberID}}", memberId)}`)
         const data = result.data
@@ -37,7 +37,7 @@ export const getMemberDettails = async ({
 
 export const getMemberAccountDownlines = async ({
     accountId
-}: {accountId: string}) => {
+}: { accountId: string }) => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_DOWNLINES.replace("{{accountID}}", accountId)}`)
         const data = result.data
@@ -130,7 +130,51 @@ export const memberRegister = (formData: {
             const errorString = e?.response?.data;
             console.error(errorString);
             let message = ''
-            
+
+            if (errorString?.error) {
+                message = errorString.error;
+            } else if (errorString?.error?.match(/string='([^']+)'/)) {
+                message = errorString.error.match(/string='([^']+)'/)[1];
+            } else {
+                message = "Erreur lors de la création du membre.";
+            }
+
+            if (typeof message !== 'string') {
+                message = "Erreur inconnue.";
+            }
+
+            reject(new Error(message));
+        }
+    });
+};
+
+
+export const createMemberAccount = ({
+    referral_account,
+    sponsor_account,
+    memberId
+}: {
+    referral_account: string,
+    sponsor_account: string,
+    memberId: string
+}, officeId: string): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.post(
+                `${ApiEndpoints.MEMBERS.CREATE_MEMBER_ACCOUNT.replace("{{officeID}}", officeId)}`, {
+                referral_account: referral_account,
+                sponsor_account: sponsor_account,
+                member: memberId
+            });
+            const data = result.data;
+            resolve(data);
+
+            revalidatePath(`/offices/members/${officeId}`);
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            let message = ''
+
             if (errorString?.error) {
                 message = errorString.error;
             } else if (errorString?.error?.match(/string='([^']+)'/)) {

@@ -7,7 +7,7 @@ const EmptyData = ({
     return (
         <div className='max-w-lg mx-auto flex flex-col gap-2 flex-1 items-center justify-center text-gray-300 dark:text-zinc-600'>
             <Inbox size={60} />
-            <p className='text-lg'>{description}</p>
+            <p className='text-lg text-center'>{description}</p>
         </div>
     )
 }
