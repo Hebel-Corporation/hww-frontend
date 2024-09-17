@@ -12,7 +12,7 @@ const breadcrumbItems = [
   {
     label: 'Rewards',
     path: ''
-  },
+  }
 ]
 
 export default function TagsPage() {

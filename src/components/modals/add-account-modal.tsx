@@ -9,8 +9,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import PackageItem from "./package-item";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import PackageItem from "../package-item";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 
 
 const memberFormSchema = z.object({
@@ -40,10 +40,12 @@ const memberFormSchema = z.object({
 
 export default function AddAccountModal({
   accounts,
-  memberId
+  memberId,
+  hasRegisterCodeValid
 }: {
   accounts: string[],
-  memberId: string
+  memberId: string,
+  hasRegisterCodeValid: boolean
 }) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -89,7 +91,7 @@ export default function AddAccountModal({
 
   return (
     <>
-      <Button onPress={onOpen} radius="sm" color="primary"
+      <Button onPress={onOpen} isDisabled={!hasRegisterCodeValid} radius="sm" color="primary"
         startContent={
           <PlusCircle />
         }
@@ -101,7 +103,7 @@ export default function AddAccountModal({
           {(onClose) => (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <ModalHeader className="flex flex-col gap-1">Ajout d'un nouveau compte au membre</ModalHeader>
+                <ModalHeader className="flex flex-col gap-1">Ajout d&apos;un nouveau compte au membre</ModalHeader>
                 <ModalBody className="transition duration-400 ease-in-out">
                   <div className="flex flex-col gap-5">
                     <PackageItem />

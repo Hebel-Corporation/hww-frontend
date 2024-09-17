@@ -1,7 +1,7 @@
 import { getMemberDettails } from '@/actions/member-actions'
 import AccountCardItem from '@/components/account-card-item'
-import AddAccountModal from '@/components/add-account-modal'
-import AddMemberModal from '@/components/add-member-modal'
+import AddAccountModal from '@/components/modals/add-account-modal'
+import AddMemberModal from '@/components/modals/add-member-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
@@ -12,6 +12,10 @@ import { Avatar, Button, Pagination, ScrollShadow, Spinner } from '@nextui-org/r
 import { ArrowRight, EyeIcon, Filter, MoreHorizontal, PlusCircle } from 'lucide-react'
 import { notFound, redirect } from 'next/navigation'
 import React, { Suspense } from 'react'
+import { SessionType } from '@/types'
+import { getServerSession } from '@/utils/server-auth-utils'
+import { checkOfficeRegisterCodeValidity } from '@/actions/office-actions'
+import SuspenseFallback from '@/components/common/suspense-fallback'
 
 
 
@@ -23,6 +27,9 @@ const MemberDetails = async ({
     params: { memberId: string },
     searchParams: { [key: string]: string | undefined }
 }) => {
+
+    const session: SessionType = await getServerSession({ raw: false })
+    const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
 
     const currentAccountId = searchParams.account || ''
     const member = await getMemberDettails({ memberId: params.memberId })
@@ -44,7 +51,7 @@ const MemberDetails = async ({
         {
             label: `${member?.first_name} ${member?.last_name}`,
             path: ''
-        },
+        }
     ]
 
     return (
@@ -57,7 +64,7 @@ const MemberDetails = async ({
                     <div className='flex flex-wrap gap-4 justify-between items-center'>
                         <div className="flex gap-3 items-center">
                             <Avatar size='lg' fallback={
-                                <>{getInitialChar({first_name: member?.first_name, last_name: member?.last_name})}</>
+                                <>{getInitialChar({ first_name: member?.first_name, last_name: member?.last_name })}</>
                             } />
                             <div>
                                 <h1 className="text-lg font-normal">
@@ -70,8 +77,10 @@ const MemberDetails = async ({
                         </div>
                         <div>
                             <AddAccountModal memberId={member?.id} accounts={
-                                member?.accounts?.map((acc: any) => {return acc.company_id})
-                            } />
+                                member?.accounts?.map((acc: any) => { return acc.company_id })
+                            }
+                                hasRegisterCodeValid={hasRegisterCodeValid}
+                            />
                         </div>
                     </div>
 
@@ -85,6 +94,7 @@ const MemberDetails = async ({
                                     ownerFullName={`${member?.first_name} ${member?.last_name}`}
                                     downlineCount={account?.downline_count}
                                     accountBalance={account?.balance}
+                                    pvs={account?.pvs}
                                 />
                             ))
                         }
@@ -113,10 +123,7 @@ const MemberDetails = async ({
 
                     {/* Member downline list */}
                     <Suspense fallback={
-                        <div className='flex gap-2'>
-                            <Spinner size='md' />
-                            <span>Chargement...</span>
-                        </div>
+                        <SuspenseFallback />
                     }>
                         <MemberDownlineList accountId={currentAccountId} />
                     </Suspense>

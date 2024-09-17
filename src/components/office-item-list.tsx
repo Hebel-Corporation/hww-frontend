@@ -3,10 +3,11 @@ import EmptyData from './common/empty-data'
 import LocationItem from './location-item'
 import { Office } from '@/types'
 import OfficeItem from './office-item'
+import { getOffices } from '@/actions/office-actions'
 
-const OfficeItemList = async ({
-    offices
-}: { offices: Office[] }) => {
+const OfficeItemList = async () => {
+
+    const offices: Office[] = await getOffices()
 
     return (
         <ScrollShadow className="flex flex-col flex-1 h-[calc(100vh-37vh)]">

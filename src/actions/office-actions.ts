@@ -6,6 +6,20 @@ import { revalidatePath } from "next/cache";
 
 
 
+export const getCompanyPackages = async () => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_COMPANY_PACKAGE}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
 
 export const getOffices = async () => {
     try {
@@ -122,6 +136,79 @@ export const createOfficeStaff = (formData: {
                 message = errorString.error.match(/string='([^']+)'/)[1];
             } else {
                 message = "Erreur lors de la création d'un staff.";
+            }
+
+            if (typeof message !== 'string') {
+                message = "Erreur inconnue.";
+            }
+
+            reject(new Error(message));
+        }
+    });
+};
+
+
+export const getOfficeRegisterCodes = async ({
+    officeId
+}: { officeId: string }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_REGISTER_CODES.replace("officeID", officeId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
+export const checkOfficeRegisterCodeValidity = async ({
+    officeId
+}: { officeId: string }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.CHECK_OFFICE_REGISTER_CODE_VALIDITY.replace("officeID", officeId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
+
+export const createOfficeRegisterCode = (formData: {
+    package: string,
+    codeNumber: number,
+    amount: number
+}, officeId: string): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.post(
+                `${ApiEndpoints.OFFICES.CREATE_OFFICE_REGISTER_CODE.replace("officeID", officeId)}`, {
+                ...formData
+            });
+            const data = result.data;
+            resolve(data);
+            
+            revalidatePath(`/offices/point-of-sale/${officeId}`);
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error("ERROR : ", errorString);
+            let message = ''
+            
+            if (errorString?.username) {
+                message = errorString.username[0];
+            } else if (errorString?.error) {
+                message = errorString.error;
+            } else if (errorString?.error?.match(/string='([^']+)'/)) {
+                message = errorString.error.match(/string='([^']+)'/)[1];
+            } else {
+                message = "Erreur lors de la génération des codes d'enregistrement";
             }
 
             if (typeof message !== 'string') {

@@ -11,7 +11,7 @@ const MemberDownlineList = async ({
     const downlines = await getMemberAccountDownlines({ accountId: accountId })
 
     return (
-        <ScrollShadow className="flex flex-col flex-1 max-h-[calc(100vh-43vh)]">
+        <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-60vh)] max-h-[calc(100vh-60vh)]">
             {
                 downlines?.length ?
                     <div className='flex flex-col'>

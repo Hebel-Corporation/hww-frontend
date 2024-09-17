@@ -7,7 +7,7 @@ import { getLocations } from "@/actions/location-actions";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { toast } from "sonner";
 import { EyeIcon, EyeOffIcon, LocateIcon, MapPinIcon } from "lucide-react";
 import { createOffice } from "@/actions/office-actions";
@@ -133,13 +133,13 @@ export default function AddOfficeModal({
       <Button onPress={onOpen} radius="sm" color="primary">
         {children}
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} scrollBehavior="outside">
         <ModalContent>
           {(onClose) => (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <ModalHeader className="flex flex-col gap-1">Ajout du point de vente</ModalHeader>
-                <ModalBody className="transition duration-400 ease-in-out">
+                <ModalHeader className="flex flex-col gap-1 p-3.5">Ajout du point de vente</ModalHeader>
+                <ModalBody className="transition duration-400 ease-in-out p-3.5">
                   <div className="flex flex-col gap-8">
                     <div className="flex flex-col gap-3">
                       <h1 className="text-sm font-light">Infos sur le bureau</h1>
@@ -186,7 +186,7 @@ export default function AddOfficeModal({
                       />
                     </div>
                     <div className="flex flex-col gap-3">
-                      <h1 className="text-sm font-light">Infos sur l'utilisateur</h1>
+                      <h1 className="text-sm font-light">Infos sur l&apos;utilisateur</h1>
                       <FormField
                         control={form.control}
                         name="username"
@@ -264,7 +264,7 @@ export default function AddOfficeModal({
                     </div>
                   </div>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter className="p-3.5">
                   <Button isDisabled={isSubmitting} color="danger" radius="sm" variant="light" onPress={onClose}>
                     Annuler
                   </Button>

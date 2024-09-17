@@ -10,8 +10,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import PackageItem from "./package-item";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import PackageItem from "../package-item";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 
 
 const memberFormSchema = z.object({
@@ -57,7 +57,13 @@ const refineMemberFormSchema = memberFormSchema.refine(async (data) => {
 });
 
 
-export default function AddMemberModal({ isFirstNode }: { isFirstNode: boolean }) {
+export default function AddMemberModal({ 
+  isFirstNode, 
+  hasRegisterCodeValid 
+}: { 
+  isFirstNode: boolean, 
+  hasRegisterCodeValid: boolean 
+}) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = React.useState(false)
@@ -128,18 +134,18 @@ export default function AddMemberModal({ isFirstNode }: { isFirstNode: boolean }
 
   return (
     <>
-      <Button onPress={onOpen} radius="sm" color="primary" startContent={
+      <Button onPress={onOpen} isDisabled={!hasRegisterCodeValid} radius="sm" color="primary" startContent={
         <PlusCircle />
       } >
         Ajouter un membre
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} size="3xl">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} size="3xl" scrollBehavior="outside">
         <ModalContent>
           {(onClose) => (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <ModalHeader className="flex flex-col gap-1">Ajout du membre</ModalHeader>
-                <ModalBody className="transition duration-400 ease-in-out">
+                <ModalHeader className="flex flex-col gap-1 p-3.5">Ajout du membre</ModalHeader>
+                <ModalBody className="transition duration-400 ease-in-out p-3.5">
                   <div className="flex flex-col sm:flex-row gap-2">
                     <div className="md:w-[37%] sm:w-[55%]">
                       <PackageItem />
@@ -152,7 +158,7 @@ export default function AddMemberModal({ isFirstNode }: { isFirstNode: boolean }
                         isFirstNode ? (
                           <div className="w-full flex gap-2 p-2.5 rounded-sm bg-yellow-50 text-yellow-500">
                             <TriangleAlert />
-                            <span>Vous êtes au point d'enregistrer votre premier membre de la société !</span>
+                            <span>Vous êtes au point d&apos;enregistrer votre premier membre de la société !</span>
                           </div>
                         ) :
                           <div className="flex flex-col gap-2.5">
@@ -271,7 +277,7 @@ export default function AddMemberModal({ isFirstNode }: { isFirstNode: boolean }
                     </div>
                   </div>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter className="p-3.5">
                   <Button color="danger" radius="sm" variant="light"
                     isDisabled={isSubmitting}
                     onPress={onClose}

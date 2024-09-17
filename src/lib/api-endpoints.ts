@@ -13,8 +13,12 @@ export const ApiEndpoints = {
 
         OFFICES: {
             GET_OFFICES : '/members/offices/',
+            GET_COMPANY_PACKAGE : '/members/packages/',
             GET_OFFICE_STAFFS: "/members/offices/{{officeID}}/staffs/",
             CREATE_OFFICE_STAFF: "/members/offices/{{officeID}}/create-staff/",
+            GET_OFFICE_REGISTER_CODES: "/members/offices/{{officeID}}/get-register-codes/",
+            CHECK_OFFICE_REGISTER_CODE_VALIDITY: "/members/offices/{{officeID}}/check-register-code-validity/",
+            CREATE_OFFICE_REGISTER_CODE: "/members/offices/{{officeID}}/generate-register-code/",
         },
 
         MEMBERS: {

@@ -1,10 +1,12 @@
 import { ScrollShadow } from '@nextui-org/react'
 import EmptyData from './common/empty-data'
 import LocationItem from './location-item'
+import { Location } from '@/types'
+import { getLocations } from '@/actions/location-actions'
 
-const LocationItemList = async ({
-    locations
-}: { locations: Location[] }) => {
+const LocationItemList = async () => {
+
+    const locations: Location[] = await getLocations()
 
     return (
         <ScrollShadow className="flex flex-col flex-1 h-[calc(100vh-37vh)]">
@@ -13,7 +15,7 @@ const LocationItemList = async ({
                     <div className='flex flex-wrap gap-5'>
                         {
                             locations?.map((location: Location) => (
-                                <LocationItem location={location} />
+                                <LocationItem key={location?.id} location={location} />
                             ))
                         }
                     </div>

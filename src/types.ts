@@ -9,7 +9,8 @@ export type User = {
     company_id: string,
     user_type: string,
     office: Office,
-    downline_count: number
+    downline_count: number,
+    accounts_number: number
 }
 
 export type UserGroup = {
@@ -44,5 +45,45 @@ export type Office = {
     office_type: string,
     is_active: string,
     created_at: string,
+}
+
+
+
+export type Package = {
+    id: string,
+    name: string,
+    price: number,
+    is_default: boolean,
+    description: string,
+    created_at: string | Date,
+    updated_at: string | Date
+}
+
+
+
+export type SubscriptionCode = {
+    id: string,
+    code: string,
+    reccords_number: number,
+    used_reccords_number: number,
+    amount_paid: number,
+    total_amount: number,
+    office: string | Office,
+    package: Package,
+    is_valid: boolean,
+    created_at: string | Date,
+    updated_at: string | Date
+}
+
+
+
+
+export type SessionType = {
+    token_type: string,
+    exp: number,
+    iat: number,
+    jti: string,
+    user_id: string,
+    user: User
 }
 

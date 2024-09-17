@@ -1,6 +1,6 @@
 
 import { getMembers } from "@/actions/member-actions";
-import AddMemberModal from "@/components/add-member-modal";
+import AddMemberModal from "@/components/modals/add-member-modal";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import EmptyData from "@/components/common/empty-data";
 import PageTitle from "@/components/common/page-title";
@@ -9,6 +9,9 @@ import CustomBreadcrumb from "@/components/custom-breadcrumb";
 import MemberItem from "@/components/member-item";
 import { Button, Pagination, ScrollShadow } from "@nextui-org/react";
 import { Filter } from "lucide-react";
+import { SessionType } from "@/types";
+import { getServerSession } from "@/utils/server-auth-utils";
+import { checkOfficeRegisterCodeValidity } from "@/actions/office-actions";
 
 const breadcrumbItems = [
   {
@@ -18,11 +21,13 @@ const breadcrumbItems = [
   {
     label: 'Membres',
     path: ''
-  },
+  }
 ]
 
 export default async function MembersPage() {
 
+  const session: SessionType = await getServerSession({ raw: false })
+  const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
   const members = await getMembers()
 
   return (
@@ -45,7 +50,10 @@ export default async function MembersPage() {
             <SearchBar />
           </div>
           <div className="flex gap-3 items-center">
-            <AddMemberModal isFirstNode={members?.length > 0 ? false : true} />
+            <AddMemberModal
+              isFirstNode={members?.length > 0 ? false : true}
+              hasRegisterCodeValid={hasRegisterCodeValid}
+            />
             <Button radius="sm" startContent={
               <Filter />
             }>Filtrer</Button>

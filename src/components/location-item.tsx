@@ -33,7 +33,7 @@ const LocationItem = ({
         <div>
           <h1>{location.name}</h1>
           <span className='text-small font-light'>
-            Taux d'inscription : {location.subscription_rate}%
+            Taux d&apos;inscription : {location.subscription_rate}%
           </span>
         </div>
         <Divider orientation='vertical' />

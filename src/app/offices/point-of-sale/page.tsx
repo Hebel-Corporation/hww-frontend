@@ -1,12 +1,16 @@
-import { getOffices } from '@/actions/office-actions'
-import AddOfficeModal from '@/components/add-office-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import PageTitle from '@/components/common/page-title'
 import SearchBar from '@/components/common/search-bar'
+import SuspenseFallback from '@/components/common/suspense-fallback'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
+import AddOfficeModal from '@/components/modals/add-office-modal'
 import OfficeItemList from '@/components/office-item-list'
+import { SessionType } from '@/types'
+import { getServerSession } from '@/utils/server-auth-utils'
 import { Button, Pagination } from '@nextui-org/react'
 import { Filter, PlusCircle } from 'lucide-react'
+import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 
 const breadcrumbItems = [
@@ -17,12 +21,14 @@ const breadcrumbItems = [
   {
     label: 'Points de ventes',
     path: ''
-  },
+  }
 ]
 
-const PointOfSalePage = async () => {
+export default async function OfficePage() {
 
-  const offices = await getOffices()
+  const session: SessionType = await getServerSession({ raw: false })
+  if(!session)
+    redirect('/login')
 
   return (
     <ContentLayout breadcrumb={
@@ -57,7 +63,11 @@ const PointOfSalePage = async () => {
         </div>
 
         {/* Office list */}
-        <OfficeItemList offices={offices} />
+        <Suspense fallback={
+          <SuspenseFallback />
+        } >
+          <OfficeItemList />
+        </Suspense>
 
         <Pagination showControls total={5} />
 
@@ -67,4 +77,4 @@ const PointOfSalePage = async () => {
   )
 }
 
-export default PointOfSalePage
+

@@ -1,6 +1,6 @@
 import { User } from '@/types'
 import { getInitialChar } from '@/utils/utils-fonctions'
-import { Avatar, Button } from '@nextui-org/react'
+import { Avatar, Button, Chip } from '@nextui-org/react'
 import { ChevronRight, PenSquare } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -20,6 +20,9 @@ const MemberItem = ({ member }: { member: User }) => {
                         {member?.company_id}
                     </span>
                 </div>
+            </div>
+            <div className='hidden sm:block'>
+                <Chip size='sm'>{member?.accounts_number} compte{member?.accounts_number > 1 ? 's' : ''}</Chip>
             </div>
             <div className='hidden sm:block'>
                 <h1 className="text-base font-medium">

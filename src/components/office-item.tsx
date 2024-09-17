@@ -16,7 +16,7 @@ const OfficeItem = ({
         <div>
           <h1>{office.location.name}-{office.office_code}</h1>
           <span className='text-small font-light'>
-            Taux d'inscription : {office.subscription_rate}%
+            Taux d&apos;inscription : {office.subscription_rate}%
           </span>
         </div>
         <Divider orientation='vertical' />

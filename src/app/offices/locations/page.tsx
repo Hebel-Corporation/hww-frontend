@@ -1,12 +1,16 @@
-import { getLocations } from '@/actions/location-actions'
-import AddLocationModal from '@/components/add-location-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import PageTitle from '@/components/common/page-title'
 import SearchBar from '@/components/common/search-bar'
+import SuspenseFallback from '@/components/common/suspense-fallback'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import LocationItemList from '@/components/location-item-list'
+import AddLocationModal from '@/components/modals/add-location-modal'
+import { SessionType } from '@/types'
+import { getServerSession } from '@/utils/server-auth-utils'
 import { Button, Pagination } from '@nextui-org/react'
 import { Filter, PlusCircle } from 'lucide-react'
+import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 
 const breadcrumbItems = [
@@ -17,12 +21,14 @@ const breadcrumbItems = [
   {
     label: 'Emplacements',
     path: ''
-  },
+  }
 ]
 
-const LocationPage = async () => {
+export default async function LocationPage() {
 
-  const locations = await getLocations()
+  const session: SessionType = await getServerSession({ raw: false })
+  if(!session)
+    redirect('/login')
 
   return (
     <ContentLayout breadcrumb={
@@ -57,7 +63,11 @@ const LocationPage = async () => {
         </div>
 
         {/* Location list */}
-        <LocationItemList locations={locations} />
+        <Suspense fallback={
+          <SuspenseFallback />
+        } >
+          <LocationItemList />
+        </Suspense>
 
         <Pagination showControls total={5} />
 
@@ -67,4 +77,4 @@ const LocationPage = async () => {
   )
 }
 
-export default LocationPage
+

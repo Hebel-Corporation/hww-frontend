@@ -7,6 +7,7 @@ const AccountCardItem = ({
     currentAccountId,
     ownerFullName,
     downlineCount,
+    pvs,
     companyId,
     accountBalance
 } : {
@@ -14,6 +15,7 @@ const AccountCardItem = ({
     currentAccountId: string,
     ownerFullName: string,
     downlineCount: number,
+    pvs: number,
     companyId: string,
     accountBalance: number
 }) => {
@@ -27,10 +29,16 @@ const AccountCardItem = ({
                 </div>
 
                 <div className="flex gap-8 justify-between">
-                    <div className="owner flex flex-col w-max">
+                    {/* <div className="owner flex flex-col w-max">
                         <span className="text-sm">Proprietaire</span>
                         <span className="whitespace-nowrap text-base">
                             {ownerFullName}
+                        </span>
+                    </div> */}
+                    <div className="owner flex flex-col w-max">
+                        <span className="text-sm">Points cumulés</span>
+                        <span className="whitespace-nowrap text-base">
+                            {pvs} <span className='text-[12px] font-light'>PVs</span> 
                         </span>
                     </div>
                     <div className="cvc flex flex-col w-max">

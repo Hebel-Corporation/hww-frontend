@@ -6,7 +6,7 @@ import { Autocomplete, AutocompleteItem, Button, Input, Modal, ModalBody, ModalC
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { toast } from "sonner";
 
 
@@ -83,11 +83,11 @@ export default function AddLocationModal({
           {(onClose) => (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <ModalHeader className="flex flex-col gap-1">Ajout d'un emplacement</ModalHeader>
+                <ModalHeader className="flex flex-col gap-1">Ajout d&apos;un emplacement</ModalHeader>
                 <ModalBody className="transition duration-400 ease-in-out">
                   <div className="flex flex-col gap-8">
                     <div className="flex flex-col gap-3">
-                      <h1 className="text-sm font-light">Infos sur l'emplacement</h1>
+                      <h1 className="text-sm font-light">Infos sur l&apos;emplacement</h1>
 
                       <FormField
                         control={form.control}

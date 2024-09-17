@@ -12,7 +12,7 @@ const breadcrumbItems = [
   {
     label: 'Mon compte',
     path: ''
-  },
+  }
 ]
 
 export default function AccountPage() {

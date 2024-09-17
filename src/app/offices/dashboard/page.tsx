@@ -8,7 +8,7 @@ const breadcrumbItems = [
   {
     label: 'Accueil',
     path: ''
-  },
+  }
 ]
 
 export default function DashboardPage() {
@@ -41,7 +41,7 @@ export default function DashboardPage() {
               <BadgeCheck size={42} className="text-[#f37c54]" />
               <p className="font-bold text-2xl sm:text-3xl lg:text-4xl leading-6 text-primary ml-2">8900+</p>
             </div>
-            <p className="font-medium text-base sm:text-lg leading-6 mt-3 md:mt-6 text-center">D'équilibres atteints</p>
+            <p className="font-medium text-base sm:text-lg leading-6 mt-3 md:mt-6 text-center">D&apos;équilibres atteints</p>
           </div>
           <div
             className="flex flex-col flex-1 justify-center items-center bg-[#f3f2f1] dark:bg-zinc-800 dark:text-slate-100 px-4 py-2 h-[126px] w-[100%] md:w-[281px] rounded-lg justify-self-center">
@@ -49,7 +49,7 @@ export default function DashboardPage() {
               <TrendingUp size={45} className="text-[#f37c54]" />
               <p className="font-bold text-2xl sm:text-3xl lg:text-4xl leading-6 text-primary ml-2">1.5M+</p>
             </div>
-            <p className="font-medium text-base sm:text-lg leading-6 mt-3 md:mt-6 text-center">De chiffre d'affaires</p>
+            <p className="font-medium text-base sm:text-lg leading-6 mt-3 md:mt-6 text-center">De chiffre d&apos;affaires</p>
           </div>
         </div>
       </section>

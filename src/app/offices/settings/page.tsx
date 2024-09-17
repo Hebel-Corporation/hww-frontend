@@ -12,7 +12,7 @@ const breadcrumbItems = [
   {
     label: 'Paramètres',
     path: ''
-  },
+  }
 ]
 
 const SettingsPage = () => {

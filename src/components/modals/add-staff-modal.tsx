@@ -6,7 +6,7 @@ import { useDisclosure } from '@nextui-org/react';
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { toast } from "sonner";
 import { EyeIcon, EyeOffIcon, PlusCircle } from "lucide-react";
 import { createOfficeStaff } from "@/actions/office-actions";
@@ -123,7 +123,7 @@ export default function AddStaffModal({officeID}:{officeID: string}) {
           {(onClose) => (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <ModalHeader className="flex flex-col gap-1">Ajout d'un staff</ModalHeader>
+                <ModalHeader className="flex flex-col gap-1">Ajout d&apos;un staff</ModalHeader>
                 <ModalBody className="transition duration-400 ease-in-out">
                   <div className="flex flex-col gap-3">
                     <FormField
