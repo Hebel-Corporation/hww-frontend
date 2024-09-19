@@ -8,10 +8,15 @@ import ObjectiveItem from "@/components/portal/objective-item";
 import ProducItem from "@/components/portal/product-item";
 import { ModeToggle } from "@/components/mode-toggle";
 import MobileMenu from "@/components/portal/mobile-menu";
+import { getServerSession } from "@/utils/server-auth-utils";
 
-export default function HomePage() {
+export default async function HomePage() {
+
+  const session = await getServerSession({raw: false})
+  const hasSession = session ? true : false
+
   return (
-    <div className="flex flex-col min-h-screen scroll-smooth">
+    <div className="flex flex-col min-h-screen">
       <main className="min-h-[calc(100vh-57px-97px)] flex-1 w-full">
 
         {/* <!-- HEADER SECTION --> */}
@@ -24,7 +29,7 @@ export default function HomePage() {
 
             <div className="flex flex-row sm:flex-row-reverse gap-5 sm:gap-8 items-center">
               <ModeToggle />
-              <MobileMenu />
+              <MobileMenu hasSession={hasSession} />
 
               <div className="hidden md:block w-full md:w-auto" id="menu">
                 <nav className="w-full bg-white md:bg-transparent rounded shadow-lg px-6 py-4 mt-4 text-center md:p-0 md:mt-0 md:shadow-none">
@@ -76,10 +81,12 @@ export default function HomePage() {
                 Le bonheur commence par un corps en meilleure santé.
               </h1>
               <div className="flex flex-col gap-6">
-                <p className="text-green-700 text-xl md:text-2xl leading-snug mt-8">Welcome to the Health Winning World !</p>
+                <p className="text-green-700 text-xl md:text-2xl leading-snug mt-8">
+                  Welcome to the Health Winning World !
+                </p>
                 <Button variant="default" asChild className="max-w-max px-5">
-                  <Link href="/login">
-                    Commencer
+                  <Link href={`${hasSession ? '/offices/dashboard' : '/login'}`}>
+                    {hasSession ? 'Commencer': 'Mon compte' }
                     <ArrowRightIcon className="ml-2" />
                   </Link>
                 </Button>
@@ -101,7 +108,8 @@ export default function HomePage() {
             <div className="max-w-3xl">
               <p className="font-light">
                 Health Winning World est une entreprise de marketing de réseau crée en 2023 par une association des médecins malaisiens, chinois, thailandais
-                oeuvrant dans la recherche sur le traitement et prise en charge des pathologies chroniques. Cette association dénommée Medecin Advance Research Association (MARA) est représentée par Dr KAMVAM BIN FARVAS.
+                oeuvrant dans la recherche sur le traitement et prise en charge des pathologies chroniques. 
+                Cette association dénommée Medecin Advance Research Association (MARA) est représentée par Dr KAMVAM BIN FARVAS.
               </p>
             </div>
 
@@ -180,7 +188,7 @@ export default function HomePage() {
 
             <div className="w-full md:w-1/3 flex items-center justify-center">
               <img src="/images/joyful_lady.png" className="h-60" alt="" />
-              <h2 className="text-2xl text-center leading-tight font-bold text-primary1">Rejoignez-nous <br /> aujourd'hui !</h2>
+              <h2 className="text-2xl text-center leading-tight font-bold text-primary1">Rejoignez-nous <br /> aujourd&apos;hui !</h2>
             </div>
 
           </div>

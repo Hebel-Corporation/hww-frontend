@@ -3,7 +3,9 @@
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { Menu } from "lucide-react";
 
-export default function MobileMenu() {
+export default function MobileMenu({
+    hasSession
+}: {hasSession: boolean}) {
     return (
         <div className="block sm:hidden">
             <Dropdown backdrop="opaque">
@@ -20,8 +22,8 @@ export default function MobileMenu() {
                     <DropdownItem key="rewards" href="#rewards">Rewards</DropdownItem>
                     <DropdownItem key="products" href="#products">Produits</DropdownItem>
                     <DropdownItem key="contact" href="#contact">Nous contacter</DropdownItem>
-                    <DropdownItem key="signIn" href="/login" className="text-green-500" color="success">
-                        Se connecter
+                    <DropdownItem key="signIn" href={`${hasSession ? '/offices/dashboard' : '/login'}`} className="text-green-500" color="success">
+                        {hasSession ? 'Tableau de bord' : 'Se connecter'}
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
