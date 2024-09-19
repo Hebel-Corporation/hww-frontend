@@ -7,9 +7,9 @@ const LoginPage = async() => {
 
   return (
     <div className='flex min-h-screen'>
-        <div className='hidden sm:flex flex-1 items-center justify-center bg-blue-100 dark:bg-transparent'>
+        <div className='hidden md:flex flex-1 items-center justify-center bg-blue-100 dark:bg-zinc-900'>
             <Image alt='Login image' width={100} height={100} src={'/login-img.svg'}
-            className='min-w-fit h-auto'
+            className='max-w-fit min-w-96 mx-auto h-auto scale-90'
              />
         </div>
         <div className='flex flex-1 items-center justify-center'>
