@@ -24,6 +24,7 @@ export const ApiEndpoints = {
         MEMBERS: {
             GET_MEMBERS: '/members/users/members/',
             GET_MEMBER_DETAILS: '/members/users/{{memberID}}/member-details/',
+            GET_MEMBER_ACCOUNT_DETAILS: '/members/accounts/{{accountID}}/account-details/',
             GET_MEMBER_ACCOUNT_DOWNLINES: '/members/accounts/{{accountID}}/member-downlines/',
             GET_MEMBER_ACCOUNT_REFERRALS: '/members/accounts/{{accountID}}/member-referrals/',
             CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',

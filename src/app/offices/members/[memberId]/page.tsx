@@ -16,6 +16,7 @@ import { SessionType } from '@/types'
 import { getServerSession } from '@/utils/server-auth-utils'
 import { checkOfficeRegisterCodeValidity } from '@/actions/office-actions'
 import SuspenseFallback from '@/components/common/suspense-fallback'
+import Link from 'next/link'
 
 
 
@@ -31,8 +32,9 @@ const MemberDetails = async ({
     const session: SessionType = await getServerSession({ raw: false })
     const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
 
-    const currentAccountId = searchParams.account || ''
-    const member = await getMemberDettails({ memberId: params.memberId })
+    const currentAccountId: string = searchParams.account || ''
+    const memberId: string = params.memberId || ''
+    const member = await getMemberDettails({ memberId: memberId })
     if (!member)
         notFound()
     if (!currentAccountId)
@@ -108,11 +110,12 @@ const MemberDetails = async ({
                             <SearchBar />
                         </div>
                         <div className="flex flex-wrap gap-3 items-center">
-                            <Button radius="sm" variant='flat' color='warning' startContent={
-                                <EyeIcon />
-                            }
+                            <Button radius="sm" variant='flat' color='warning'
+                                children={
+                                    <Link href={`/offices/members/${memberId}/${currentAccountId}`}>Détails du compte</Link>
+                                }
+                                startContent={<EyeIcon />}
                             >
-                                Détails du compte
                             </Button>
                             <Button radius="sm" startContent={
                                 <Filter />
