@@ -120,7 +120,7 @@ const LoginForm = () => {
                             error && <span className='text-small font-light text-red-400'>{error}</span>
                         }
                 </div>
-                <Button type="submit" isLoading={isLoggingIn} isDisabled={isLoggingIn} radius='sm'>
+                <Button type="submit" color='primary' isLoading={isLoggingIn} isDisabled={isLoggingIn} radius='sm'>
                     Se connecter
                 </Button>
             </form>
