@@ -16,6 +16,11 @@ import {
   TooltipProvider
 } from "@/components/ui/tooltip";
 import { userLogout } from "@/actions/auth-actions";
+import RegisterBanner from "../common/register-banner";
+import { useEffect, useState } from "react";
+import { SessionType } from "@/types";
+import { getClientSession } from "@/utils/client-utils";
+import { checkOfficeRegisterCodeValidity } from "@/actions/office-actions";
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -26,6 +31,20 @@ export function Menu({ isOpen }: MenuProps) {
   const router = useRouter()
   const pathname = usePathname();
   const menuList = getMenuList(pathname);
+  const [hasRegisterCodeValid, setHasRegisterCodeValid] = useState(false)
+
+
+  useEffect(() => {
+
+    async function registerCodeCheck() {
+      const session: SessionType = await getClientSession()
+      const isCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
+      setHasRegisterCodeValid(isCodeValid)
+    }
+
+    registerCodeCheck()
+
+  }, [])
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
@@ -110,6 +129,14 @@ export function Menu({ isOpen }: MenuProps) {
               )}
             </li>
           ))}
+
+          {
+            !hasRegisterCodeValid &&
+            <div className="grow flex items-end">
+              <RegisterBanner />
+            </div>
+          }
+
           <li className="w-full grow flex items-end">
             <TooltipProvider disableHoverableContent>
               <Tooltip delayDuration={100}>

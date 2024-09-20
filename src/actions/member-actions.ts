@@ -83,6 +83,23 @@ export const getMemberAccountReferrals = async ({
 
 
 
+
+export const getMemberAccountMatchings = async ({
+    accountId
+}: { accountId: string }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_MATCHINGS.replace("{{accountID}}", accountId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
 export const isFirstNodeCheck = async () => {
     try {
         const result = await serverApi.get(`${ApiEndpoints.MEMBERS.CHECK_FIRST_NODE}`)

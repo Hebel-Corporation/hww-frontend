@@ -27,6 +27,7 @@ export const ApiEndpoints = {
             GET_MEMBER_ACCOUNT_DETAILS: '/members/accounts/{{accountID}}/account-details/',
             GET_MEMBER_ACCOUNT_DOWNLINES: '/members/accounts/{{accountID}}/member-downlines/',
             GET_MEMBER_ACCOUNT_REFERRALS: '/members/accounts/{{accountID}}/member-referrals/',
+            GET_MEMBER_ACCOUNT_MATCHINGS: '/members/accounts/{{accountID}}/member-matchings/',
             CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',
             MEMBER_REGISTER: '/members/offices/{{officeID}}/member-registration/',
             CREATE_MEMBER_ACCOUNT: '/members/offices/{{officeID}}/member-registration-account/',

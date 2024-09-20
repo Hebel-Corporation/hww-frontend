@@ -1,11 +1,11 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useStore } from "@/hooks/use-store";
 import { Sidebar } from "@/components/admin-panel/sidebar";
 import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
+import { useStore } from "@/hooks/use-store";
+import { cn } from "@/lib/utils";
 
-export default function AdminPanelLayout({
+export default async function AdminPanelLayout({
   children
 }: {
   children: React.ReactNode;
@@ -14,9 +14,10 @@ export default function AdminPanelLayout({
 
   if (!sidebar) return null;
 
+
   return (
     <>
-      <Sidebar />
+      <Sidebar /> 
       <main
         className={cn(
           "relative min-h-[calc(100vh)] bg-zinc-50 dark:bg-zinc-900 transition-[margin-left] ease-in-out duration-300",
