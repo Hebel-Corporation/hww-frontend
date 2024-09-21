@@ -1,10 +1,10 @@
-import { getOfficeDetails } from '@/actions/office-actions'
+import { getOfficeDetails, getOfficeRegisterCodes } from '@/actions/office-actions'
 import AddStaffModal from '@/components/modals/add-staff-modal'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import StaffItemList from '@/components/staff-item-list'
-import { Office } from '@/types'
+import { Office, SubscriptionCode } from '@/types'
 import { Avatar, Button, Pagination, Spinner } from '@nextui-org/react'
 import { Edit, Filter, View } from 'lucide-react'
 import { Suspense } from 'react'
@@ -19,6 +19,12 @@ const OfficeDetails = async ({
 
     const officeID = params?.officeId
     const office: Office = await getOfficeDetails({ officeId: officeID })
+    const codes = await getOfficeRegisterCodes({ officeId: officeID });
+
+    let validCodeNumber = 0
+    codes?.forEach((code: SubscriptionCode) => {
+        validCodeNumber += (code?.reccords_number - code?.used_reccords_number)
+    });
 
     const breadcrumbItems = [
         {
@@ -55,9 +61,13 @@ const OfficeDetails = async ({
                         </div>
                     </div>
                     <div className='flex gap-4 items-center'>
-                        
+
                         {/* Subscription codes */}
-                        <SubscriptionCodeModal officeId={officeID} />
+                        <SubscriptionCodeModal
+                            officeId={officeID}
+                            registerCodes={codes}
+                            validCodeNumber={validCodeNumber}
+                        />
 
                         <Button radius="sm" variant='flat' color='warning' startContent={
                             <Edit size={20} />

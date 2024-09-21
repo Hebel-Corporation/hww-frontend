@@ -5,7 +5,7 @@ import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
 import { useStore } from "@/hooks/use-store";
 import { cn } from "@/lib/utils";
 
-export default async function AdminPanelLayout({
+export default function AdminPanelLayout({
   children
 }: {
   children: React.ReactNode;

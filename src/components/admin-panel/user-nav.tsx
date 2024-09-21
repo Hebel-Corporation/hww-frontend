@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutGrid, LogOut, User } from "lucide-react";
+import { LayoutGrid, LogOut, User, User2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -22,10 +22,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { userLogout } from "@/actions/auth-actions";
 import { useRouter } from "next/navigation";
+import { getInitialChar } from "@/utils/utils-fonctions";
+import { getClientSession } from "@/utils/client-utils";
 
 export function UserNav() {
 
   const router = useRouter()
+  const session = getClientSession()
 
   return (
     <DropdownMenu>
@@ -39,7 +42,17 @@ export function UserNav() {
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="#" alt="Avatar" />
-                  <AvatarFallback className="bg-transparent">JD</AvatarFallback>
+                  <AvatarFallback className="bg-transparent">
+                    {
+                      session?.user?.first_name || session?.user?.last_name ?
+                      getInitialChar({
+                        first_name: session?.user?.first_name,
+                        last_name: session?.user?.last_name
+                      })
+                      :
+                      <User2 />
+                    }
+                  </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -51,9 +64,11 @@ export function UserNav() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Nelson Kayisirirya</p>
+            <p className="text-sm font-medium leading-none">
+              {session?.user?.first_name} {session?.user?.last_name}
+            </p>
             <p className="text-xs leading-none text-muted-foreground">
-              nelsonkayisirirya5@gmail.com
+              {session?.user?.company_id}
             </p>
           </div>
         </DropdownMenuLabel>

@@ -12,7 +12,7 @@ export default function RegisterBanner() {
                     <p className="text-sm leading-6 text-gray-900">
                         <strong className="font-semibold hidden sm:inline">Désolé !</strong>
                         <DotIcon className="mx-0.5 hidden sm:inline" />
-                        Vous avez pas des codes valide pour faire les enregistrements.
+                        Vous n&apos;avez pas des codes valide pour faire les enregistrements.
                     </p>
 
                     <HelpPopover />

@@ -3,6 +3,7 @@
 import { ApiEndpoints } from "@/lib/api-endpoints";
 import serverApi from "@/lib/axios-server-instance";
 import { revalidatePath } from "next/cache";
+import { format } from 'date-fns';
 
 
 
@@ -168,6 +169,7 @@ export const memberRegister = (formData: {
                 ...formData,
                 member: {
                     ...formData.member,
+                    birthday: format(formData.member.birthday, "yyyy-MM-dd"),
                     user_type: 'member'
                 }
             });
@@ -186,6 +188,48 @@ export const memberRegister = (formData: {
                 message = errorString.error.match(/string='([^']+)'/)[1];
             } else {
                 message = "Erreur lors de la création du membre.";
+            }
+
+            if (typeof message !== 'string') {
+                message = "Erreur inconnue.";
+            }
+
+            reject(new Error(message));
+        }
+    });
+};
+
+
+
+export const memberUpdate = (formData: {
+    first_name: string,
+    last_name: string,
+    gender: string,
+    birthday: Date,
+    phone?: string
+}, memberId: string): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.patch(
+                `${ApiEndpoints.MEMBERS.MEMBER_UPDATE.replace("{{memberID}}", memberId)}`, {
+                ...formData,
+                birthday: format(formData.birthday, "yyyy-MM-dd")
+            });
+            const data = result.data;
+            resolve(data);
+
+            revalidatePath(`/offices/members`);
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            let message = ''
+
+            if (errorString?.error) {
+                message = errorString.error;
+            } else if (errorString?.error?.match(/string='([^']+)'/)) {
+                message = errorString.error.match(/string='([^']+)'/)[1];
+            } else {
+                message = "Erreur lors de la mise à jour.";
             }
 
             if (typeof message !== 'string') {

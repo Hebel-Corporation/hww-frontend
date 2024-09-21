@@ -1,45 +1,24 @@
 'use client'
 
+import { SubscriptionCode } from "@/types";
 import { Button, Chip, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 import { View } from "lucide-react";
 import EmptyData from "../common/empty-data";
 import RegisterCodeModal from "./register-code-modal";
-import { useEffect, useState } from "react";
-import { getOfficeRegisterCodes } from "@/actions/office-actions";
-import { SubscriptionCode } from "@/types";
 
 
 
 export default function SubscriptionCodeModal({
-  officeId
-}: { officeId: string }) {
+  officeId,
+  registerCodes,
+  validCodeNumber
+}: { 
+  officeId: string,
+  registerCodes: SubscriptionCode[],
+  validCodeNumber: number
+ }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [ registerCodes, setRegisterCodes ] = useState<SubscriptionCode[]>([])
-  const [ validCodeNumber, setValidCodeNumber ] = useState(0)
-
-
-  useEffect(() => {
-
-    async function getRegisterCodes() {
-      const codes = await getOfficeRegisterCodes({ officeId: officeId })
-      if (codes) setRegisterCodes(codes)
-    }
-
-    getRegisterCodes()
-
-  }, [])
-
-
-  useEffect(() => {
-    if(registerCodes?.length > 0) {
-      let codeNumber: number = 0
-      registerCodes?.forEach((code: SubscriptionCode) => {
-        codeNumber += (code?.reccords_number-code?.used_reccords_number)
-      });
-      setValidCodeNumber(codeNumber)
-    }
-  }, [registerCodes])
-
+  
 
   return (
     <>
@@ -47,7 +26,7 @@ export default function SubscriptionCodeModal({
         <View size={20} />
       }
       >
-        {validCodeNumber} Code{validCodeNumber > 1 ? 's': ''} d&apos;inscription valide
+        {validCodeNumber} Code{validCodeNumber > 1 ? 's' : ''} d&apos;inscription valide
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} isKeyboardDismissDisabled={true} size="3xl" scrollBehavior="inside">
         <ModalContent>
@@ -58,7 +37,7 @@ export default function SubscriptionCodeModal({
                 <div className="flex flex-col gap-5">
                   <div className="relative overflow-x-auto">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                      <thead className="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                           <th scope="col" className="px-3 py-3">
                             Package
@@ -81,26 +60,26 @@ export default function SubscriptionCodeModal({
                         {
                           registerCodes?.map((code: SubscriptionCode) => (
                             <tr key={code?.id} className="bg-white border-b dark:bg-transparent dark:border-gray-700">
-                              <th scope="row" className="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              <th scope="row" className="px-3 py-2.5 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {code?.package?.name} <span className="text-small font-extralight ml-2">(${code?.package?.price}/code)</span>
                               </th>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-2.5">
                                 {code?.reccords_number}
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-2.5">
                                 {code?.used_reccords_number}
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-2.5">
                                 ${code?.total_amount}
                               </td>
-                              <td className="px-6 py-4">
+                              <td className="px-6 py-2.5">
                                 {
                                   code?.is_valid ?
-                                  <Chip size="sm" color="success">Valide</Chip>
-                                  :
-                                  <Chip size="sm" color="danger">Non valide</Chip>
+                                    <Chip variant="faded" size="sm" color="success">Valide</Chip>
+                                    :
+                                    <Chip variant="faded" size="sm" color="danger">Non valide</Chip>
                                 }
-                                
+
                               </td>
                             </tr>
                           ))

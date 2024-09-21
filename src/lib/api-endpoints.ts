@@ -30,6 +30,7 @@ export const ApiEndpoints = {
             GET_MEMBER_ACCOUNT_MATCHINGS: '/members/accounts/{{accountID}}/member-matchings/',
             CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',
             MEMBER_REGISTER: '/members/offices/{{officeID}}/member-registration/',
+            MEMBER_UPDATE: '/members/users/{{memberID}}/',
             CREATE_MEMBER_ACCOUNT: '/members/offices/{{officeID}}/member-registration-account/',
             CHECK_FIRST_NODE: '/members/accounts/is-first-node/'
         }
