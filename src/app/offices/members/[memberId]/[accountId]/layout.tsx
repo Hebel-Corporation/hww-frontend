@@ -79,7 +79,7 @@ export default async function AccountLayout ({ children, params, searchParams }:
           </Chip>
         </div>
 
-        <div className='flex justify-between'>
+        <div className='flex flex-wrap gap-4 justify-between'>
           <AccountSubMenu accountId={accountId} memberId={memberId} />
 
           <div className="sm:w-2/4 w-full flex items-center">
