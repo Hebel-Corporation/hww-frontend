@@ -12,7 +12,7 @@ import { getServerSession } from "@/utils/server-auth-utils";
 
 export default async function HomePage() {
 
-  const session = await getServerSession({raw: false})
+  const session = await getServerSession({ raw: false })
   const hasSession = session ? true : false
 
   return (
@@ -56,8 +56,8 @@ export default async function HomePage() {
                     </li>
                     <li className="md:ml-6 mt-3 md:mt-0">
                       <Button variant="default" asChild>
-                        <Link href="/login">
-                          Se connecter
+                        <Link href={`${hasSession ? '/offices/dashboard' : '/login'}`}>
+                          {hasSession ? 'Tableau de bord' : 'Se connecter'}
                         </Link>
                       </Button>
                     </li>
@@ -84,9 +84,9 @@ export default async function HomePage() {
                 <p className="text-green-700 text-xl md:text-2xl leading-snug mt-8">
                   Welcome to the Health Winning World !
                 </p>
-                <Button variant="default" asChild className="max-w-max px-5">
+                <Button variant="default" size='lg' asChild className="max-w-max px-5">
                   <Link href={`${hasSession ? '/offices/dashboard' : '/login'}`}>
-                    {hasSession ? 'Commencer': 'Mon compte' }
+                    {hasSession ? 'Mon compte' : 'Commencer'}
                     <ArrowRightIcon className="ml-2" />
                   </Link>
                 </Button>
@@ -108,7 +108,7 @@ export default async function HomePage() {
             <div className="max-w-3xl">
               <p className="font-light">
                 Health Winning World est une entreprise de marketing de réseau crée en 2023 par une association des médecins malaisiens, chinois, thailandais
-                oeuvrant dans la recherche sur le traitement et prise en charge des pathologies chroniques. 
+                oeuvrant dans la recherche sur le traitement et prise en charge des pathologies chroniques.
                 Cette association dénommée Medecin Advance Research Association (MARA) est représentée par Dr KAMVAM BIN FARVAS.
               </p>
             </div>

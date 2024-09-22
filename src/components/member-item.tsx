@@ -1,16 +1,29 @@
+'use client'
+
 import { User } from '@/types'
 import { getInitialChar } from '@/utils/utils-fonctions'
-import { Avatar, Button, Chip } from '@nextui-org/react'
-import { ChevronRight, PenSquare } from 'lucide-react'
-import Link from 'next/link'
-import React from 'react'
+import { Avatar, Chip } from '@nextui-org/react'
+import { ChevronRight } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { MouseEvent } from 'react'
+import UpdateMemberModal from './modals/uppdate-member-modal'
 
 const MemberItem = ({ member }: { member: User }) => {
+
+    const router = useRouter()
+
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
+        const target = event.target as HTMLElement;
+        if (target.closest('#parent-click')) {
+            router.push(`/offices/members/${member?.id}`);
+        }
+    };
+
     return (
-        <Link href={`/offices/members/${member?.id}`} className="flex items-center justify-between text-sm py-2 border-b duration-500 hover:bg-gray-100 dark:hover:bg-gray-950">
+        <div id="parent-click" onClick={handleClick} className="flex items-center justify-between text-sm py-2 border-b duration-500 hover:bg-gray-100 dark:hover:bg-gray-950 cursor-pointer">
             <div className="flex gap-3 items-center">
                 <Avatar fallback={
-                    <>{getInitialChar({first_name: member?.first_name, last_name: member?.last_name})}</>
+                    <>{getInitialChar({ first_name: member?.first_name, last_name: member?.last_name })}</>
                 } className='h-[3.1rem] w-[3.1rem]' />
                 <div className='sm:min-w-60'>
                     <h1 className="text-base font-medium">
@@ -39,14 +52,19 @@ const MemberItem = ({ member }: { member: User }) => {
                 </h2>
             </div>
             <div className="flex items-center gap-5">
-                <Button radius='sm' className='min-w-0 p-1.5'>
-                    <PenSquare size={22} />
-                </Button>
-                <Button radius='sm' variant='light' className='min-w-0 p-1.5'>
-                    <ChevronRight size={25} />
-                </Button>
+                <UpdateMemberModal member={
+                    {
+                        id: member?.id,
+                        first_name: member?.first_name,
+                        last_name: member?.last_name,
+                        gender: member?.gender,
+                        birthday: new Date(member?.birthday),
+                        phone: member?.phone
+                    }
+                } />
+                <ChevronRight size={25} className='opacity-50' />
             </div>
-        </Link>
+        </div>
     )
 }
 
