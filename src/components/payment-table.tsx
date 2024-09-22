@@ -19,7 +19,7 @@ function PaymentTable({
 
     return (
         <>
-            <Table aria-label="Referral table" shadow='none' radius='sm'
+            <Table isStriped aria-label="Referral table" shadow='none' radius='sm'
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{

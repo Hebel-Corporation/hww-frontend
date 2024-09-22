@@ -19,7 +19,7 @@ function MatchingTable({
 
     return (
         <>
-            <Table aria-label="Referral table" shadow='none' radius='sm'
+            <Table isStriped aria-label="Referral table" shadow='none' radius='sm'
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
@@ -47,7 +47,7 @@ function MatchingTable({
             >
                 <TableHeader>
                     <TableColumn key="downline">Les personnes ayant ocasionnées l&apos;équilibre</TableColumn>
-                    <TableColumn key="date">Date</TableColumn>
+                    <TableColumn key="date" className='hidden sm:table-cell'>Date</TableColumn>
                     <TableColumn key="amount">Montant</TableColumn>
                     <TableColumn key="status">Statut</TableColumn>
                 </TableHeader>
@@ -57,7 +57,7 @@ function MatchingTable({
                     {
                         matchings?.map((item: any) => (
                             <TableRow key={item?.id}>
-                                <TableCell>
+                                <TableCell className='px-0 sm:px-3'>
                                     <div className='flex gap-5 items-center'>
                                         {
                                             item?.downlines?.map((downline: any) => (
@@ -73,13 +73,13 @@ function MatchingTable({
                                         }
                                     </div>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className='hidden sm:table-cell'>
                                     {item?.created_at}
                                 </TableCell>
                                 <TableCell>
                                     $ {item?.amount}
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className='px-0 sm:px-3'>
                                     {
                                         item?.is_paid ?
                                             <Chip variant='faded' size='sm' color='danger'>Payé</Chip>
