@@ -3,7 +3,7 @@ import { Avatar } from '@nextui-org/react'
 
 const DownlineItem = ({ downline }: { downline: any }) => {
     return (
-        <div className="flex items-center justify-between text-sm py-2 border-b duration-500 hover:bg-gray-100 dark:hover:bg-gray-950">
+        <div className="flex items-center justify-between text-sm py-2 border-b duration-500">
             <div className="flex gap-3 items-center">
                 <Avatar fallback={<>{getInitialChar({first_name: downline?.member?.first_name, last_name: downline?.member?.last_name})}</>
                 } className='h-[3.1rem] w-[3.1rem]' />
