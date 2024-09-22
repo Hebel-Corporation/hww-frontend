@@ -23,7 +23,7 @@ function ReferralTable({
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[calc(100vh-45.5vh)] max-h-[calc(100vh-45.5vh)] p-0",
+                    wrapper: "min-h-[calc(100vh-45vh)] max-h-[calc(100vh-45vh)] p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={
@@ -39,6 +39,7 @@ function ReferralTable({
                                 onChange={(newPage) => {
                                     router.push(`?page=${newPage}`)
                                 }}
+                                className='p-2 -m-3'
                             />
                         </div>
                     ) : null
@@ -46,7 +47,7 @@ function ReferralTable({
             >
                 <TableHeader>
                     <TableColumn key="downline">Downline</TableColumn>
-                    <TableColumn key="downline">Compte</TableColumn>
+                    <TableColumn key="account">Compte</TableColumn>
                     <TableColumn key="date">Date</TableColumn>
                     <TableColumn key="amount">Montant</TableColumn>
                     <TableColumn key="status">Statut</TableColumn>

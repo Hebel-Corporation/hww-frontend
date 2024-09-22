@@ -23,7 +23,7 @@ function MatchingTable({
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[calc(100vh-45.5vh)] max-h-[calc(100vh-45.5vh)] p-0",
+                    wrapper: "min-h-[calc(100vh-45vh)] max-h-[calc(100vh-45vh)] p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={
@@ -39,6 +39,7 @@ function MatchingTable({
                                 onChange={(newPage) => {
                                     router.push(`?page=${newPage}`)
                                 }}
+                                className='p-2 -m-3'
                             />
                         </div>
                     ) : null
@@ -60,7 +61,7 @@ function MatchingTable({
                                     <div className='flex gap-5 items-center'>
                                         {
                                             item?.downlines?.map((downline: any) => (
-                                                <div className='w-1/2 first:border-r-2'>
+                                                <div key={downline?.id} className='w-1/2 first:border-r-2'>
                                                     <h1 className='text-base font-semibold'>
                                                         {downline?.member?.first_name} {downline?.member?.last_name}
                                                     </h1>

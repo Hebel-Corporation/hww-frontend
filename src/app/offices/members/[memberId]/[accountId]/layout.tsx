@@ -8,16 +8,19 @@ import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 
 
+interface AccountLayoutProps {
+  children: ReactNode;
+  params: {
+    memberId: string;
+    accountId: string;
+  };
+  searchParams: {
+    [key: string]: string | undefined;
+  };
+}
 
-const AccountLayout = async ({
-  children,
-  params,
-  searchParams
-}: {
-  children: ReactNode,
-  params: { memberId: string, accountId: string },
-  searchParams: { [key: string]: string | undefined }
-}) => {
+
+export default async function AccountLayout ({ children, params, searchParams }: AccountLayoutProps) {
 
   const memberId: string = params.memberId || ''
   const accountId: string = params?.accountId
@@ -93,4 +96,3 @@ const AccountLayout = async ({
   )
 }
 
-export default AccountLayout

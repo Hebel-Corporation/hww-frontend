@@ -48,26 +48,25 @@ export default function UpdateMemberModal({ member }: { member: MemberType }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [date, setDate] = useState<CalendarDate | undefined>(undefined);
-  const [currentMember, setCurrentMember] = useState<MemberType>({...member})
 
 
 
   const form = useForm<z.infer<typeof memberFormSchema>>({
     resolver: zodResolver(memberFormSchema),
     defaultValues: {
-      first_name: currentMember.first_name,
-      last_name: currentMember.last_name,
-      gender: currentMember.gender,
-      birthday: currentMember.birthday,
-      phone: currentMember.phone,
+      first_name: member.first_name,
+      last_name: member.last_name,
+      gender: member.gender,
+      birthday: member.birthday,
+      phone: member.phone,
     },
   })
 
   useEffect(() => {
-    if (currentMember?.birthday) {
-      setDate(parseDate(format(currentMember.birthday, "yyyy-MM-dd")))
+    if (member?.birthday) {
+      setDate(parseDate(format(member.birthday, "yyyy-MM-dd")))
     }
-  }, [])
+  }, [member])
 
 
   async function onSubmit(values: z.infer<typeof memberFormSchema>) {
@@ -81,21 +80,14 @@ export default function UpdateMemberModal({ member }: { member: MemberType }) {
       phone: values.phone || ''
     }
 
-    setCurrentMember({
-      ...memberUpdateInstance,
-      id: currentMember.id
-    })
-
     toast.promise(
       memberUpdate({
         ...memberUpdateInstance,
         birthday: new Date(memberUpdateInstance.birthday)
-      }, currentMember?.id), {
+      }, member?.id), {
       loading: 'Mise à jour en cours...',
       success: () => {
         onOpenChange()
-        form.reset()
-        setDate(undefined)
         return `Les infos ont été ajouté avec succès !`;
       },
       error: (err: Error) => {
@@ -113,8 +105,8 @@ export default function UpdateMemberModal({ member }: { member: MemberType }) {
       <Button radius='sm' className='min-w-0 p-1.5'
         onClick={(event) => {
           event.stopPropagation();
+          onOpen()
         }}
-        onPress={onOpen}
       >
         <PenSquare size={22} />
       </Button>
@@ -163,7 +155,7 @@ export default function UpdateMemberModal({ member }: { member: MemberType }) {
                                 <Select {...field} isDisabled={isSubmitting} radius="sm" size="sm"
                                   label="Genre"
                                   className="w-full"
-                                  defaultSelectedKeys={currentMember.gender}
+                                  defaultSelectedKeys={member.gender}
                                 >
                                   <SelectItem key={'F'}>
                                     Femme

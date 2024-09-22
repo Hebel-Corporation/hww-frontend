@@ -111,11 +111,12 @@ const MemberDetails = async ({
                         </div>
                         <div className="flex flex-wrap gap-3 items-center">
                             <Button radius="sm" variant='flat' color='warning'
-                                children={
-                                    <Link href={`/offices/members/${memberId}/${currentAccountId}`}>Détails du compte</Link>
-                                }
                                 startContent={<EyeIcon />}
+                                className="!p-0 !min-w-0 h-max"
                             >
+                                <Link href={`/offices/members/${memberId}/${currentAccountId}`} className="flex-1 px-4 py-2.5">
+                                    Détails du compte
+                                </Link>
                             </Button>
                             <Button radius="sm" startContent={
                                 <Filter />
