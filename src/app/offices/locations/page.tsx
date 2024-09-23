@@ -35,6 +35,7 @@ export default async function LocationPage({
   if(!session)
     redirect('/login')
 
+  const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
 
@@ -74,7 +75,7 @@ export default async function LocationPage({
         <Suspense fallback={
           <SuspenseFallback />
         } >
-          <LocationItemList page={page} limit={limit} />
+          <LocationItemList page={page} limit={limit} search={search} />
         </Suspense>
 
       </main>

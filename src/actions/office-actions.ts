@@ -22,10 +22,11 @@ export const getCompanyPackages = async () => {
 
 
 export const getOffices = async ({
-    page, limit
-}: {page: number, limit: number}) => {
+    page, limit, search
+}: {page: number, limit: number, search: string}) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICES}?page=${page}&limit=${limit}`)
+        const result = await serverApi.get(
+            `${ApiEndpoints.OFFICES.GET_OFFICES}?page=${page}&limit=${limit}&search=${search}`)
         const data = result.data
 
         return data;
@@ -55,10 +56,11 @@ export const getOfficeDetails = async ({
 
 
 export const getOfficeStaffs = async ({
-    officeId
-}: { officeId: string }) => {
+    officeId, search
+}: { officeId: string, search: string }) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_STAFFS.replace("officeID", officeId)}`)
+        const result = await serverApi.get(
+            `${ApiEndpoints.OFFICES.GET_OFFICE_STAFFS.replace("{{officeID}}", officeId)}?search=${search}`)
         const data = result.data
 
         return data;
@@ -154,7 +156,7 @@ export const getOfficeRegisterCodes = async ({
     officeId
 }: { officeId: string }) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_REGISTER_CODES.replace("officeID", officeId)}`)
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_REGISTER_CODES.replace("{{officeID}}", officeId)}`)
         const data = result.data
 
         return data;

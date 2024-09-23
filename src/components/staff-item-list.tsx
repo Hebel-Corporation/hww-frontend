@@ -5,10 +5,10 @@ import EmptyData from './common/empty-data'
 import StaffItem from './staff-item'
 
 const StaffItemList = async ({
-    officeID
-}: { officeID: string }) => {
+    officeID, search
+}: { officeID: string, search: string }) => {
 
-    const staffList = await getOfficeStaffs({ officeId: officeID })
+    const staffList = await getOfficeStaffs({ officeId: officeID, search: search })
 
     return (
         <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-35vh)] max-h-[calc(100vh-35vh)]">

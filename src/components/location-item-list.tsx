@@ -15,10 +15,10 @@ type locationResultType = {
 
 const LocationItemList = async ({
     page,
-    limit
-}: { page: number, limit: number }) => {
+    limit, search
+}: { page: number, limit: number, search: string }) => {
 
-    const locations: locationResultType = await getLocations({ page: page, limit: limit })
+    const locations: locationResultType = await getLocations({ page: page, limit: limit, search: search })
 
     return (
         <div className='flex flex-col flex-1 gap-2'>

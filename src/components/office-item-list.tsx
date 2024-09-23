@@ -15,10 +15,14 @@ type oficeResultType = {
 }
 
 const OfficeItemList = async ({
-    page, limit
-}: { page: number, limit: number }) => {
+    page, limit, search
+}: { page: number, limit: number, search: string }) => {
 
-    const offices: oficeResultType = await getOffices({ page: page, limit: limit })
+    const offices: oficeResultType = await getOffices({
+        page: page,
+        limit: limit,
+        search: search
+    })
 
     return (
         <div className='flex flex-col flex-1 gap-2'>

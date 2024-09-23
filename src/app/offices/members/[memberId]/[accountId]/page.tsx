@@ -14,9 +14,15 @@ const ReferralPage = async ({
 
   const accountId: string = params?.accountId
 
+  const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
-  const referrals = await getMemberAccountReferrals({ accountId: accountId, page: page, limit: limit })
+  const referrals = await getMemberAccountReferrals({
+    accountId: accountId,
+    page: page,
+    limit: limit,
+    search: search
+  })
   if (referrals == undefined)
     notFound()
 

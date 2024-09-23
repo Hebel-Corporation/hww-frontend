@@ -8,14 +8,14 @@ import ServerPaginationControls from './common/server-pagination-controls'
 const MemberDownlineList = async ({
     accountId,
     page,
-    limit
-}: { accountId: string, page: number, limit: number }) => {
+    limit, search
+}: { accountId: string, page: number, limit: number, search: string }) => {
 
-    const downlines = await getMemberAccountDownlines({ accountId: accountId, page: page, limit: limit })
+    const downlines = await getMemberAccountDownlines({ accountId: accountId, page: page, limit: limit, search: search })
 
     return (
         <div className='flex flex-col flex-1 gap-2'>
-            <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-59vh)] max-h-[calc(100vh-59vh)]">
+            <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-60vh)] max-h-[calc(100vh-60vh)]">
                 {
                     downlines?.count ?
                         <div className='flex flex-col'>

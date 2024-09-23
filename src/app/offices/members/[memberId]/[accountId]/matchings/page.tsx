@@ -13,9 +13,15 @@ async function MatchingPage({
 
   const accountId: string = params?.accountId
 
+  const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
-  const matchings = await getMemberAccountMatchings({ accountId: accountId, page: page, limit: limit })
+  const matchings = await getMemberAccountMatchings({
+    accountId: accountId,
+    page: page,
+    limit: limit,
+    search: search
+  })
   if (matchings == undefined)
     notFound()
 

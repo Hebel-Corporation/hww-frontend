@@ -35,6 +35,7 @@ export default async function OfficePage({
   if(!session)
     redirect('/login')
 
+  const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
 
@@ -74,7 +75,7 @@ export default async function OfficePage({
         <Suspense fallback={
           <SuspenseFallback />
         } >
-          <OfficeItemList page={page} limit={limit} />
+          <OfficeItemList page={page} limit={limit} search={search} />
         </Suspense>
 
       </main>

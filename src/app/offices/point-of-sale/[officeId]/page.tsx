@@ -12,11 +12,14 @@ import SubscriptionCodeModal from '@/components/modals/subscription-code-modal'
 
 
 const OfficeDetails = async ({
-    params
+    params,
+    searchParams
 }: {
-    params: { officeId: string }
+    params: { officeId: string },
+    searchParams: { [key: string]: string | undefined }
 }) => {
 
+    const search = searchParams?.search || ''
     const officeID = params?.officeId
     const office: Office = await getOfficeDetails({ officeId: officeID })
     const codes = await getOfficeRegisterCodes({ officeId: officeID });
@@ -99,7 +102,7 @@ const OfficeDetails = async ({
                             <span>Chargement...</span>
                         </div>
                     }>
-                        <StaffItemList officeID={officeID} />
+                        <StaffItemList officeID={officeID} search={search} />
                     </Suspense>
                 </div>
             </main>
