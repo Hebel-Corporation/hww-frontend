@@ -101,9 +101,6 @@ const OfficeDetails = async ({
                     }>
                         <StaffItemList officeID={officeID} />
                     </Suspense>
-
-
-                    <Pagination showControls total={5} />
                 </div>
             </main>
         </ContentLayout>

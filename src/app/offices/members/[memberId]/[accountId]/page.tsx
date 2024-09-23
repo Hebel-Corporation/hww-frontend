@@ -1,5 +1,6 @@
 import { getMemberAccountReferrals } from '@/actions/member-actions';
 import ReferralTable from '@/components/referral-table';
+import { constantVars } from '@/lib/constants';
 import { notFound } from 'next/navigation';
 
 
@@ -12,22 +13,21 @@ const ReferralPage = async ({
 }) => {
 
   const accountId: string = params?.accountId
-  
-  const referrals = await getMemberAccountReferrals({ accountId: accountId })
+
+  const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
+  const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
+  const referrals = await getMemberAccountReferrals({ accountId: accountId, page: page, limit: limit })
   if (referrals == undefined)
     notFound()
 
-  const page = Number(searchParams.page) || 1;
-  const limit = Number(searchParams.limit) || 10
-  const pages = referrals?.length ? Math.ceil(referrals.length / limit) : 0;
 
   return (
     <main className='flex flex-col flex-1 gap-3'>
       <h1>Bonus de Parrainage</h1>
 
-      <ReferralTable referrals={referrals}
+      <ReferralTable referrals={referrals?.results}
         page={page}
-        pages={pages}
+        pages={referrals?.total_pages}
       />
     </main>
   )

@@ -28,7 +28,7 @@ function ReferralTable({
                 }}
                 bottomContent={
                     pages > 0 ? (
-                        <div className="flex w-full justify-center">
+                        <div className="flex w-full justify-start">
                             <Pagination radius='sm'
                                 isCompact
                                 showControls

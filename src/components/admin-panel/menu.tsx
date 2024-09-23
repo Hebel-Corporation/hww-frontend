@@ -31,7 +31,7 @@ export function Menu({ isOpen }: MenuProps) {
   const router = useRouter()
   const pathname = usePathname();
   const menuList = getMenuList(pathname);
-  const [hasRegisterCodeValid, setHasRegisterCodeValid] = useState(true)
+  const [hasRegisterCodeValid, setHasRegisterCodeValid] = useState(false)
 
 
   useEffect(() => {

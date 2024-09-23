@@ -1,31 +1,48 @@
+import { getOffices } from '@/actions/office-actions'
+import { Office } from '@/types'
 import { ScrollShadow } from '@nextui-org/react'
 import EmptyData from './common/empty-data'
-import LocationItem from './location-item'
-import { Office } from '@/types'
+import ServerPaginationControls from './common/server-pagination-controls'
 import OfficeItem from './office-item'
-import { getOffices } from '@/actions/office-actions'
 
-const OfficeItemList = async () => {
 
-    const offices: Office[] = await getOffices()
+type oficeResultType = {
+    count: number,
+    total_pages: number,
+    next: string,
+    previous: string,
+    results: Office[]
+}
+
+const OfficeItemList = async ({
+    page, limit
+}: { page: number, limit: number }) => {
+
+    const offices: oficeResultType = await getOffices({ page: page, limit: limit })
 
     return (
-        <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-37vh)] max-h-[calc(100vh-37vh)]">
+        <div className='flex flex-col flex-1 gap-2'>
+            <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-35.5vh)] max-h-[calc(100vh-35.5vh)]">
+                {
+                    offices?.count ?
+                        <div className='flex flex-wrap gap-5'>
+                            {
+                                offices?.results?.map((office: Office) => (
+
+                                    <OfficeItem key={office.id} office={office} />
+
+                                ))
+                            }
+                        </div>
+                        :
+                        <EmptyData description="Aucun emplacement n'est encore enregistrer pour le moment." />
+                }
+            </ScrollShadow>
             {
-                offices?.length ?
-                    <div className='flex flex-wrap gap-5'>
-                        {
-                            offices.map((office: Office) => (
-
-                                <OfficeItem key={office.id} office={office} />
-
-                            ))
-                        }
-                    </div>
-                    :
-                    <EmptyData description="Aucun emplacement n'est encore enregistrer pour le moment." />
+                offices?.count > 0 &&
+                <ServerPaginationControls page={page} limit={limit} total_pages={offices?.total_pages} />
             }
-        </ScrollShadow>
+        </div>
     )
 }
 

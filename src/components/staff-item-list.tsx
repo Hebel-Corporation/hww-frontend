@@ -11,7 +11,7 @@ const StaffItemList = async ({
     const staffList = await getOfficeStaffs({ officeId: officeID })
 
     return (
-        <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-41vh)] max-h-[calc(100vh-41vh)]">
+        <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-35vh)] max-h-[calc(100vh-35vh)]">
             {
                 staffList?.length ?
                     <div className='flex flex-col'>

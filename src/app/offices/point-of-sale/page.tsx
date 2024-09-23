@@ -5,6 +5,7 @@ import SuspenseFallback from '@/components/common/suspense-fallback'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import AddOfficeModal from '@/components/modals/add-office-modal'
 import OfficeItemList from '@/components/office-item-list'
+import { constantVars } from '@/lib/constants'
 import { SessionType } from '@/types'
 import { getServerSession } from '@/utils/server-auth-utils'
 import { Button, Pagination } from '@nextui-org/react'
@@ -24,11 +25,18 @@ const breadcrumbItems = [
   }
 ]
 
-export default async function OfficePage() {
+export default async function OfficePage({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | undefined }
+}) {
 
   const session: SessionType = await getServerSession({ raw: false })
   if(!session)
     redirect('/login')
+
+  const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
+  const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
 
   return (
     <ContentLayout breadcrumb={
@@ -66,10 +74,8 @@ export default async function OfficePage() {
         <Suspense fallback={
           <SuspenseFallback />
         } >
-          <OfficeItemList />
+          <OfficeItemList page={page} limit={limit} />
         </Suspense>
-
-        <Pagination showControls total={5} />
 
       </main>
 
