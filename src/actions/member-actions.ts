@@ -9,13 +9,13 @@ import { format } from 'date-fns';
 
 export const getMembers = async ({
     page,
-    limit
+    limit, search
 } : {
     page: number,
-    limit: number
+    limit: number, search: string
 }) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBERS}?page=${page}&limit=${limit}`)
+        const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBERS}?page=${page}&limit=${limit}&search=${search}`)
         const data = result.data
 
         return data;
@@ -61,11 +61,11 @@ export const getMemberAccountDetails = async ({
 export const getMemberAccountDownlines = async ({
     accountId,
     page,
-    limit
-}: { accountId: string, page: number, limit: number }) => {
+    limit, search
+}: { accountId: string, page: number, limit: number, search: string }) => {
     try {
         const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_DOWNLINES.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}`)
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_DOWNLINES.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}`)
         const data = result.data
 
         return data;
@@ -78,11 +78,11 @@ export const getMemberAccountDownlines = async ({
 
 
 export const getMemberAccountReferrals = async ({
-    accountId, page, limit
-}: { accountId: string, page: number, limit: number }) => {
+    accountId, page, limit, search
+}: { accountId: string, page: number, limit: number, search:string }) => {
     try {
         const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_REFERRALS.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}`)
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_REFERRALS.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}`)
         const data = result.data
 
         return data;
@@ -96,11 +96,11 @@ export const getMemberAccountReferrals = async ({
 
 
 export const getMemberAccountMatchings = async ({
-    accountId, page, limit
-}: { accountId: string, page: number, limit: number }) => {
+    accountId, page, limit, search
+}: { accountId: string, page: number, limit: number, search: string }) => {
     try {
         const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_MATCHINGS.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}`)
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_MATCHINGS.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}`)
         const data = result.data
 
         return data;

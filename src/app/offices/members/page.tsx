@@ -35,9 +35,10 @@ export default async function MembersPage({
   const session: SessionType = await getServerSession({ raw: false })
   const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
 
+  const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
-  const members = await getMembers({page: page, limit:limit})
+  const members = await getMembers({page: page, limit:limit, search: search})
 
   return (
     <ContentLayout breadcrumb={

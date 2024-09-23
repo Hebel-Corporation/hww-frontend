@@ -43,6 +43,7 @@ const MemberDetails = async ({
 
     const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
     const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
+    const search = searchParams?.search || ''
 
 
     const breadcrumbItems = [
@@ -134,7 +135,7 @@ const MemberDetails = async ({
                     <Suspense fallback={
                         <SuspenseFallback />
                     }>
-                        <MemberDownlineList page={page} limit={limit} accountId={currentAccountId} />
+                        <MemberDownlineList page={page} limit={limit} search={search} accountId={currentAccountId} />
                     </Suspense>
                 </div>
             </main>
