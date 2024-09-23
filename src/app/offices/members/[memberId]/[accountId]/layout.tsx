@@ -8,15 +8,15 @@ import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 
 
-interface AccountLayoutProps {
-  children: ReactNode;
+type AccountLayoutProps = {
+  children: ReactNode,
   params: {
-    memberId: string;
-    accountId: string;
-  };
+    memberId: string,
+    accountId: string,
+  },
   searchParams: {
-    [key: string]: string | undefined;
-  };
+    [key: string]: string | undefined
+  }
 }
 
 
