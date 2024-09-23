@@ -1,6 +1,6 @@
 import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
 
-export default async function OfficeLayout({
+export default function OfficeLayout({
   children
 }: {
   children: React.ReactNode;

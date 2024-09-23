@@ -111,9 +111,13 @@ export default function AddOfficeModal({
   useEffect(() => {
 
     async function fetchLocations() {
-      const locationList = await getLocations({page: constantVars.INIT_PAGINATION_PAGE, limit: constantVars.LIMIT_PAGINATION})
-      if (locationList?.length) {
-        setLocations([...locationList.map((itm: any) => {
+      const locationList = await getLocations({
+        page: constantVars.INIT_PAGINATION_PAGE,
+        limit: constantVars.LIMIT_PAGINATION,
+        search: ''
+      })
+      if (locationList?.count) {
+        setLocations([...locationList?.results?.map((itm: any) => {
           return { value: itm.id, label: itm.name }
         })])
       }
