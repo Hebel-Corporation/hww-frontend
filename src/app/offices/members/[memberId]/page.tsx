@@ -17,6 +17,7 @@ import { getServerSession } from '@/utils/server-auth-utils'
 import { checkOfficeRegisterCodeValidity } from '@/actions/office-actions'
 import SuspenseFallback from '@/components/common/suspense-fallback'
 import Link from 'next/link'
+import { constantVars } from '@/lib/constants'
 
 
 
@@ -39,6 +40,9 @@ const MemberDetails = async ({
         notFound()
     if (!currentAccountId)
         redirect(`?account=${member?.accounts[0].id}`)
+
+    const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
+    const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
 
 
     const breadcrumbItems = [
@@ -130,10 +134,8 @@ const MemberDetails = async ({
                     <Suspense fallback={
                         <SuspenseFallback />
                     }>
-                        <MemberDownlineList accountId={currentAccountId} />
+                        <MemberDownlineList page={page} limit={limit} accountId={currentAccountId} />
                     </Suspense>
-
-                    <Pagination showControls total={5} />
                 </div>
             </main>
         </ContentLayout>

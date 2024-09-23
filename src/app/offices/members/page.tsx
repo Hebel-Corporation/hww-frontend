@@ -12,6 +12,8 @@ import { Filter } from "lucide-react";
 import { SessionType } from "@/types";
 import { getServerSession } from "@/utils/server-auth-utils";
 import { checkOfficeRegisterCodeValidity } from "@/actions/office-actions";
+import ServerPaginationControls from "@/components/common/server-pagination-controls";
+import { constantVars } from "@/lib/constants";
 
 const breadcrumbItems = [
   {
@@ -24,11 +26,18 @@ const breadcrumbItems = [
   }
 ]
 
-export default async function MembersPage() {
+export default async function MembersPage({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | undefined }
+}) {
 
   const session: SessionType = await getServerSession({ raw: false })
   const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
-  const members = await getMembers()
+
+  const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
+  const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
+  const members = await getMembers({page: page, limit:limit})
 
   return (
     <ContentLayout breadcrumb={
@@ -62,10 +71,10 @@ export default async function MembersPage() {
 
         <ScrollShadow className="flex flex-col flex-1 max-h-[calc(100vh-37vh)] min-h-[calc(100vh-37vh)]">
           {
-            members?.length ?
+            members?.count ?
               <div className='flex flex-col'>
                 {
-                  members?.map((member: any) => (
+                  members?.results?.map((member: any) => (
                     <MemberItem key={member.id} member={member} />
                   ))
                 }
@@ -75,7 +84,11 @@ export default async function MembersPage() {
           }
         </ScrollShadow>
 
-        <Pagination showControls total={5} />
+        <ServerPaginationControls
+          limit={limit}
+          page={page}
+          total_pages={members?.total_pages}
+        />
       </div>
     </ContentLayout>
   );

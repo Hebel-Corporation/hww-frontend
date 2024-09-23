@@ -8,7 +8,7 @@ const StaffItem = ({
     staff
 }: { staff: User }) => {
     return (
-        <div className="flex items-center justify-between text-sm py-2 border-b duration-500 hover:bg-gray-100 dark:hover:bg-zinc-800">
+        <div className="flex items-center justify-between text-sm py-2 border-b duration-500">
             <div className="sm:min-w-48 md:min-w-60 flex gap-3 items-center">
                 <Avatar fallback={
                     <>
@@ -58,9 +58,6 @@ const StaffItem = ({
             <div className="flex items-center gap-5">
                 <Button radius='sm' className='min-w-0 p-1.5'>
                     <PenSquare size={22} />
-                </Button>
-                <Button radius='sm' variant='light' className='min-w-0 p-1.5'>
-                    <ChevronRight size={25} />
                 </Button>
             </div>
         </div>

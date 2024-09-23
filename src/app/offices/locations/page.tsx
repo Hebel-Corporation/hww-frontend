@@ -5,9 +5,10 @@ import SuspenseFallback from '@/components/common/suspense-fallback'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import LocationItemList from '@/components/location-item-list'
 import AddLocationModal from '@/components/modals/add-location-modal'
+import { constantVars } from '@/lib/constants'
 import { SessionType } from '@/types'
 import { getServerSession } from '@/utils/server-auth-utils'
-import { Button, Pagination } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { Filter, PlusCircle } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
@@ -24,11 +25,18 @@ const breadcrumbItems = [
   }
 ]
 
-export default async function LocationPage() {
+export default async function LocationPage({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | undefined }
+}) {
 
   const session: SessionType = await getServerSession({ raw: false })
   if(!session)
     redirect('/login')
+
+  const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
+  const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
 
   return (
     <ContentLayout breadcrumb={
@@ -66,10 +74,8 @@ export default async function LocationPage() {
         <Suspense fallback={
           <SuspenseFallback />
         } >
-          <LocationItemList />
+          <LocationItemList page={page} limit={limit} />
         </Suspense>
-
-        <Pagination showControls total={5} />
 
       </main>
 

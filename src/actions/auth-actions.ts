@@ -67,7 +67,7 @@ export const getUserApiGroups = cache(async () => {
         const result = await serverApi.get(`${ApiEndpoints.AUTH.GET_USER_GROUPS}`)
         const data = result.data
 
-        return data;
+        return data.results;
     } catch (e: any) {
         console.error(e?.message)
         return e?.message;

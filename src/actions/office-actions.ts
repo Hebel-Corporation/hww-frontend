@@ -21,9 +21,11 @@ export const getCompanyPackages = async () => {
 
 
 
-export const getOffices = async () => {
+export const getOffices = async ({
+    page, limit
+}: {page: number, limit: number}) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICES}`)
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICES}?page=${page}&limit=${limit}`)
         const data = result.data
 
         return data;

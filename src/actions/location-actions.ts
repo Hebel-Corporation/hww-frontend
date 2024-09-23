@@ -47,9 +47,11 @@ export const CreateLocation = async ({
 
 
 
-export const getLocations = async () => {
+export const getLocations = async ({
+    page, limit
+}: {page: number, limit: number}) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.LOCATION.GET_LOCATIONS}`)
+        const result = await serverApi.get(`${ApiEndpoints.LOCATION.GET_LOCATIONS}?page${page}&limit=${limit}`)
         const data = result.data
         
         return data;
