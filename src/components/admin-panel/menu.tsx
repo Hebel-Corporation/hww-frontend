@@ -31,14 +31,17 @@ export function Menu({ isOpen }: MenuProps) {
   const router = useRouter()
   const pathname = usePathname();
   const menuList = getMenuList(pathname);
-  const [hasRegisterCodeValid, setHasRegisterCodeValid] = useState(false)
+  const [hasRegisterCodeValid, setHasRegisterCodeValid] = useState(true)
 
 
   useEffect(() => {
 
     async function registerCodeCheck() {
       const session: SessionType = await getClientSession()
-      const isCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
+      const isCodeValid = await checkOfficeRegisterCodeValidity({ 
+        officeId: session?.user?.office?.id 
+      })
+      
       setHasRegisterCodeValid(isCodeValid)
     }
 
@@ -131,7 +134,7 @@ export function Menu({ isOpen }: MenuProps) {
           ))}
 
           {
-            !hasRegisterCodeValid &&
+            !hasRegisterCodeValid && isOpen &&
             <div className="grow flex items-end">
               <RegisterBanner />
             </div>

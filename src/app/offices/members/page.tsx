@@ -61,7 +61,7 @@ export default async function MembersPage({
           </div>
           <div className="flex gap-3 items-center">
             <AddMemberModal
-              isFirstNode={members?.length > 0 ? false : true}
+              isFirstNode={members?.count > 0 ? false : true}
               hasRegisterCodeValid={hasRegisterCodeValid}
             />
             <Button radius="sm" startContent={
