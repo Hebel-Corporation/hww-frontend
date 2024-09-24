@@ -11,7 +11,7 @@ export const getCompanyPackages = async () => {
         const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_COMPANY_PACKAGE}`)
         const data = result.data
 
-        return data;
+        return data.results;
     } catch (e: any) {
         console.error(e?.message)
         return e?.message;

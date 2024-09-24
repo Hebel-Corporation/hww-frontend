@@ -44,6 +44,7 @@ export default function RegisterCodeModal({
 }: { officeId: string }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [packages, setPackages] = useState([]);
     const [currentPackage, setCurrentPackage] = useState<Package | undefined>(undefined);
 
@@ -85,8 +86,11 @@ export default function RegisterCodeModal({
 
     useEffect(() => {
         async function getPackages() {
+            setIsLoading(true)
             const packages = await getCompanyPackages()
             if (packages?.length > 0) setPackages(packages)
+
+            setIsLoading(false)
         }
 
         getPackages()
@@ -117,7 +121,7 @@ export default function RegisterCodeModal({
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormControl>
-                                                            <Select {...field} radius="sm" size="sm"
+                                                            <Select {...field} radius="sm" size="sm" isLoading={isLoading} isDisabled={isLoading}
                                                                 label="Paquet ou plan d'enregistrement"
                                                                 description="Sellectionner le paquet pour lequel vous générez le code d'enregistrement!."
                                                                 className="w-full"
