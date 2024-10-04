@@ -40,7 +40,7 @@ export async function userLogin({
         if (accessTokenValue.user.user_type === 'staff' || accessTokenValue.user.user_type === 'admin') {
             return { redirectUrl: '/offices/dashboard', IsloggedIn: true };
         } else if (accessTokenValue.user.user_type === 'member') {
-            return { redirectUrl: '/members/dashboard', IsloggedIn: true };
+            return { redirectUrl: '/member/dashboard', IsloggedIn: true };
         }
 
     } catch (e: any) {
