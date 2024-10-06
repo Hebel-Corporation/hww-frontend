@@ -58,6 +58,22 @@ export const getMemberAccountDetails = async ({
 
 
 
+export const getMemberAccountNetwork = async ({
+    accountId
+}: { accountId: string }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_NETWORK.replace("{{accountID}}", accountId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
 export const getMemberAccountDownlines = async ({
     accountId,
     page,

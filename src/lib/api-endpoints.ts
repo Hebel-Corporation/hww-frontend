@@ -25,6 +25,7 @@ export const ApiEndpoints = {
             GET_MEMBERS: '/members/users/members/',
             GET_MEMBER_DETAILS: '/members/users/{{memberID}}/member-details/',
             GET_MEMBER_ACCOUNT_DETAILS: '/members/accounts/{{accountID}}/account-details/',
+            GET_MEMBER_ACCOUNT_NETWORK: '/members/accounts/{{accountID}}/account-network',
             GET_MEMBER_ACCOUNT_DOWNLINES: '/members/accounts/{{accountID}}/member-downlines/',
             GET_MEMBER_ACCOUNT_REFERRALS: '/members/accounts/{{accountID}}/member-referrals/',
             GET_MEMBER_ACCOUNT_MATCHINGS: '/members/accounts/{{accountID}}/member-matchings/',
