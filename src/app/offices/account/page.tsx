@@ -10,7 +10,7 @@ const breadcrumbItems = [
     path: '/offices/dashboard'
   },
   {
-    label: 'Mon compte',
+    label: 'Mon profil',
     path: ''
   }
 ]

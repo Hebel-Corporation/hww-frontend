@@ -67,21 +67,24 @@ export const getUserGroups = (sessionParams?: any) => {
 }
 
 
-export function hasGroupAuthorization(arr: string[], groups?: UserGroup[]) {
+export function hasGroupAuthorization({
+    authorizedGroups,
+    userGroups
+}: {authorizedGroups: string[], userGroups?: UserGroup[]}) {
 
-    if (!arr.length) return false
+    if (!authorizedGroups.length) return false
 
     try {
 
         let group_instances: UserGroup[]
-        if (groups){
-            group_instances = groups
+        if (userGroups){
+            group_instances = userGroups
         }else {
             group_instances = getClientSession()?.user?.groups
         }
 
         const subarr = group_instances.map((g: UserGroup) => { return g?.name })
-        return subarr.some((group: string) => arr.includes(group));
+        return subarr.some((group: string) => authorizedGroups.includes(group));
     } catch (e) {
         return false
     }
@@ -89,18 +92,21 @@ export function hasGroupAuthorization(arr: string[], groups?: UserGroup[]) {
 }
 
 
-export function hasOfficeAuthorization(arr: string[], office?: Office) {
+export function hasOfficeAuthorization({
+    authorizedOffices,
+    userOffice
+} : {authorizedOffices: string[], userOffice?: Office}) {
 
-    if (!arr.length) return false
+    if (!authorizedOffices.length) return false
 
     try {
         let office_instance: Office
-        if (office){
-            office_instance = office
+        if (userOffice){
+            office_instance = userOffice
         }else {
             office_instance = getClientSession()?.user?.office
         }
-        return arr.some((type: string) => type === office_instance?.office_type);
+        return authorizedOffices.some((type: string) => type === office_instance?.office_type);
     } catch (e) {
         return false
     }

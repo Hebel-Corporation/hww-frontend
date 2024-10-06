@@ -54,6 +54,8 @@ export const config = {
         '/offices/rewards',
         '/offices/members/:path*',
         '/offices/settings',
+        //
+        '/member/:path*'
     ],
 };
 

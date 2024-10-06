@@ -1,4 +1,4 @@
-import { hasOfficeAuthorization } from "@/utils/client-utils";
+import { hasGroupAuthorization, hasOfficeAuthorization } from "@/utils/client-utils";
 import {
   LayoutGrid,
   MapPinnedIcon,
@@ -39,7 +39,10 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/dashboard",
           label: "Accueil",
           active: pathname.includes("/offices/dashboard"),
-          authorized: true,
+          authorized: (
+            hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'] }) &&
+            hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+          ),
           icon: LayoutGrid,
           submenus: []
         }
@@ -52,7 +55,10 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/members",
           label: "Membres",
           active: pathname.includes("/offices/members"),
-          authorized: hasOfficeAuthorization(['head_office', 'sub_office']),
+          authorized: (
+            hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'] }) &&
+            hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+          ),
           icon: UsersRound,
           submenus: []
         },
@@ -60,7 +66,10 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/point-of-sale",
           label: "Points de vente / Bureaux",
           active: pathname.includes("/offices/point-of-sale"),
-          authorized: hasOfficeAuthorization(['head_office']),
+          authorized: (
+            hasOfficeAuthorization({ authorizedOffices: ['head_office'] }) &&
+            hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+          ),
           icon: StoreIcon,
           submenus: []
         },
@@ -68,7 +77,10 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/locations",
           label: "Emplacements",
           active: pathname.includes("/offices/locations"),
-          authorized: hasOfficeAuthorization(['head_office']),
+          authorized: (
+            hasOfficeAuthorization({ authorizedOffices: ['head_office'] }) &&
+            hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+          ),
           icon: MapPinnedIcon,
           submenus: []
         },
@@ -76,7 +88,10 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/rewards",
           label: "Rewards",
           active: pathname.includes("/offices/rewards"),
-          authorized: hasOfficeAuthorization(['head_office', 'sub_office']),
+          authorized: (
+            hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'] }) &&
+            hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+          ),
           icon: Tag,
           submenus: []
         }
@@ -89,7 +104,10 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/account",
           label: "Mon compte",
           active: pathname.includes("/offices/account"),
-          authorized: true,
+          authorized: (
+            hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'] }) &&
+            hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+          ),
           icon: User2Icon,
           submenus: []
         },
@@ -97,8 +115,38 @@ export function getMenuList(pathname: string): Group[] {
           href: "/offices/settings",
           label: "Paramètres",
           active: pathname.includes("/offices/settings"),
-          authorized: true,
+          authorized: (
+            hasOfficeAuthorization({ authorizedOffices: ['head_office'] }) &&
+            hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+          ),
           icon: Settings,
+          submenus: []
+        }
+      ]
+    },
+    // Member menus
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: "/offices/dashboard",
+          label: "Mes Comptes",
+          active: pathname.includes("/offices/members"),
+          authorized: hasGroupAuthorization({ authorizedGroups: ['membre'] }),
+          icon: LayoutGrid,
+          submenus: []
+        }
+      ]
+    },
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: "/offices/account",
+          label: "Mon Profil",
+          active: pathname.includes("/offices/account"),
+          authorized: hasGroupAuthorization({ authorizedGroups: ['membre'] }),
+          icon: User2Icon,
           submenus: []
         }
       ]

@@ -8,7 +8,7 @@ import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import MemberDownlineList from '@/components/member-downline-list'
 import MemberItem from '@/components/member-item'
 import { getInitialChar } from '@/utils/utils-fonctions'
-import { Avatar, Button, Pagination, ScrollShadow, Spinner } from '@nextui-org/react'
+import { Avatar, Button, Chip, Pagination, ScrollShadow, Spinner } from '@nextui-org/react'
 import { ArrowRight, EyeIcon, Filter, MoreHorizontal, PlusCircle } from 'lucide-react'
 import { notFound, redirect } from 'next/navigation'
 import React, { Suspense } from 'react'
@@ -40,6 +40,7 @@ const MemberDetails = async ({
         notFound()
     if (!currentAccountId)
         redirect(`?account=${member?.accounts[0].id}`)
+
 
     const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
     const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
@@ -109,11 +110,8 @@ const MemberDetails = async ({
                 </div>
 
                 <div className='flex flex-col flex-1 gap-3'>
-                    <h1>Downlines</h1>
-                    <div className="flex gap-3 flex-wrap justify-between items-center">
-                        <div className="sm:w-2/4 w-full flex items-center">
-                            <SearchBar />
-                        </div>
+                    <div className="flex gap-2.5 flex-wrap justify-between items-center">
+                        <h1>Réseau</h1>
                         <div className="flex flex-wrap gap-3 items-center">
                             <Button radius="sm" variant='flat' color='warning'
                                 className="!p-0 !min-w-0 h-max"
@@ -124,19 +122,37 @@ const MemberDetails = async ({
                                     <span>Détails du compte</span>
                                 </Link>
                             </Button>
-                            <Button radius="sm" startContent={
+                            {/* <Button radius="sm" startContent={
                                 <Filter />
                             }
-                            >Filtrer</Button>
+                            >Filtrer</Button> */}
                         </div>
                     </div>
 
-                    {/* Member downline list */}
-                    <Suspense fallback={
-                        <SuspenseFallback />
-                    }>
-                        <MemberDownlineList page={page} limit={limit} search={search} accountId={currentAccountId} />
-                    </Suspense>
+                    {/* Member network */}
+                    <div className='flex flex-col sm:flex-row flex-1 gap-5 justify-between'>
+                        <div className='flex flex-col flex-1 gap-4 border rounded-lg p-4 md:p-5 bg-zinc-100 dark:bg-zinc-800'>
+                            <h2>Parrents</h2>
+                            <div className="flex gap-2 items-center border rounded-lg border-zinc-300 dark:border-zinc-700 p-2">
+                                <Avatar fallback={<>NK</>
+                                } className='h-[3.5rem] w-[3.5rem]' />
+                                <div className='w-5/6 flex items-center justify-between'>
+                                    <div className='sm:min-w-60'>
+                                        <h1 className="text-base font-medium">
+                                            Nelson Kayisirirya
+                                        </h1>
+                                        <span className="font-extralight text-small">
+                                            ID : HWW-HEA01-M01-ACC01
+                                        </span>
+                                    </div>
+                                    <Chip>Parrain</Chip>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='flex flex-col flex-1 border rounded-lg p-4 bg-zinc-100 dark:bg-zinc-800'>
+                            <h2>Enfants direct</h2>
+                        </div>
+                    </div>
                 </div>
             </main>
         </ContentLayout>
