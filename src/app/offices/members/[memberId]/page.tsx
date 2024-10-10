@@ -141,7 +141,7 @@ const MemberDetails = async ({
                             <h2 className='border-b pb-2'>Enfants direct</h2>
                             {
                                 network?.children?.length > 0 ? network?.children?.map((downline: any) => (
-                                    <NetworkNodeItem account={downline} tag={toCapitalize(downline?.position)} />
+                                    <NetworkNodeItem key={downline.id} account={downline} tag={toCapitalize(downline?.position)} />
                                 ))
                                 :
                                 <EmptyData description='Aucun enfant direct enregistrer pour le momnent !' />
