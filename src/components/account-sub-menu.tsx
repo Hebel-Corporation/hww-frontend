@@ -17,10 +17,16 @@ function AccountSubMenu({
 
     const accountSubMenus = [
         {
-            key: 'referals',
-            label: 'Parrainage',
+            key: 'dowlines',
+            label: 'Dowlines',
             path: `/offices/members/${memberId}/${accountId}`,
             isActive: pathname.endsWith(`/offices/members/${memberId}/${accountId}`)
+        },
+        {
+            key: 'referrals',
+            label: 'Parrainages',
+            path: `/offices/members/${memberId}/${accountId}/referrals`,
+            isActive: pathname.endsWith(`/offices/members/${memberId}/${accountId}/referrals`)
         },
         {
             key: 'matchings',
@@ -37,19 +43,21 @@ function AccountSubMenu({
     ]
 
     return (
-        <ButtonGroup radius='sm'>
-            {
-                accountSubMenus?.map(menu => (
-                    <Button
-                        key={menu?.key}
-                        color={menu?.isActive ? 'primary' : 'default'}
-                        className="!p-0 !min-w-0 h-max"
-                    >
-                        <Link href={menu?.path} className="flex-1 px-4 py-2.5">{menu?.label}</Link>
-                    </Button>
-                ))
-            }
-        </ButtonGroup>
+        <div className='overflow-x-auto'>
+            <ButtonGroup radius='sm'>
+                {
+                    accountSubMenus?.map(menu => (
+                        <Button
+                            key={menu?.key}
+                            color={menu?.isActive ? 'primary' : 'default'}
+                            className="!p-0 !min-w-0 h-max"
+                        >
+                            <Link href={menu?.path} className="flex-1 px-4 py-2.5">{menu?.label}</Link>
+                        </Button>
+                    ))
+                }
+            </ButtonGroup>
+        </div>
     )
 }
 

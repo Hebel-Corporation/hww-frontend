@@ -13,14 +13,11 @@ type AccountLayoutProps = {
   params: {
     memberId: string,
     accountId: string,
-  },
-  searchParams: {
-    [key: string]: string | undefined
   }
 }
 
 
-export default async function AccountLayout ({ children, params, searchParams }: AccountLayoutProps) {
+export default async function AccountLayout ({ children, params }: AccountLayoutProps) {
 
   const memberId: string = params.memberId || ''
   const accountId: string = params?.accountId

@@ -24,11 +24,12 @@ import { userLogout } from "@/actions/auth-actions";
 import { useRouter } from "next/navigation";
 import { getInitialChar } from "@/utils/utils-fonctions";
 import { getClientSession } from "@/utils/client-utils";
+import { SessionType } from "@/types";
 
 export function UserNav() {
 
   const router = useRouter()
-  const session = getClientSession()
+  const session: SessionType = getClientSession()
 
   return (
     <DropdownMenu>
@@ -45,12 +46,12 @@ export function UserNav() {
                   <AvatarFallback className="bg-transparent">
                     {
                       session?.user?.first_name || session?.user?.last_name ?
-                      getInitialChar({
-                        first_name: session?.user?.first_name,
-                        last_name: session?.user?.last_name
-                      })
-                      :
-                      <User2 />
+                        getInitialChar({
+                          first_name: session?.user?.first_name,
+                          last_name: session?.user?.last_name
+                        })
+                        :
+                        <User2 />
                     }
                   </AvatarFallback>
                 </Avatar>
@@ -75,15 +76,15 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link href="/dashboard" className="flex items-center">
+            <Link href="/offices/dashboard" className="flex items-center">
               <LayoutGrid className="w-4 h-4 mr-3 text-muted-foreground" />
-              Accueil
+              {session?.user?.user_type === 'staff' ? 'Accueil' : 'Mes Comptes'}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="hover:cursor-pointer" asChild>
-            <Link href="/account" className="flex items-center">
+            <Link href="/offices/account" className="flex items-center">
               <User className="w-4 h-4 mr-3 text-muted-foreground" />
-              Mon compte
+              Mon profil
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

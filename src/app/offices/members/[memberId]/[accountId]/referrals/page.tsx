@@ -1,13 +1,10 @@
-import { getMemberAccountDownlines, getMemberAccountReferrals } from '@/actions/member-actions';
-import SuspenseFallback from '@/components/common/suspense-fallback';
-import MemberDownlineList from '@/components/member-downline-list';
+import { getMemberAccountReferrals } from '@/actions/member-actions';
 import ReferralTable from '@/components/referral-table';
 import { constantVars } from '@/lib/constants';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 
 
-const DownlinePage = async ({
+const ReferralPage = async ({
   params,
   searchParams
 }: {
@@ -20,22 +17,28 @@ const DownlinePage = async ({
   const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
+  const referrals = await getMemberAccountReferrals({
+    accountId: accountId,
+    page: page,
+    limit: limit,
+    search: search
+  })
+  if (referrals == undefined)
+    notFound()
 
 
   return (
     <main className='flex flex-col flex-1 gap-3'>
-      <h1>Downlines</h1>
+      <h1>Bonus de Parrainage</h1>
 
-      {/* Member downline list */}
-      <Suspense fallback={
-        <SuspenseFallback />
-      }>
-        <MemberDownlineList page={page} limit={limit} search={search} accountId={accountId} />
-      </Suspense>
+      <ReferralTable referrals={referrals?.results}
+        page={page}
+        pages={referrals?.total_pages}
+      />
     </main>
   )
 }
 
 
 
-export default DownlinePage
+export default ReferralPage

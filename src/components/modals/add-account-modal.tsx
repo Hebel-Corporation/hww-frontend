@@ -95,6 +95,7 @@ export default function AddAccountModal({
         startContent={
           <PlusCircle />
         }
+        className="!min-w-0"
       >
         <span className="hidden sm:block">Ajouter un compte</span>
       </Button>
