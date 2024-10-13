@@ -131,7 +131,7 @@ export function getMenuList(pathname: string): Group[] {
         {
           href: "/offices/dashboard",
           label: "Mes Comptes",
-          active: pathname.includes("/offices/members"),
+          active: pathname.includes("/offices/dashboard"),
           authorized: hasGroupAuthorization({ authorizedGroups: ['membre'] }),
           icon: LayoutGrid,
           submenus: []

@@ -42,6 +42,9 @@ export async function userLogin({
             accessTokenValue.user.user_type === 'admin' ||
             accessTokenValue.user.user_type === 'member'
         ) {
+            if (accessTokenValue.user.user_type === 'member' && accessTokenValue.user.has_default_password) {
+                return { redirectUrl: '/offices/account/config-password', IsloggedIn: true }
+            }
             return { redirectUrl: '/offices/dashboard', IsloggedIn: true };
         } else {
             return { redirectUrl: '/unauthorized', IsloggedIn: false };

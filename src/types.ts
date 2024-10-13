@@ -11,7 +11,8 @@ export type User = {
     user_type: string,
     office: Office,
     downline_count: number,
-    accounts_number: number
+    accounts_number: number,
+    has_default_password: boolean
 }
 
 export type UserGroup = {

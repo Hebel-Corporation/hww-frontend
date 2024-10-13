@@ -2,13 +2,14 @@ import { ArrowRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { BadgeDollarSign, HeartPulse, Image, Mail, PhoneCall } from "lucide-react";
+import { BadgeDollarSign, HeartPulse, Mail, PhoneCall } from "lucide-react";
 import SectionTitle from "@/components/portal/section-title";
 import ObjectiveItem from "@/components/portal/objective-item";
 import ProducItem from "@/components/portal/product-item";
 import { ModeToggle } from "@/components/mode-toggle";
 import MobileMenu from "@/components/portal/mobile-menu";
 import { getServerSession } from "@/utils/server-auth-utils";
+import Image from "next/image";
 
 export default async function HomePage() {
 
@@ -24,7 +25,7 @@ export default async function HomePage() {
 
           <div className="flex flex-wrap items-center justify-between py-3">
             <a href="index.html" className="">
-              <img src="/images/logo_HWW.png" className="sm:w-20 w-14 h-auto" />
+              <Image width={100} height={100} alt='Logo HWW' src="/images/logo_HWW.png" className="sm:w-20 w-14 h-auto" />
             </a>
 
             <div className="flex flex-row sm:flex-row-reverse gap-5 sm:gap-8 items-center">

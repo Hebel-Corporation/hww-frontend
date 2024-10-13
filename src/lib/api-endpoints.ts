@@ -3,7 +3,8 @@ export const ApiEndpoints = {
         AUTH: {
             LOGIN: '/auth/login/',
             REFRESH_TOKEN: '/auth/token/refresh/',
-            GET_USER_GROUPS: '/auth/user/groups/'
+            GET_USER_GROUPS: '/auth/user/groups/',
+            CHANGE_USER_PASSWORD: '/members/users/change_password/'
         },
 
         LOCATION: {
