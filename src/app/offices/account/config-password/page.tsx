@@ -1,9 +1,18 @@
 import ChangePasswordForm from '@/components/forms/change-password-form';
+import { SessionType } from '@/types';
+import { getServerSession } from '@/utils/server-auth-utils';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 import React from 'react'
 
 
-export default function ConfigPasswordPage() {
+
+export default async function ConfigPasswordPage() {
+
+  const session: SessionType = await getServerSession({raw: false})
+  if (!session.user.has_default_password) {
+    redirect('/offices/dashboard')
+  }
 
   return (
     <main className="w-full flex flex-col flex-1 justify-center items-center">
@@ -14,3 +23,4 @@ export default function ConfigPasswordPage() {
     </main>
   );
 }
+

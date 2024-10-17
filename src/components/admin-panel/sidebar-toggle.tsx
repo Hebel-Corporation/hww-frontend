@@ -11,13 +11,16 @@ interface SidebarToggleProps {
 export function SidebarToggle({ isOpen, setIsOpen }: SidebarToggleProps) {
   return (
     <div className={cn(
-      "invisible lg:visible absolute top-[17px] z-20",
-      isOpen === false ? "-right-[3px]" : "right-[10px]"
+      "invisible lg:visible absolute top-[17px] z-20 duration-500",
+      isOpen === false ? "-right-[15px]" : "right-[10px]"
     )}>
       <Button
         onClick={() => setIsOpen?.()}
-        className="rounded-md w-8 h-8"
-        variant="link"
+        className={cn(
+          "rounded-s-none rounded-e-md w-8 h-8",
+          isOpen ? "bg-transparent" : "bg-white hover:bg-white dark:bg-black dark:hover:bg-black"
+        )}
+        variant={isOpen ? "link" : "ghost"}
         size="icon"
       >
         <ChevronLeft

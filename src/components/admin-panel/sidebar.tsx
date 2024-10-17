@@ -25,16 +25,19 @@ export function Sidebar() {
       <div className="relative h-full flex flex-col px-3 py-4 overflow-y-auto">
         <Button
           className={cn(
-            "transition-transform ease-in-out duration-300 mb-1 flex justify-start",
+            "!min-w-0 !p-0 transition-transform ease-in-out duration-300 mb-1 flex justify-start",
             sidebar?.isOpen === false ? "translate-x-1" : "translate-x-0"
           )}
           variant="link"
           asChild
         >
-          <Link href="/offices/dashboard" className="flex items-center gap-2">
+          <Link href="/offices/dashboard" className={cn(
+            "flex gap-2",
+            sidebar?.isOpen == false ? "items-center justify-start" : 'items-center justify-center'
+            )}>
             {/* <PanelsTopLeft className="w-6 h-6 mr-1" /> */}
             <Image width={100} height={100} alt='Logo HWW' src="/images/logo_HWW.png" className="w-14 h-14" />
-            <h1
+            {/* <h1
               className={cn(
                 "font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300",
                 sidebar?.isOpen === false
@@ -43,7 +46,7 @@ export function Sidebar() {
               )}
             >
               HWW
-            </h1>
+            </h1> */}
           </Link>
         </Button>
         <Menu isOpen={sidebar?.isOpen} />

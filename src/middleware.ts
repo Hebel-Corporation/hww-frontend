@@ -47,15 +47,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/offices/dashboard',
-        '/offices/locations',
-        '/offices/account',
-        '/offices/point-of-sale/:path*',
-        '/offices/rewards',
-        '/offices/members/:path*',
-        '/offices/settings',
-        //
-        '/member/:path*'
+        '/offices'
     ],
 };
 

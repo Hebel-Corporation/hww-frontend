@@ -10,7 +10,6 @@ import { encrypt } from "@/utils/client-utils";
 import { ApiEndpoints } from "@/lib/api-endpoints";
 import { setServerCookie } from "@/utils/server-auth-utils";
 import { getTokenValue } from "@/utils/utils-fonctions";
-import { redirect } from "next/navigation";
 
 
 
@@ -80,6 +79,42 @@ export const getUserApiGroups = cache(async () => {
         return e?.message;
     }
 })
+
+
+
+
+export const changeUserPassword = (passwordFormData: {
+    old_password: string,
+    new_password: string,
+    confirm_password: string
+}): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.put(
+                `${ApiEndpoints.AUTH.CHANGE_USER_PASSWORD}`, {
+                ...passwordFormData
+            });
+            const data = result.data;
+            resolve(data);
+
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            let message = ''
+
+            if (errorString?.old_password) {
+                message = errorString?.old_password?.message;
+            } else if (message = errorString?.new_password) {
+                message = errorString?.new_password[0]
+            }
+            else {
+                message = String(errorString);
+            }
+
+            reject(new Error(message));
+        }
+    });
+};
 
 
 
