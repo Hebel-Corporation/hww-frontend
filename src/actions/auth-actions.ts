@@ -10,7 +10,6 @@ import { encrypt } from "@/utils/client-utils";
 import { ApiEndpoints } from "@/lib/api-endpoints";
 import { setServerCookie } from "@/utils/server-auth-utils";
 import { getTokenValue } from "@/utils/utils-fonctions";
-import { redirect } from "next/navigation";
 
 
 
@@ -42,6 +41,9 @@ export async function userLogin({
             accessTokenValue.user.user_type === 'admin' ||
             accessTokenValue.user.user_type === 'member'
         ) {
+            if (accessTokenValue.user.user_type === 'member' && accessTokenValue.user.has_default_password) {
+                return { redirectUrl: '/offices/account/config-password', IsloggedIn: true }
+            }
             return { redirectUrl: '/offices/dashboard', IsloggedIn: true };
         } else {
             return { redirectUrl: '/unauthorized', IsloggedIn: false };
@@ -65,6 +67,21 @@ export async function userLogout() {
 }
 
 
+export const getUserDettails = async ({
+    userId
+}: { userId: string }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.AUTH.GET_USER_DETAILS.replace("{{userID}}", userId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
 
 export const getUserApiGroups = cache(async () => {
     try {
@@ -77,6 +94,42 @@ export const getUserApiGroups = cache(async () => {
         return e?.message;
     }
 })
+
+
+
+
+export const changeUserPassword = (passwordFormData: {
+    old_password: string,
+    new_password: string,
+    confirm_password: string
+}): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.put(
+                `${ApiEndpoints.AUTH.CHANGE_USER_PASSWORD}`, {
+                ...passwordFormData
+            });
+            const data = result.data;
+            resolve(data);
+
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            let message = ''
+
+            if (errorString?.old_password) {
+                message = errorString?.old_password?.message;
+            } else if (message = errorString?.new_password) {
+                message = errorString?.new_password[0]
+            }
+            else {
+                message = String(errorString);
+            }
+
+            reject(new Error(message));
+        }
+    });
+};
 
 
 
