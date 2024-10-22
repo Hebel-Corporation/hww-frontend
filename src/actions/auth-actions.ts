@@ -67,6 +67,21 @@ export async function userLogout() {
 }
 
 
+export const getUserDettails = async ({
+    userId
+}: { userId: string }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.AUTH.GET_USER_DETAILS.replace("{{userID}}", userId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
 
 export const getUserApiGroups = cache(async () => {
     try {
