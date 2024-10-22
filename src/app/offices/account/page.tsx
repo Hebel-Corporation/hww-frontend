@@ -60,7 +60,7 @@ export default async function AccountPage() {
           <div className="flex gap-2.5 items-center justify-center">
             {
               user?.groups.map((group: UserGroup) => (
-                <Chip size="sm">{toCapitalize(group?.name)}</Chip>
+                <Chip size="sm" key={group.id}>{toCapitalize(group?.name)}</Chip>
               ))
             }
           </div>
