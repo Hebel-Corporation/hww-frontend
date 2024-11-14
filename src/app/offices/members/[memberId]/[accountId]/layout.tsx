@@ -3,6 +3,7 @@ import AccountSubMenu from '@/components/account-sub-menu'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
+import PaymentModal from '@/components/modals/payment-modal'
 import { Chip } from '@nextui-org/react'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
@@ -79,8 +80,9 @@ export default async function AccountLayout ({ children, params }: AccountLayout
         <div className='flex flex-wrap gap-4 justify-between'>
           <AccountSubMenu accountId={accountId} memberId={memberId} />
 
-          <div className="sm:w-2/4 w-full flex items-center">
+          <div className="sm:w-2/4 w-full flex gap-5 items-center">
             <SearchBar />
+            <PaymentModal />
           </div>
         </div>
 
