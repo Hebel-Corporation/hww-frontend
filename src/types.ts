@@ -90,3 +90,48 @@ export type SessionType = {
     user: User
 }
 
+
+
+export type RewardType = {
+    id: string
+}
+
+
+
+export type AccountType = {
+    id: string,
+    member: User,
+    company_id: string,
+    referral_account?: AccountType | null,
+    parent?: AccountType | null,
+    position: string,
+    pvs: number,
+    office: Office,
+    rewards: RewardType[],
+    is_active: boolean,
+    created_at: string
+}
+
+
+type BonusBaseType = {
+    id: string,
+    grantee: AccountType,
+    amount: number,
+    is_paid: boolean,
+    created_at: string,
+    updated_at: string
+}
+
+
+
+export type MatchingType = BonusBaseType & {
+    downlines: AccountType,
+    is_validated: boolean
+}
+
+
+
+export type ReferralType = BonusBaseType & {
+    downline: AccountType
+}
+

@@ -22,7 +22,7 @@ export const ApiEndpoints = {
             CHECK_OFFICE_REGISTER_CODE_VALIDITY: "/members/offices/{{officeID}}/check-register-code-validity/",
             CREATE_OFFICE_REGISTER_CODE: "/members/offices/{{officeID}}/generate-register-code/",
         },
-
+        
         MEMBERS: {
             GET_MEMBERS: '/members/users/members/',
             GET_MEMBER_DETAILS: '/members/users/{{memberID}}/member-details/',
@@ -31,8 +31,10 @@ export const ApiEndpoints = {
             GET_MEMBER_ACCOUNT_DOWNLINES: '/members/accounts/{{accountID}}/member-downlines/',
             GET_MEMBER_ACCOUNT_REFERRALS: '/members/accounts/{{accountID}}/member-referrals/',
             GET_MEMBER_ACCOUNT_MATCHINGS: '/members/accounts/{{accountID}}/member-matchings/',
+            GET_MEMBER_ACCOUNT_PAYMENTS: '/members/accounts/{{accountID}}/member-payments/',
             CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',
             MEMBER_REGISTER: '/members/offices/{{officeID}}/member-registration/',
+            REGISTER_MEMBER_PAYMENT: "/members/offices/{{officeID}}/register-member-payment/",
             MEMBER_UPDATE: '/members/users/{{memberID}}/',
             CREATE_MEMBER_ACCOUNT: '/members/offices/{{officeID}}/member-registration-account/',
             CHECK_FIRST_NODE: '/members/accounts/is-first-node/'

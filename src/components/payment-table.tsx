@@ -23,7 +23,7 @@ function PaymentTable({
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[calc(100vh-45vh)] max-h-[calc(100vh-45vh)] p-0",
+                    wrapper: "min-h-[calc(100vh-47.5vh)] max-h-[calc(100vh-47.5vh)] p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={
@@ -47,8 +47,9 @@ function PaymentTable({
             >
                 <TableHeader>
                     <TableColumn key="date">Date</TableColumn>
+                    <TableColumn key="office">Bureau Charger du Paiement</TableColumn>
                     <TableColumn key="amount">Montant</TableColumn>
-                    {/* <TableColumn key="status">Bonus</TableColumn> */}
+                    <TableColumn key="paymentType">Type de Paiement</TableColumn>
                 </TableHeader>
                 <TableBody emptyContent={
                     <EmptyData description="Aucune transaction n'est enregistrer pour le moment." />
@@ -60,16 +61,14 @@ function PaymentTable({
                                     {item?.created_at}
                                 </TableCell>
                                 <TableCell>
+                                    {item?.office?.office_code}
+                                </TableCell>
+                                <TableCell>
                                     $ {item?.amount}
                                 </TableCell>
-                                {/* <TableCell>
-                                    {
-                                        item?.is_paid ?
-                                            <Chip variant='faded' size='sm' color='danger'>Payé</Chip>
-                                            :
-                                            <Chip variant='faded' size='sm' color='success'>Non Payé</Chip>
-                                    }
-                                </TableCell> */}
+                                <TableCell>
+                                    {item?.payment_type_display}
+                                </TableCell>
                             </TableRow>
                         ))
                     }
