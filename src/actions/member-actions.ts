@@ -112,11 +112,27 @@ export const getMemberAccountReferrals = async ({
 
 
 export const getMemberAccountMatchings = async ({
+    accountId, page, limit, search, is_paid
+}: { accountId: string, page: number, limit: number, search: string, is_paid?: boolean }) => {
+    try {
+        const result = await serverApi.get(
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_MATCHINGS.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}&is_paid=${is_paid}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+export const getMemberAccountpayments = async ({
     accountId, page, limit, search
 }: { accountId: string, page: number, limit: number, search: string }) => {
     try {
         const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_MATCHINGS.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}`)
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_PAYMENTS.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}`)
         const data = result.data
 
         return data;
@@ -301,6 +317,54 @@ export const createMemberAccount = ({
                 message = errorString.error.match(/string='([^']+)'/)[1];
             } else {
                 message = "Erreur lors de la création du membre.";
+            }
+
+            if (typeof message !== 'string') {
+                message = "Erreur inconnue.";
+            }
+
+            reject(new Error(message));
+        }
+    });
+};
+
+
+
+
+export const registerMemberPayment = ({
+    payment_type,
+    account,
+    amount,
+    bonuses
+}: {
+    payment_type: string,
+    account: string,
+    amount: number, bonuses: string[]
+}, officeId: string): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.post(
+                `${ApiEndpoints.MEMBERS.REGISTER_MEMBER_PAYMENT.replace("{{officeID}}", officeId)}`, {
+                payment_type: payment_type,
+                account: account,
+                amount: amount,
+                bonuses: bonuses
+            });
+            const data = result.data;
+            resolve(data);
+
+            revalidatePath(`/offices/members/${officeId}/${account}/payments`);
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            let message = ''
+
+            if (errorString?.error) {
+                message = errorString.error;
+            } else if (errorString?.error?.match(/string='([^']+)'/)) {
+                message = errorString.error.match(/string='([^']+)'/)[1];
+            } else {
+                message = "Erreur lors d'enregistrement du paiement'.";
             }
 
             if (typeof message !== 'string') {

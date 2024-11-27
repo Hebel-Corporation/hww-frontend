@@ -1,34 +1,64 @@
+import { getMemberAccountMatchings, getMemberAccountpayments } from '@/actions/member-actions'
+import PaymentModal from '@/components/modals/payment/payment-modal'
 import PaymentTable from '@/components/payment-table'
+import { constantVars } from '@/lib/constants'
+import { MatchingType } from '@/types'
 import { notFound } from 'next/navigation'
 
-async function PaymentPage ({
-    params,
-    searchParams
-  }: {
-    params: { memberId: string, accountId: string },
-    searchParams: { [key: string]: string | undefined }
-  }) {
+async function PaymentPage({
+  params,
+  searchParams
+}: {
+  params: { memberId: string, accountId: string },
+  searchParams: { [key: string]: string | undefined }
+}) {
 
-    const accountId: string = params?.accountId
-    
-    const payments: any[] = [] //await getMemberAccountpayments({ accountId: accountId })
-    if (payments == undefined)
-      notFound()
-  
-    const page = Number(searchParams.page) || 1;
-    const limit = Number(searchParams.limit) || 10
-    const pages = payments?.length ? Math.ceil(payments.length / limit) : 0;
+  const accountId: string = params?.accountId
+  const currentTab = searchParams?.tab || 'refferal'
+  const search = searchParams?.search || ''
+  const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
+  const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
 
-    return (
-        <main className='flex flex-col flex-1 gap-3'>
-            <h1>Liste des transactions</h1>
+  const payments = await getMemberAccountpayments({
+    accountId: accountId,
+    page: page,
+    limit: limit,
+    search: search
+  })
+  if (payments == undefined)
+    notFound()
 
-            <PaymentTable payments={payments}
-                page={page}
-                pages={pages}
-            />
-        </main>
-    )
+
+  let matchings: any;
+
+  switch (currentTab) {
+    case 'matching':
+      matchings = await getMemberAccountMatchings({
+        accountId: accountId,
+        page: page,
+        limit: limit,
+        search: search,
+        is_paid: false
+      })
+      break;
+
+    default:
+      break;
+  }
+
+  return (
+    <main className='flex flex-col flex-1 gap-3'>
+      <div className='flex gap-4 items-center justify-between'>
+        <h1>Liste des transactions</h1>
+        <PaymentModal currentTab={currentTab} matchings={matchings?.results} accountId={accountId} />
+      </div>
+
+      <PaymentTable payments={payments?.results}
+        page={page}
+        pages={payments?.total_pages}
+      />
+    </main>
+  )
 }
 
 export default PaymentPage
