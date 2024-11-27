@@ -94,11 +94,11 @@ export const getMemberAccountDownlines = async ({
 
 
 export const getMemberAccountReferrals = async ({
-    accountId, page, limit, search
-}: { accountId: string, page: number, limit: number, search:string }) => {
+    accountId, page, limit, search, is_paid
+}: { accountId: string, page: number, limit: number, search:string, is_paid?: boolean }) => {
     try {
         const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_REFERRALS.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}`)
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_REFERRALS.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}&is_paid=${is_paid}`)
         const data = result.data
 
         return data;

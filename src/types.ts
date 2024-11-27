@@ -129,3 +129,9 @@ export type MatchingType = BonusBaseType & {
     is_validated: boolean
 }
 
+
+
+export type ReferralType = BonusBaseType & {
+    downline: AccountType
+}
+

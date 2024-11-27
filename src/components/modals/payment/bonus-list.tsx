@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 import { Chip, Listbox, ListboxItem, Selection } from "@nextui-org/react";
-import { MatchingType } from '@/types';
+import { MatchingType, ReferralType } from '@/types';
 import { DollarSign } from 'lucide-react';
 
-function MatchingList({
-  matchings,
+function BonusList({
+  bonusType,
+  items,
   setAmount,
   setBonuses
 }: {
-  matchings: MatchingType[],
+  bonusType: 'matching' | 'referral',
+  items: MatchingType[] | ReferralType[],
   setAmount: React.Dispatch<React.SetStateAction<number>>;
   setBonuses: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
@@ -18,7 +20,7 @@ function MatchingList({
   const totalAmount = React.useMemo(
     () => {
 
-      const total = matchings?.length ? matchings
+      const total = items?.length ? items
         .filter(obj => Array.from(selectedKeys).includes(obj.id))
         .reduce((sum, obj) => sum + Number(obj.amount), 0) : 0;
 
@@ -43,7 +45,9 @@ function MatchingList({
         selectionMode="multiple"
         selectedKeys={selectedKeys}
         onSelectionChange={(value) => {
-          if (totalAmount < 16 /*&& Array.from(selectedKeys).includes(Array.from(value)[1])*/) {
+          if (totalAmount < 50 && bonusType === 'matching' /*&& Array.from(selectedKeys).includes(Array.from(value)[1])*/) {
+            setSelectedKeys(value)
+          } else if (bonusType !== 'matching') {
             setSelectedKeys(value)
           } else {
             console.log('Fillet de sécurité ateint !')
@@ -54,7 +58,7 @@ function MatchingList({
         }}
       >
         {
-          matchings?.map((item: MatchingType) => (
+          items?.map((item: MatchingType | ReferralType) => (
             <ListboxItem key={item?.id}>
               <div className='flex gap-3 items-center justify-between'>
                 <p>{item?.created_at}</p>
@@ -70,9 +74,8 @@ function MatchingList({
           ))
         }
       </Listbox>
-      <p className="text-small text-default-500">Montant total a payer : $ {totalAmount}</p>
     </div>
   )
 }
 
-export default MatchingList
+export default BonusList

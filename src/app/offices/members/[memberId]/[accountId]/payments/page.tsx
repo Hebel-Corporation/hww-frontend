@@ -1,8 +1,8 @@
-import { getMemberAccountMatchings, getMemberAccountpayments } from '@/actions/member-actions'
+import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountReferrals } from '@/actions/member-actions'
 import PaymentModal from '@/components/modals/payment/payment-modal'
 import PaymentTable from '@/components/payment-table'
 import { constantVars } from '@/lib/constants'
-import { MatchingType } from '@/types'
+import { MatchingType, ReferralType } from '@/types'
 import { notFound } from 'next/navigation'
 
 async function PaymentPage({
@@ -14,7 +14,7 @@ async function PaymentPage({
 }) {
 
   const accountId: string = params?.accountId
-  const currentTab = searchParams?.tab || 'refferal'
+  const currentTab = searchParams?.tab || 'referral'
   const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
@@ -29,11 +29,20 @@ async function PaymentPage({
     notFound()
 
 
-  let matchings: any;
+  let bonuses: any;
 
   switch (currentTab) {
     case 'matching':
-      matchings = await getMemberAccountMatchings({
+      bonuses = await getMemberAccountMatchings({
+        accountId: accountId,
+        page: page,
+        limit: limit,
+        search: search,
+        is_paid: false
+      })
+      break;
+    case 'referral':
+      bonuses = await getMemberAccountReferrals({
         accountId: accountId,
         page: page,
         limit: limit,
@@ -50,7 +59,7 @@ async function PaymentPage({
     <main className='flex flex-col flex-1 gap-3'>
       <div className='flex gap-4 items-center justify-between'>
         <h1>Liste des transactions</h1>
-        <PaymentModal currentTab={currentTab} matchings={matchings?.results} accountId={accountId} />
+        <PaymentModal currentTab={currentTab} bonusItems={bonuses?.results} accountId={accountId} />
       </div>
 
       <PaymentTable payments={payments?.results}

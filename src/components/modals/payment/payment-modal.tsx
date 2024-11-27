@@ -1,18 +1,21 @@
 'use client'
 
-import { MatchingType } from "@/types";
+import { MatchingType, ReferralType } from "@/types";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Tab, Tabs, useDisclosure } from "@nextui-org/react";
 import { usePathname } from 'next/navigation';
-import MatchingList from "./matching-list";
-import PurchaseList from "./purchase-list";
-import ReferralList from "./referral-list";
+import BonusList from "./bonus-list";
 import { useState } from "react";
 import { registerMemberPayment } from "@/actions/member-actions";
 import { toast } from "sonner";
 import { getClientSession } from "@/utils/client-utils";
 
 
-function PaymentModal({ currentTab, matchings, accountId }: { currentTab: string, matchings: MatchingType[], accountId: string }) {
+function PaymentModal({ currentTab, bonusItems, accountId }:
+    {
+        currentTab: string,
+        bonusItems: MatchingType[] | ReferralType[],
+        accountId: string
+    }) {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -23,19 +26,27 @@ function PaymentModal({ currentTab, matchings, accountId }: { currentTab: string
 
     let tabs = [
         {
-            id: "refferal",
+            id: "referral",
             label: "Parrainages",
-            content: <ReferralList setAmount={setAmount} setBonuses={setBonuses} />
+            content: <BonusList bonusType="referral"
+                items={bonusItems}
+                setAmount={setAmount}
+                setBonuses={setBonuses}
+            />
         },
         {
             id: "matching",
             label: "Equilibres",
-            content: <MatchingList matchings={matchings} setAmount={setAmount} setBonuses={setBonuses} />
+            content: <BonusList bonusType="matching"
+                items={bonusItems}
+                setAmount={setAmount}
+                setBonuses={setBonuses}
+            />
         },
         {
             id: "purchase",
             label: "Bonus sur achat",
-            content: <PurchaseList />
+            content: ""
         }
     ];
 
@@ -48,9 +59,9 @@ function PaymentModal({ currentTab, matchings, accountId }: { currentTab: string
         toast.promise(
             registerMemberPayment({
                 account: accountId,
-                payment_type: currentTab === 'matching' 
-                ? 'matching_payment' : currentTab === 'referral' 
-                ? 'referral_payment' : currentTab === 'purchase' ? 'purchase_payment' : '',
+                payment_type: currentTab === 'matching'
+                    ? 'matching_payment' : currentTab === 'referral'
+                        ? 'referral_payment' : currentTab === 'purchase' ? 'purchase_payment' : '',
                 amount: amount,
                 bonuses: bonuses
             }, session?.user?.office?.id), {
@@ -89,13 +100,16 @@ function PaymentModal({ currentTab, matchings, accountId }: { currentTab: string
                                         </Tabs>
                                     </div>
                                 </ModalBody>
-                                <ModalFooter>
-                                    <Button color="danger" radius="sm" variant="light" isDisabled={isSubmitting} onPress={onClose}>
-                                        Annuler
-                                    </Button>
-                                    <Button color="primary" radius="sm" isDisabled={isSubmitting || amount <= 0} isLoading={isSubmitting} onPress={handleSubmit}>
-                                        {isSubmitting ? 'Enregistrement...' : 'Enregistrer'}
-                                    </Button>
+                                <ModalFooter className="flex gap-3 justify-between items-center">
+                                    <p className="text-small text-default-500">Montant total a payer : $ {amount}</p>
+                                    <div className="flex gap-3 items-center">
+                                        <Button color="danger" radius="sm" variant="light" isDisabled={isSubmitting} onPress={onClose}>
+                                            Annuler
+                                        </Button>
+                                        <Button color="primary" radius="sm" isDisabled={isSubmitting || amount <= 0} isLoading={isSubmitting} onPress={handleSubmit}>
+                                            {isSubmitting ? 'Enregistrement...' : 'Enregistrer'}
+                                        </Button>
+                                    </div>
                                 </ModalFooter>
                             </>
                         )}
