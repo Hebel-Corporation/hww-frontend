@@ -23,7 +23,7 @@ function PaymentTable({
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[calc(100vh-47.5vh)] max-h-[calc(100vh-47.5vh)] p-0",
+                    wrapper: "min-h-[calc(100vh-48.5vh)] max-h-[calc(100vh-48.5vh)] p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={

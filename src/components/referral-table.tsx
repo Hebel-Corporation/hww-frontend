@@ -23,7 +23,7 @@ function ReferralTable({
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[calc(100vh-45vh)] max-h-[calc(100vh-45vh)] p-0",
+                    wrapper: "min-h-[calc(100vh-46vh)] max-h-[calc(100vh-46vh)] p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={

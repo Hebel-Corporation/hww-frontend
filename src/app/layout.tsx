@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
-      <body className={`${GeistSans.className} `}>
+      <body className={`${GeistSans.className} min-h-[calc(100vh)] `}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
           <Toaster position="top-right" richColors  />

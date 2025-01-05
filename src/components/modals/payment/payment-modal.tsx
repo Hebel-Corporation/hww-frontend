@@ -84,14 +84,18 @@ function PaymentModal({ currentTab, bonusItems, accountId }:
         return (
             <>
                 < Button radius='sm' className="min-w-max" onPress={onOpen} > Enregistrer un payement</Button >
-                <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl" isDismissable={false} scrollBehavior="inside">
+                <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl" isDismissable={false} shouldBlockScroll>
                     <ModalContent>
                         {(onClose) => (
                             <>
                                 <ModalHeader className="flex flex-col gap-1">Payements</ModalHeader>
                                 <ModalBody>
                                     <div className="flex w-full flex-col">
-                                        <Tabs disabledKeys={["purchase"]} selectedKey={currentTab} aria-label="Payment tabs" items={tabs}>
+                                        <Tabs disabledKeys={["purchase"]} selectedKey={currentTab} aria-label="Payment tabs" items={tabs}
+                                        classNames={{
+                                            panel: "overflow-y-auto p-0"
+                                        }}
+                                        >
                                             {(item) => (
                                                 <Tab key={item.id} title={item.label} href={`?tab=${item.id}`}>
                                                     {item.content}

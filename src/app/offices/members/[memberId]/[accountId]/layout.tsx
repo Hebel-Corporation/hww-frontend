@@ -85,7 +85,7 @@ export default async function AccountLayout ({ children, params }: AccountLayout
           </div>
         </div>
 
-        <div>
+        <div className='flex flex-col flex-1'>
           {children}
         </div>
 

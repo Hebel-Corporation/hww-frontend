@@ -20,19 +20,19 @@ export default function AdminPanelLayout({
 
 
   return (
-    <>
+    <main className="flex flex-col flex-1 border-5 min-h-[calc(100vh)]">
       {
         hideSideBar ? <></> :
           <Sidebar />
       }
-      <main
+      <div
         className={cn(
-          "relative min-h-[calc(100vh)] flex flex-col flex-1 bg-zinc-50 dark:bg-zinc-900 transition-[margin-left] ease-in-out duration-300",
+          "relative flex flex-col flex-1 bg-zinc-50 dark:bg-zinc-900 transition-[margin-left] ease-in-out duration-300",
           sidebar?.isOpen === false && hideSideBar === false ? "lg:ml-[90px]" : hideSideBar ? "lg:ml-0" : "lg:ml-72"
         )}
       >
         {children}
-      </main>
-    </>
+      </div>
+    </main>
   );
 }
