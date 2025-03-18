@@ -1,16 +1,18 @@
 'use client'
 
-import { createMemberAccount, uplinesVerificationIDs } from "@/actions/member-actions";
+import { createMemberAccount, getMemberAccountSponsors, uplinesVerificationIDs } from "@/actions/member-actions";
 import { getClientSession } from "@/utils/client-utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, Avatar, Button, Chip, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
 import { PlusCircle } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import PackageItem from "../package-item";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import { AccountType } from "@/types";
+import { getInitialChar } from "@/utils/utils-fonctions";
 
 
 const memberFormSchema = z.object({
@@ -41,15 +43,20 @@ const memberFormSchema = z.object({
 export default function AddAccountModal({
   accounts,
   memberId,
+  referralAccounts,
   hasRegisterCodeValid
 }: {
   accounts: string[],
   memberId: string,
+  referralAccounts: AccountType[],
   hasRegisterCodeValid: boolean
 }) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const [isFetchingSponsors, setIsFetchingSponsors] = React.useState(false)
+  const [referralID, setReferralID] = React.useState<string | undefined>('')
+  const [sponsorAccounts, setSponsorAccounts] = React.useState<{ id: string, full_name: string, company_id: string, descendant_count: number }[]>([])
 
 
   const form = useForm<z.infer<typeof memberFormSchema>>({
@@ -88,6 +95,21 @@ export default function AddAccountModal({
     )
   }
 
+  useEffect(() => {
+
+    async function getSponsors() {
+      setIsFetchingSponsors(true)
+      const sponsors = await getMemberAccountSponsors({ accountId: referralID || '' })
+      setSponsorAccounts(sponsors)
+      setIsFetchingSponsors(false)
+    }
+
+    if (referralID) {
+      getSponsors()
+    }
+
+  }, [referralID])
+
 
   return (
     <>
@@ -97,7 +119,7 @@ export default function AddAccountModal({
         }
         className="!min-w-0"
       >
-        <span className="hidden sm:block">Ajouter un compte</span>
+        <span className="">Ajouter un compte</span>
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
         <ModalContent>
@@ -120,11 +142,19 @@ export default function AddAccountModal({
                                 label="Compte parrain"
                                 description="Sellectionner le compte du membre qui parraine le nouveau compte."
                                 className="w-full"
+                                onChange={(e) => {
+                                  const value = e.target.value
+                                  form.setValue("sponsorId", '')
+                                  form.setValue("parrainId", value)
+                                  if (!value) setSponsorAccounts([])
+                                  setReferralID(referralAccounts?.find(acc => acc?.company_id === value)?.id)
+
+                                }}
                               >
                                 {
-                                  accounts?.map(account => (
-                                    <SelectItem key={account} value={account}>
-                                      {account}
+                                  referralAccounts?.map((account: AccountType) => (
+                                    <SelectItem key={account.company_id}>
+                                      {account.company_id}
                                     </SelectItem>
                                   ))
                                 }
@@ -141,10 +171,34 @@ export default function AddAccountModal({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input {...field} isRequired type="text" radius="sm" size="sm"
-                                label="ID du sponsor"
-                                description="Saisissez l'ID du compte sponsor du nouveau compte."
-                              />
+                              <Autocomplete {...field} className="w-full" label="ID du sponsor" radius="sm" size="sm"
+                                isDisabled={isSubmitting || sponsorAccounts?.length === 0}
+                                isLoading={isFetchingSponsors}
+                                onSelectionChange={(value) => {
+                                  if (value) {
+                                    form.setValue("sponsorId", value?.toString())
+                                  } else {
+                                    form.setValue("sponsorId", '')
+                                  }
+                                }}
+                              >
+                                {sponsorAccounts.map((account) => (
+                                  <AutocompleteItem key={account.company_id} textValue={account.company_id}>
+                                    <div className="w-full flex gap-2 items-center">
+                                      <Avatar alt={account.full_name} className="flex-shrink-0" size="sm" fallback={
+                                        <>{getInitialChar({ first_name: account.full_name.split('')[0], last_name: account.full_name.split('')[1] })}</>
+                                      } />
+                                      <div className="w-full flex gap-2 justify-between items-center">
+                                        <div className="flex flex-col">
+                                          <span className="text-tiny">{account.full_name}</span>
+                                          <span className="text-small text-default-400">{account.company_id}</span>
+                                        </div>
+                                        <Chip size="sm">{account.descendant_count} downline</Chip>
+                                      </div>
+                                    </div>
+                                  </AutocompleteItem>
+                                ))}
+                              </Autocomplete>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { registerMemberPayment } from "@/actions/member-actions";
 import { toast } from "sonner";
 import { getClientSession } from "@/utils/client-utils";
+import { Plus } from "lucide-react";
 
 
 function PaymentModal({ currentTab, bonusItems, accountId }:
@@ -83,7 +84,12 @@ function PaymentModal({ currentTab, bonusItems, accountId }:
     if (currentpath.endsWith('payments')) {
         return (
             <>
-                < Button radius='sm' className="min-w-max" onPress={onOpen} > Enregistrer un payement</Button >
+                < Button radius='sm' size="sm" variant="flat" className="min-w-max" onPress={onOpen} 
+                startContent={
+                    <Plus size={18} />
+                }> 
+                Enregistrer un payement
+                </Button >
                 <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl" isDismissable={false} shouldBlockScroll>
                     <ModalContent>
                         {(onClose) => (

@@ -23,13 +23,19 @@ const PackageItem = () => {
                         <li className="flex">
                             <CircleCheck size={17} className="text-blue-700 dark:text-blue-500" />
                             <span className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+                                10% de bonus d'équilibre.
+                            </span>
+                        </li>
+                        <li className="flex">
+                            <CircleCheck size={17} className="text-blue-700 dark:text-blue-500" />
+                            <span className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
                                 20% sur le parrainage.
                             </span>
                         </li>
                         <li className="flex">
                             <CircleCheck size={17} className="text-blue-700 dark:text-blue-500" />
                             <span className="text-sm font-normal leading-tight text-gray-500 ms-3">
-                                30% de bonus sur achat de produits.
+                                40% de bonus sur achat de produits.
                             </span>
                         </li>
                     </ul>

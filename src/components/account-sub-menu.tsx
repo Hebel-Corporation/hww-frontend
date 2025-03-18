@@ -35,6 +35,12 @@ function AccountSubMenu({
             isActive: pathname.endsWith(`/offices/members/${memberId}/${accountId}/matchings`)
         },
         {
+            key: 'purchase-bonus',
+            label: 'Bonus achat produit',
+            path: `/offices/members/${memberId}/${accountId}/purchase-bonus`,
+            isActive: pathname.endsWith(`/offices/members/${memberId}/${accountId}/purchase-bonus`)
+        },
+        {
             key: 'payments',
             label: 'Payements',
             path: `/offices/members/${memberId}/${accountId}/payments`,
