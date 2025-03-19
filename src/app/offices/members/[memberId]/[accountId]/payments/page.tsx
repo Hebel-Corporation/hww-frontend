@@ -1,4 +1,4 @@
-import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountReferrals } from '@/actions/member-actions'
+import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountPurchases, getMemberAccountReferrals } from '@/actions/member-actions'
 import PaymentModal from '@/components/modals/payment/payment-modal'
 import PaymentTable from '@/components/payment-table'
 import { constantVars } from '@/lib/constants'
@@ -43,6 +43,15 @@ async function PaymentPage({
       break;
     case 'referral':
       bonuses = await getMemberAccountReferrals({
+        accountId: accountId,
+        page: page,
+        limit: limit,
+        search: search,
+        is_paid: false
+      })
+      break;
+    case 'purchase':
+      bonuses = await getMemberAccountPurchases({
         accountId: accountId,
         page: page,
         limit: limit,

@@ -7,9 +7,9 @@ interface ContentLayoutProps {
 
 export function ContentLayout({ breadcrumb, children }: ContentLayoutProps) {
   return (
-    <div>
-      <Navbar breadcrumb={breadcrumb} />
-      <div className="container min-h-[calc(100vh_-_75px)] relative flex flex-col flex-1 px-4 sm:px-[19px]">
+    <div className="flex flex-col flex-1">
+      <Navbar breadcrumb={breadcrumb} /> 
+      <div className="flex-1 relative flex flex-col px-4 sm:px-[19px]">
         {children}
       </div>
     </div>

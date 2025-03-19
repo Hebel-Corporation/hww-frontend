@@ -3,6 +3,7 @@ import AccountSubMenu from '@/components/account-sub-menu'
 import { ContentLayout } from '@/components/admin-panel/content-layout'
 import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
+import PurchaseBonusModal from '@/components/modals/add-purchase-bonus'
 import PaymentModal from '@/components/modals/payment/payment-modal'
 import { Chip } from '@nextui-org/react'
 import { notFound } from 'next/navigation'
@@ -18,7 +19,7 @@ type AccountLayoutProps = {
 }
 
 
-export default async function AccountLayout ({ children, params }: AccountLayoutProps) {
+export default async function AccountLayout({ children, params }: AccountLayoutProps) {
 
   const memberId: string = params.memberId || ''
   const accountId: string = params?.accountId
@@ -71,21 +72,23 @@ export default async function AccountLayout ({ children, params }: AccountLayout
               </Chip>
             </div>
           </div>
-
-          <Chip variant='flat' size='lg' radius='sm' color='success' className='p-3 h-10'>
-            Balance : <span className='font-bold'>$ {account?.balance}</span>
-          </Chip>
+          <div className='flex flex-wrap-reverse gap-3 items-center'>
+            
+            <Chip variant='flat' size='lg' radius='sm' color='success' className='p-3 h-10'>
+              Balance : <span className='font-bold'>$ {account?.balance}</span>
+            </Chip>
+          </div>
         </div>
 
         <div className='flex flex-wrap gap-4 justify-between'>
           <AccountSubMenu accountId={accountId} memberId={memberId} />
 
-          <div className="sm:w-2/4 w-full flex flex-col sm:flex-row gap-5 items-center">
+          <div className="w-full max-w-sm flex flex-col sm:flex-row gap-5 items-center">
             <SearchBar />
           </div>
         </div>
 
-        <div>
+        <div className='flex flex-col flex-1'>
           {children}
         </div>
 

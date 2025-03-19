@@ -15,7 +15,7 @@ const MemberDownlineList = async ({
 
     return (
         <div className='flex flex-col flex-1 gap-2'>
-            <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-44vh)] max-h-[calc(100vh-44vh)]">
+            <ScrollShadow className="flex flex-col flex-1 max-h-[calc(100vh-45vh)] min-h-[calc(100vh-45vh)]">
                 {
                     downlines?.count ?
                         <div className='flex flex-col'>

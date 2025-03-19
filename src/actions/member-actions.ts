@@ -93,12 +93,45 @@ export const getMemberAccountDownlines = async ({
 
 
 
+export const getMemberAccountSponsors = async ({
+    accountId
+}: { accountId: string }) => {
+    try {
+        const result = await serverApi.get(
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_SPONSORS.replace("{{accountID}}", accountId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
 export const getMemberAccountReferrals = async ({
     accountId, page, limit, search, is_paid
 }: { accountId: string, page: number, limit: number, search:string, is_paid?: boolean }) => {
     try {
         const result = await serverApi.get(
             `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_REFERRALS.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}&is_paid=${is_paid}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+export const getMemberAccountPurchases = async ({
+    accountId, page, limit, search, is_paid
+}: { accountId: string, page: number, limit: number, search:string, is_paid?: boolean }) => {
+    try {
+        const result = await serverApi.get(
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_PURCHASES.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}&is_paid=${is_paid}`)
         const data = result.data
 
         return data;
@@ -301,6 +334,49 @@ export const createMemberAccount = ({
                 referral_account: referral_account,
                 sponsor_account: sponsor_account,
                 member: memberId
+            });
+            const data = result.data;
+            resolve(data);
+
+            revalidatePath(`/offices/members/${officeId}`);
+        } catch (e: any) {
+            const errorString = e?.response?.data;
+            console.error(errorString);
+            let message = ''
+
+            if (errorString?.error) {
+                message = errorString.error;
+            } else if (errorString?.error?.match(/string='([^']+)'/)) {
+                message = errorString.error.match(/string='([^']+)'/)[1];
+            } else {
+                message = "Erreur lors de la création du membre.";
+            }
+
+            if (typeof message !== 'string') {
+                message = "Erreur inconnue.";
+            }
+
+            reject(new Error(message));
+        }
+    });
+};
+
+
+
+
+export const registerMemberPurchase = ({
+    accountID,
+    amount
+}: {
+    accountID: string,
+    amount: number
+}, officeId: string): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const result: any = await serverApi.post(
+                `${ApiEndpoints.MEMBERS.CREATE_MEMBER_PURCHASE.replace("{{officeID}}", officeId)}`, {
+                accountID: accountID,
+                amount: Number(amount)
             });
             const data = result.data;
             resolve(data);

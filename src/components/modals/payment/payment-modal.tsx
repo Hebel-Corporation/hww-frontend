@@ -8,6 +8,7 @@ import { useState } from "react";
 import { registerMemberPayment } from "@/actions/member-actions";
 import { toast } from "sonner";
 import { getClientSession } from "@/utils/client-utils";
+import { Plus } from "lucide-react";
 
 
 function PaymentModal({ currentTab, bonusItems, accountId }:
@@ -45,8 +46,12 @@ function PaymentModal({ currentTab, bonusItems, accountId }:
         },
         {
             id: "purchase",
-            label: "Bonus sur achat",
-            content: ""
+            label: "Bonus sur achat produits",
+            content: <BonusList bonusType="purchase"
+                items={bonusItems}
+                setAmount={setAmount}
+                setBonuses={setBonuses}
+            />
         }
     ];
 
@@ -83,15 +88,25 @@ function PaymentModal({ currentTab, bonusItems, accountId }:
     if (currentpath.endsWith('payments')) {
         return (
             <>
-                < Button radius='sm' className="min-w-max" onPress={onOpen} > Enregistrer un payement</Button >
-                <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl" isDismissable={false} scrollBehavior="inside">
+                < Button radius='sm' size="sm" variant="flat" className="min-w-max" onPress={onOpen}
+                    startContent={
+                        <Plus size={18} />
+                    }>
+                    Enregistrer un payement
+                </Button >
+                <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="xl" isDismissable={false} shouldBlockScroll>
                     <ModalContent>
                         {(onClose) => (
                             <>
                                 <ModalHeader className="flex flex-col gap-1">Payements</ModalHeader>
                                 <ModalBody>
                                     <div className="flex w-full flex-col">
-                                        <Tabs disabledKeys={["purchase"]} selectedKey={currentTab} aria-label="Payment tabs" items={tabs}>
+                                        <Tabs selectedKey={currentTab} aria-label="Payment tabs" items={tabs}
+                                            classNames={{
+                                                panel: "overflow-y-auto p-0 py-4",
+                                                tabList: 'mx-auto'
+                                            }}
+                                        >
                                             {(item) => (
                                                 <Tab key={item.id} title={item.label} href={`?tab=${item.id}`}>
                                                     {item.content}

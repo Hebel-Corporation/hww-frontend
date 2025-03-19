@@ -38,7 +38,7 @@ export default async function MembersPage({
   const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
-  const members = await getMembers({page: page, limit:limit, search: search})
+  const members = await getMembers({ page: page, limit: limit, search: search })
 
   return (
     <ContentLayout breadcrumb={
@@ -60,10 +60,15 @@ export default async function MembersPage({
             <SearchBar />
           </div>
           <div className="flex gap-3 items-center">
-            <AddMemberModal
-              isFirstNode={members?.count > 0 ? false : true}
-              hasRegisterCodeValid={hasRegisterCodeValid}
-            />
+            {
+              members?.count > 0 ? null
+                :
+                <AddMemberModal
+                  isFirstNode={true}
+                  hasRegisterCodeValid={hasRegisterCodeValid}
+                  referralAccounts={[]}
+                />
+            }
             <Button radius="sm" startContent={
               <Filter />
             }>Filtrer</Button>

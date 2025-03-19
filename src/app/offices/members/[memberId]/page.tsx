@@ -20,6 +20,7 @@ import Link from 'next/link'
 import { constantVars } from '@/lib/constants'
 import NetworkNodeItem from '@/components/network-node-item'
 import EmptyData from '@/components/common/empty-data'
+import PurchaseBonusModal from '@/components/modals/add-purchase-bonus'
 
 
 
@@ -88,10 +89,14 @@ const MemberDetails = async ({
                                 </span>
                             </div>
                         </div>
-                        <div>
+                        <div className='flex flex-wrap gap-4'>
+                            <PurchaseBonusModal accounts={
+                                member?.accounts?.map((acc: any) => { return acc.company_id })
+                            } />
                             <AddAccountModal memberId={member?.id} accounts={
                                 member?.accounts?.map((acc: any) => { return acc.company_id })
                             }
+                            referralAccounts={member?.accounts}
                                 hasRegisterCodeValid={hasRegisterCodeValid}
                             />
                         </div>
@@ -127,6 +132,11 @@ const MemberDetails = async ({
                                     <span>Détails du compte</span>
                                 </Link>
                             </Button>
+                            <AddMemberModal
+                                isFirstNode={false}
+                                hasRegisterCodeValid={hasRegisterCodeValid}
+                                referralAccounts={member?.accounts}
+                            />
                         </div>
                     </div>
 
@@ -143,8 +153,8 @@ const MemberDetails = async ({
                                 network?.children?.length > 0 ? network?.children?.map((downline: any) => (
                                     <NetworkNodeItem key={downline.id} account={downline} tag={toCapitalize(downline?.position)} />
                                 ))
-                                :
-                                <EmptyData description='Aucun enfant direct enregistrer pour le momnent !' />
+                                    :
+                                    <EmptyData description='Aucun enfant direct enregistrer pour le momnent !' />
                             }
                         </div>
                     </div>

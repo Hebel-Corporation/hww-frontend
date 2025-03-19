@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Chip, Listbox, ListboxItem, Selection } from "@nextui-org/react";
-import { MatchingType, ReferralType } from '@/types';
+import { MatchingType, PurchaseType, ReferralType } from '@/types';
 import { DollarSign } from 'lucide-react';
 
 function BonusList({
@@ -9,8 +9,8 @@ function BonusList({
   setAmount,
   setBonuses
 }: {
-  bonusType: 'matching' | 'referral',
-  items: MatchingType[] | ReferralType[],
+  bonusType: 'matching' | 'referral' | 'purchase',
+  items: MatchingType[] | ReferralType[] | PurchaseType[],
   setAmount: React.Dispatch<React.SetStateAction<number>>;
   setBonuses: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
@@ -54,11 +54,11 @@ function BonusList({
           }
         }}
         classNames={{
-          base: "min-h-[calc(100vh-50vh)] max-h-[calc(100vh-50vh)] p-0"
+          base: "min-h-[calc(100vh-45vh)] max-h-[calc(100vh-45vh)] p-0"
         }}
       >
         {
-          items?.map((item: MatchingType | ReferralType) => (
+          items?.map((item: MatchingType | ReferralType | PurchaseType) => (
             <ListboxItem key={item?.id}>
               <div className='flex gap-3 items-center justify-between'>
                 <p>{item?.created_at}</p>
