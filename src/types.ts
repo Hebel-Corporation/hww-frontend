@@ -113,6 +113,16 @@ export type AccountType = {
 }
 
 
+type SaleDetailType = {
+    id: string,
+    member_account: AccountType,
+    amount: number,
+    office: Office,
+    created_at: string,
+    updated_at: string
+}
+
+
 type BonusBaseType = {
     id: string,
     grantee: AccountType,
@@ -133,5 +143,10 @@ export type MatchingType = BonusBaseType & {
 
 export type ReferralType = BonusBaseType & {
     downline: AccountType
+}
+
+
+export type PurchaseType = BonusBaseType & {
+    sale_detail: SaleDetailType
 }
 

@@ -150,6 +150,8 @@ export default function AddMemberModal({
 
     if (referralID) {
       getSponsors()
+    } else {
+      setSponsorAccounts([])
     }
 
   }, [referralID])

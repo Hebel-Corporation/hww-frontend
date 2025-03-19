@@ -30,6 +30,7 @@ export const ApiEndpoints = {
             GET_MEMBER_ACCOUNT_NETWORK: '/members/accounts/{{accountID}}/account-network',
             GET_MEMBER_ACCOUNT_DOWNLINES: '/members/accounts/{{accountID}}/member-downlines/',
             GET_MEMBER_ACCOUNT_REFERRALS: '/members/accounts/{{accountID}}/member-referrals/',
+            GET_MEMBER_ACCOUNT_PURCHASES: '/members/accounts/{{accountID}}/member-purchases/',
             GET_MEMBER_ACCOUNT_MATCHINGS: '/members/accounts/{{accountID}}/member-matchings/',
             GET_MEMBER_ACCOUNT_PAYMENTS: '/members/accounts/{{accountID}}/member-payments/',
             GET_MEMBER_ACCOUNT_SPONSORS: '/members/accounts/{{accountID}}/sponsor-accounts/',

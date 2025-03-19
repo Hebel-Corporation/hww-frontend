@@ -126,6 +126,22 @@ export const getMemberAccountReferrals = async ({
 }
 
 
+export const getMemberAccountPurchases = async ({
+    accountId, page, limit, search, is_paid
+}: { accountId: string, page: number, limit: number, search:string, is_paid?: boolean }) => {
+    try {
+        const result = await serverApi.get(
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_PURCHASES.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}&is_paid=${is_paid}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
 
 
 export const getMemberAccountMatchings = async ({

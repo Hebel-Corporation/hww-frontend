@@ -106,6 +106,8 @@ export default function AddAccountModal({
 
     if (referralID) {
       getSponsors()
+    } else {
+      setSponsorAccounts([])
     }
 
   }, [referralID])
@@ -114,6 +116,7 @@ export default function AddAccountModal({
   return (
     <>
       <Button onPress={onOpen} isDisabled={!hasRegisterCodeValid} radius="sm" color="primary"
+        variant="ghost"
         startContent={
           <PlusCircle />
         }

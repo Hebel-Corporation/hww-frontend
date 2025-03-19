@@ -1,5 +1,6 @@
-import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountReferrals } from '@/actions/member-actions'
+import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountPurchases, getMemberAccountReferrals } from '@/actions/member-actions'
 import PurchaseBonusModal from '@/components/modals/add-purchase-bonus'
+import PurchaseBonusTable from '@/components/purchase-bonus-table'
 import { constantVars } from '@/lib/constants'
 import { notFound } from 'next/navigation'
 
@@ -12,58 +13,32 @@ async function PurchasePage({
 }) {
 
     const accountId: string = params?.accountId
-    const currentTab = searchParams?.tab || 'referral'
-    const search = searchParams?.search || ''
-    const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
-    const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
 
-    const payments = await getMemberAccountpayments({
+  const search = searchParams?.search || ''
+  const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
+  const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
+
+    const purchaseBonuses = await getMemberAccountPurchases({
         accountId: accountId,
         page: page,
         limit: limit,
         search: search
     })
-    if (payments == undefined)
+    if (purchaseBonuses == undefined)
         notFound()
 
-
-    let bonuses: any;
-
-    switch (currentTab) {
-        case 'matching':
-            bonuses = await getMemberAccountMatchings({
-                accountId: accountId,
-                page: page,
-                limit: limit,
-                search: search,
-                is_paid: false
-            })
-            break;
-        case 'referral':
-            bonuses = await getMemberAccountReferrals({
-                accountId: accountId,
-                page: page,
-                limit: limit,
-                search: search,
-                is_paid: false
-            })
-            break;
-
-        default:
-            break;
-    }
 
     return (
         <main className='flex flex-col flex-1 gap-3'>
             <div className='flex gap-4 items-center justify-between'>
-                <h1>Liste des bonus sur achat des produits</h1>
-                
+                <h1>Bonus sur achat des produits</h1>
+
             </div>
 
-            {/* <PaymentTable payments={payments?.results}
-        page={page}
-        pages={payments?.total_pages}
-      /> */}
+            <PurchaseBonusTable purchaseBonuses={purchaseBonuses?.results}
+                page={page}
+                pages={purchaseBonuses?.total_pages}
+            />
         </main>
     )
 }
