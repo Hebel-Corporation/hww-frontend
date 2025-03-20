@@ -323,7 +323,7 @@ export default function AddMemberModal({
                                   value={date}
                                   onChange={(value) => {
                                     setDate(value)
-                                    form.setValue('birthday', new Date(value.toString()))
+                                    form.setValue('birthday', value ? new Date(value.toString()) : undefined)
                                   }}
                                   label="Date de naissance"
                                   className="w-full"
