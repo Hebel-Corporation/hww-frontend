@@ -3,7 +3,7 @@
 import { getMemberAccountSponsors, memberRegister, uplinesVerificationIDs } from "@/actions/member-actions";
 import { getClientSession } from "@/utils/client-utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarDate } from "@internationalized/date";
+import { CalendarDate, DateValue } from "@internationalized/date";
 import { Autocomplete, AutocompleteItem, Avatar, Button, Chip, DatePicker, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
 import { PlusCircle, TriangleAlert } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -74,7 +74,7 @@ export default function AddMemberModal({
   const [isFetchingSponsors, setIsFetchingSponsors] = React.useState(false)
   const [referralID, setReferralID] = React.useState<string | undefined>('')
   const [sponsorAccounts, setSponsorAccounts] = React.useState<{ id: string, full_name: string, company_id: string, descendant_count: number }[]>([])
-  const [date, setDate] = useState<CalendarDate | undefined>(undefined);
+  const [date, setDate] = useState<CalendarDate | DateValue | undefined>(undefined);
 
 
 
