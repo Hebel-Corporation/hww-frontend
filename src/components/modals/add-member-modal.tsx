@@ -74,7 +74,7 @@ export default function AddMemberModal({
   const [isFetchingSponsors, setIsFetchingSponsors] = React.useState(false)
   const [referralID, setReferralID] = React.useState<string | undefined>('')
   const [sponsorAccounts, setSponsorAccounts] = React.useState<{ id: string, full_name: string, company_id: string, descendant_count: number }[]>([])
-  const [date, setDate] = useState<CalendarDate | DateValue | undefined>(undefined);
+  const [date, setDate] = useState< DateValue | undefined>(undefined);
 
 
 
