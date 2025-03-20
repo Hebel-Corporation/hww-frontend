@@ -48,7 +48,7 @@ function PurchaseBonusTable({
                 <TableHeader>
                     <TableColumn key="downline">Downline</TableColumn>
                     <TableColumn key="account" className='hidden sm:table-cell'>ID du Compte</TableColumn>
-                    <TableColumn key="date" className='hidden sm:table-cell'>Date d'achat</TableColumn>
+                    <TableColumn key="date" className='hidden sm:table-cell'>Date d&apos;achat</TableColumn>
                     <TableColumn key="amount">Montant</TableColumn>
                     <TableColumn key="status">Statut</TableColumn>
                 </TableHeader>
