@@ -74,7 +74,7 @@ export default function AddMemberModal({
   const [isFetchingSponsors, setIsFetchingSponsors] = React.useState(false)
   const [referralID, setReferralID] = React.useState<string | undefined>('')
   const [sponsorAccounts, setSponsorAccounts] = React.useState<{ id: string, full_name: string, company_id: string, descendant_count: number }[]>([])
-  const [date, setDate] = useState< ZonedDateTime | CalendarDate | CalendarDateTime | undefined | null>(undefined);
+  const [date, setDate] = useState<any>(null);
 
 
 
@@ -126,7 +126,7 @@ export default function AddMemberModal({
       success: () => {
         onOpenChange()
         form.reset()
-        setDate(undefined)
+        setDate(null)
         return `Le membre a été ajouté avec succès !`;
       },
       error: (err: Error) => {
