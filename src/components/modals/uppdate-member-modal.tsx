@@ -47,7 +47,7 @@ export default function UpdateMemberModal({ member }: { member: MemberType }) {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSubmitting, setIsSubmitting] = React.useState(false)
-  const [date, setDate] = useState<CalendarDate | undefined>(undefined);
+  const [date, setDate] = useState<any>(null);
 
 
 
