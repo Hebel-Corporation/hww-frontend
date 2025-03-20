@@ -23,7 +23,7 @@ const PackageItem = () => {
                         <li className="flex">
                             <CircleCheck size={17} className="text-blue-700 dark:text-blue-500" />
                             <span className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-                                10% de bonus d'équilibre.
+                                10% de bonus d&apos;équilibre.
                             </span>
                         </li>
                         <li className="flex">
