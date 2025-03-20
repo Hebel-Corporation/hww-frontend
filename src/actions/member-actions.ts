@@ -281,7 +281,7 @@ export const memberUpdate = (formData: {
     first_name: string,
     last_name: string,
     gender: string,
-    birthday: Date,
+    birthday: Date | undefined,
     phone?: string
 }, memberId: string): Promise<any> => {
     return new Promise(async (resolve, reject) => {
@@ -289,7 +289,7 @@ export const memberUpdate = (formData: {
             const result: any = await serverApi.patch(
                 `${ApiEndpoints.MEMBERS.MEMBER_UPDATE.replace("{{memberID}}", memberId)}`, {
                 ...formData,
-                birthday: format(formData.birthday, "yyyy-MM-dd")
+                birthday: formData?.birthday ? format(formData?.birthday, "yyyy-MM-dd") : ''
             });
             const data = result.data;
             resolve(data);

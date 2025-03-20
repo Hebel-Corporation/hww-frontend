@@ -28,7 +28,7 @@ const memberFormSchema = z.object({
     required_error: "La date de naissance est requise.",
   }).refine(date => !isNaN(date.getTime()), {
     message: "La date de naissance n'est pas valide.",
-  }),
+  }).optional(),
   phone: z.string().optional()
 })
 
@@ -73,17 +73,17 @@ export default function UpdateMemberModal({ member }: { member: MemberType }) {
 
     setIsSubmitting(true)
     const memberUpdateInstance = {
-      first_name: values.first_name,
-      last_name: values.last_name,
-      gender: values.gender,
-      birthday: values.birthday,
+      first_name: values.first_name || '',
+      last_name: values.last_name || '',
+      gender: values.gender || '',
+      birthday: values.birthday || null,
       phone: values.phone || ''
     }
 
     toast.promise(
       memberUpdate({
         ...memberUpdateInstance,
-        birthday: new Date(memberUpdateInstance.birthday)
+        birthday: memberUpdateInstance?.birthday ? new Date(memberUpdateInstance?.birthday) : undefined
       }, member?.id), {
       loading: 'Mise à jour en cours...',
       success: () => {
@@ -180,7 +180,7 @@ export default function UpdateMemberModal({ member }: { member: MemberType }) {
                                   value={date}
                                   onChange={(value) => {
                                     setDate(value)
-                                    form.setValue('birthday', new Date(value.toString()))
+                                    form.setValue('birthday', value ? new Date(value.toString()) : undefined)
                                   }}
                                   label="Date de naissance"
                                   className="w-full"
