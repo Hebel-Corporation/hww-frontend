@@ -57,23 +57,25 @@ export default async function AccountLayout({ children, params }: AccountLayoutP
         <div className='flex flex-wrap items-center justify-between gap-4 border-b pb-4'>
           <div className='flex flex-col gap-1'>
             <h1>{account?.company_id}</h1>
-            <div className='flex flex-wrap overflow-x-auto gap-3 font-extralight text-slate-600 dark:text-slate-300'>
-              <Chip color='default' variant='flat'>
-                {account?.pvs} PVs
-              </Chip>
-              <Chip color='warning' variant='flat'>
-                {account?.downline_count} Downline{account?.downline_count > 1 ? 's' : ''}
-              </Chip>
-              <Chip color='success' variant='flat'>
-                {account?.matching_count} Equilibre{account?.matching_count > 1 ? 's' : ''}
-              </Chip>
-              <Chip color='primary' variant='flat'>
-                {account?.referral_count} Parrainage{account?.referral_count > 1 ? 's' : ''}
-              </Chip>
-            </div>
+              <div className='flex flex-wrap gap-2 font-extralight text-slate-600 dark:text-slate-300'>
+                <Chip size='sm' color='default' variant='flat'>
+                  {account?.pvs} PVs
+                </Chip>
+                <Chip size='sm' color='warning' variant='flat'>
+                  {account?.downline_count} Downline{account?.downline_count > 1 ? 's' : ''}
+                </Chip>
+                <Chip size='sm' color='success' variant='flat'>
+                  {account?.matching_count} Equilibre{account?.matching_count > 1 ? 's' : ''}
+                </Chip>
+                <Chip size='sm' color='primary' variant='flat'>
+                  {account?.referral_count} Parrainage{account?.referral_count > 1 ? 's' : ''}
+                </Chip>
+                <Chip size='sm' color='default' variant='flat'>
+                  {account?.puchase_bonus_count} Bonus achat produit
+                </Chip>
+              </div>
           </div>
           <div className='flex flex-wrap-reverse gap-3 items-center'>
-            
             <Chip variant='flat' size='lg' radius='sm' color='success' className='p-3 h-10'>
               Balance : <span className='font-bold'>$ {account?.balance}</span>
             </Chip>

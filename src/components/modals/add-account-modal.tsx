@@ -187,11 +187,11 @@ export default function AddAccountModal({
                               >
                                 {sponsorAccounts.map((account) => (
                                   <AutocompleteItem key={account.company_id} textValue={account.company_id}>
-                                    <div className="w-full flex gap-2 items-center">
+                                    <div className="w-full flex gap-3 items-center">
                                       <Avatar alt={account.full_name} className="flex-shrink-0" size="sm" fallback={
                                         <>{getInitialChar({ first_name: account.full_name.split('')[0], last_name: account.full_name.split('')[1] })}</>
                                       } />
-                                      <div className="w-full flex gap-2 justify-between items-center">
+                                      <div className="w-full flex gap-2 py-1 justify-between items-center">
                                         <div className="flex flex-col">
                                           <span className="text-tiny">{account.full_name}</span>
                                           <span className="text-small text-default-400">{account.company_id}</span>
