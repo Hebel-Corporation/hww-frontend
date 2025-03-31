@@ -38,6 +38,7 @@ async function PurchasePage({
             <PurchaseBonusTable purchaseBonuses={purchaseBonuses?.results}
                 page={page}
                 pages={purchaseBonuses?.total_pages}
+                forPayment={false}
             />
         </main>
     )

@@ -4,6 +4,7 @@ import React from 'react'
 import EmptyData from '@/components/common/empty-data';
 import { Chip, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
+import { formatDateTime } from '@/utils/utils-fonctions';
 
 function PaymentTable({
     payments,
@@ -47,7 +48,7 @@ function PaymentTable({
             >
                 <TableHeader>
                     <TableColumn key="date">Date</TableColumn>
-                    <TableColumn key="office">Bureau Charger du Paiement</TableColumn>
+                    <TableColumn key="office" className='hidden sm:table-cell'>Bureau Charger du Paiement</TableColumn>
                     <TableColumn key="amount">Montant</TableColumn>
                     <TableColumn key="paymentType">Type de Paiement</TableColumn>
                 </TableHeader>
@@ -58,10 +59,10 @@ function PaymentTable({
                         payments?.map((item: any) => (
                             <TableRow key={item?.id}>
                                 <TableCell>
-                                    {item?.created_at}
+                                    {formatDateTime(item?.created_at)}
                                 </TableCell>
-                                <TableCell>
-                                    {item?.office?.office_code}
+                                <TableCell className='hidden sm:table-cell'>
+                                    {item?.office?.office_code} ({item?.office?.location?.name})
                                 </TableCell>
                                 <TableCell>
                                     $ {item?.amount}

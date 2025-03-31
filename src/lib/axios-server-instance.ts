@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from '@/utils/server-auth-utils';
 import { ApiEndpoints } from './api-endpoints';
 import { getTokenValue } from '@/utils/utils-fonctions';
+import { SessionType } from '@/types';
 
 const serverApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -13,7 +14,7 @@ const serverApi = axios.create({
 const refreshAccessToken = async () => {
     "use server"
     try {
-        const session = await getServerSession({raw: true})
+        const session = await getServerSession({raw: true}) as SessionType | null
 
         if (session) {
 
@@ -69,7 +70,9 @@ serverApi.interceptors.response.use(
                   });
 
                   const accessTokenValue = getTokenValue(data_access.access)
-                  axiosInstance.defaults.headers.common['Cookie'] = `Authorization=${data_access.access}; Path=/; MaxAge=${new Date(accessTokenValue * 1000)}`;
+                  // Convert token expiration to milliseconds for MaxAge
+                  const maxAge = accessTokenValue?.exp ? accessTokenValue.exp * 1000 - Date.now() : 0;
+                  axiosInstance.defaults.headers.common['Cookie'] = `Authorization=${data_access.access}; Path=/; MaxAge=${maxAge}`;
                 
                 return axiosInstance(originalRequest);
             } catch (refreshError) {

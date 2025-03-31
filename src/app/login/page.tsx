@@ -1,7 +1,5 @@
 import LoginForm from '@/components/forms/login-form'
-import { getServerSession } from '@/utils/server-auth-utils'
 import Image from 'next/image'
-import { redirect } from 'next/navigation'
 
 const LoginPage = async() => {
 

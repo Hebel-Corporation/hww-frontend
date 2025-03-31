@@ -4,6 +4,7 @@ import React from 'react'
 import EmptyData from '@/components/common/empty-data';
 import { Chip, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
+import { formatDateTime } from '@/utils/utils-fonctions';
 
 function MatchingTable({
     matchings,
@@ -74,7 +75,7 @@ function MatchingTable({
                                     </div>
                                 </TableCell>
                                 <TableCell className='hidden sm:table-cell'>
-                                    {item?.created_at}
+                                    {formatDateTime(item?.created_at)}
                                 </TableCell>
                                 <TableCell>
                                     $ {item?.amount}

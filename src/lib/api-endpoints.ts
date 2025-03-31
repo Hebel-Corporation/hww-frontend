@@ -37,6 +37,7 @@ export const ApiEndpoints = {
             CHECK_UPLINES_VALIDITY: '/members/accounts/check-uplines-validity/',
             MEMBER_REGISTER: '/members/offices/{{officeID}}/member-registration/',
             REGISTER_MEMBER_PAYMENT: "/members/offices/{{officeID}}/register-member-payment/",
+            PROCESS_PURCHASE_BONUS_PAYMENT: "/members/offices/{{officeID}}/process-purchase-bonus-payment/",
             MEMBER_UPDATE: '/members/users/{{memberID}}/',
             CREATE_MEMBER_ACCOUNT: '/members/offices/{{officeID}}/member-registration-account/',
             CREATE_MEMBER_PURCHASE: '/members/offices/{{officeID}}/member-registration-purchase/',

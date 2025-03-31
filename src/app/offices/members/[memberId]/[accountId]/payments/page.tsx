@@ -2,7 +2,9 @@ import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountPu
 import PaymentModal from '@/components/modals/payment/payment-modal'
 import PaymentTable from '@/components/payment-table'
 import { constantVars } from '@/lib/constants'
-import { MatchingType, ReferralType } from '@/types'
+import { SessionType } from '@/types'
+import { hasGroupAuthorization, hasOfficeAuthorization } from '@/utils/client-utils'
+import { getServerSession } from '@/utils/server-auth-utils'
 import { notFound } from 'next/navigation'
 
 async function PaymentPage({
@@ -25,8 +27,12 @@ async function PaymentPage({
     limit: limit,
     search: search
   })
-  if (payments == undefined)
+
+  const session = await getServerSession({raw: false}) as SessionType | null
+
+  if (payments == undefined || !session)
     notFound()
+
 
 
   let bonuses: any;
@@ -68,7 +74,13 @@ async function PaymentPage({
     <main className='flex flex-col flex-1 gap-3'>
       <div className='flex gap-4 items-center justify-between'>
         <h1>Liste des transactions</h1>
-        <PaymentModal currentTab={currentTab} bonusItems={bonuses?.results} accountId={accountId} />
+        {
+          hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'], userOffice: session?.user.office }) &&
+          hasGroupAuthorization({ authorizedGroups: ['technicien'], userGroups: session?.user.groups }) && (
+
+            <PaymentModal currentTab={currentTab} bonusItems={bonuses?.results} accountId={accountId} forPurchase={currentTab === 'purchase'} />
+          )
+        }
       </div>
 
       <PaymentTable payments={payments?.results}

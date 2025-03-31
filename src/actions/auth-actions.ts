@@ -10,6 +10,7 @@ import { encrypt } from "@/utils/client-utils";
 import { ApiEndpoints } from "@/lib/api-endpoints";
 import { setServerCookie } from "@/utils/server-auth-utils";
 import { getTokenValue } from "@/utils/utils-fonctions";
+import { SessionType } from "@/types";
 
 
 
@@ -34,7 +35,10 @@ export async function userLogin({
         setServerCookie("Authorization", tokens.access)
         setServerCookie("session", tokens.refresh)
 
-        const accessTokenValue = getTokenValue(tokens.access)
+        const accessTokenValue : SessionType | null = getTokenValue(tokens.access)
+        if (!accessTokenValue) {
+            throw new Error("Failed to decode access token")
+        }
 
         if (
             accessTokenValue.user.user_type === 'staff' || 
@@ -130,7 +134,3 @@ export const changeUserPassword = (passwordFormData: {
         }
     });
 };
-
-
-
-

@@ -4,6 +4,7 @@ import React from 'react'
 import EmptyData from '@/components/common/empty-data';
 import { Chip, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
+import { formatDateTime } from '@/utils/utils-fonctions';
 
 function ReferralTable({
     referrals,
@@ -70,7 +71,7 @@ function ReferralTable({
                                     {item?.downline?.company_id}
                                 </TableCell>
                                 <TableCell className='hidden sm:table-cell'>
-                                    {item?.created_at}
+                                    {formatDateTime(item?.created_at)}
                                 </TableCell>
                                 <TableCell>
                                     $ {item?.amount}

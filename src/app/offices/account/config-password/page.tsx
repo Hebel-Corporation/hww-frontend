@@ -9,8 +9,8 @@ import React from 'react'
 
 export default async function ConfigPasswordPage() {
 
-  const session: SessionType = await getServerSession({raw: false})
-  if (!session.user.has_default_password) {
+  const session = await getServerSession({raw: false}) as SessionType | null
+  if (!session?.user.has_default_password) {
     redirect('/offices/dashboard')
   }
 
@@ -23,4 +23,3 @@ export default async function ConfigPasswordPage() {
     </main>
   );
 }
-

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { getTokenValue } from "./utils-fonctions";
+import { SessionType } from "@/types";
 
 
 export async function getServerSession({
@@ -22,6 +23,10 @@ export async function setServerCookie(name: string, token: string) {
 
     const tokenValue = getTokenValue(token)
 
+    if (!tokenValue) {
+        throw new Error('Invalid token provided')
+    }
+
     cookies().set(name, token, {
         expires: new Date(tokenValue.exp * 1000),
         path: '/',
@@ -34,7 +39,7 @@ export async function setServerCookie(name: string, token: string) {
 
 
 export async function updateSession(request: NextRequest) {
-    const session = await getServerSession({raw: false})
+    const session = await getServerSession({raw: false}) as SessionType | null
 
     if (session) {
         const res = NextResponse.next();
@@ -66,5 +71,3 @@ export async function updateSession(request: NextRequest) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 }
-
-

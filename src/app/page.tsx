@@ -10,10 +10,11 @@ import { ModeToggle } from "@/components/mode-toggle";
 import MobileMenu from "@/components/portal/mobile-menu";
 import { getServerSession } from "@/utils/server-auth-utils";
 import Image from "next/image";
+import { SessionType } from "@/types";
 
 export default async function HomePage() {
 
-  const session = await getServerSession({ raw: false })
+  const session = await getServerSession({raw: false}) as SessionType | null
   const hasSession = session ? true : false
 
   return (

@@ -4,30 +4,33 @@ import React from 'react'
 import EmptyData from '@/components/common/empty-data';
 import { Chip, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
+import { formatDateTime } from '@/utils/utils-fonctions';
 
 function PurchaseBonusTable({
     purchaseBonuses,
     page,
-    pages
+    pages,
+    forPayment
 }: {
     purchaseBonuses: any[],
     page: number,
-    pages: number
+    pages: number,
+    forPayment: boolean
 }) {
 
     const router = useRouter()
 
     return (
         <>
-            <Table isStriped aria-label="Referral table" shadow='none' radius='sm'
+            <Table isStriped aria-label="Purchase Bonus table" shadow='none' radius='sm'
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[calc(100vh-46vh)] max-h-[calc(100vh-46vh)] p-0",
+                    wrapper: `${forPayment ? 'min-h-[calc(100vh-56vh)] max-h-[calc(100vh-56vh)]' : 'min-h-[calc(100vh-46vh)] max-h-[calc(100vh-46vh)]'} p-0`,
                     thead: 'rounded-sm'
                 }}
                 bottomContent={
-                    pages > 0 ? (
+                    pages > 0 && !forPayment ? (
                         <div className="flex w-full justify-start">
                             <Pagination radius='sm'
                                 isCompact
@@ -46,11 +49,12 @@ function PurchaseBonusTable({
                 }
             >
                 <TableHeader>
-                    <TableColumn key="downline">Downline</TableColumn>
-                    <TableColumn key="account" className='hidden sm:table-cell'>ID du Compte</TableColumn>
+                    <TableColumn key="downline" className={`${forPayment ? 'hidden' : 'table-cell'}`}>Downline</TableColumn>
+                    <TableColumn key="account" className={`${forPayment ? 'hidden' : 'hidden sm:table-cell'} `}>ID du Compte</TableColumn>
                     <TableColumn key="date" className='hidden sm:table-cell'>Date d&apos;achat</TableColumn>
                     <TableColumn key="amount">Montant</TableColumn>
-                    <TableColumn key="status">Statut</TableColumn>
+                    <TableColumn key="amount_to_be_pay">Montant à Payer</TableColumn>
+                    <TableColumn key="status" className={`${forPayment ? 'hidden' : 'table-cell'}`}>Statut</TableColumn>
                 </TableHeader>
                 <TableBody emptyContent={
                     <EmptyData description="Aucun bonus sur achat des produits n'est enregistrer pour le moment." />
@@ -58,7 +62,7 @@ function PurchaseBonusTable({
                     {
                         purchaseBonuses?.map((item: any) => (
                             <TableRow key={item?.id}>
-                                <TableCell className='px-0 sm:px-3'>
+                                <TableCell className={`${forPayment ? 'hidden' : 'table-cell'} px-0 sm:px-3`}>
                                     <div className='flex flex-col gap-1'>
                                         <h1>{item?.sale_detail?.member_account?.member?.first_name} {item?.sale_detail?.member_account?.member?.last_name}</h1>
                                         <span className='block sm:hidden text-tiny font-extralight'>
@@ -66,16 +70,19 @@ function PurchaseBonusTable({
                                         </span>
                                     </div>
                                 </TableCell>
-                                <TableCell className='hidden sm:table-cell'>
+                                <TableCell className={`${forPayment ? 'hidden' : 'hidden sm:table-cell'} `}>
                                     {item?.sale_detail?.member_account?.company_id}
                                 </TableCell>
                                 <TableCell className='hidden sm:table-cell'>
-                                    {item?.created_at}
+                                    {formatDateTime(item?.created_at)}
                                 </TableCell>
                                 <TableCell>
                                     $ {item?.amount}
                                 </TableCell>
-                                <TableCell className='px-0 sm:px-3'>
+                                <TableCell>
+                                    $ {item?.amount_to_be_paid}
+                                </TableCell>
+                                <TableCell className={`${forPayment ? 'hidden' : 'table-cell'} px-0 sm:px-3`}>
                                     {
                                         item?.is_paid ?
                                             <Chip variant='faded' size='sm' color='danger'>Payé</Chip>

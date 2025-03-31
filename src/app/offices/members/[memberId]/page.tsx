@@ -33,11 +33,11 @@ const MemberDetails = async ({
     searchParams: { [key: string]: string | undefined }
 }) => {
 
-    const session: SessionType = await getServerSession({ raw: false })
-    const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
+    const session = await getServerSession({raw: false}) as SessionType | null
+    const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id as string })
 
-    const currentAccountId: string = searchParams.account || ''
-    const memberId: string = params.memberId || ''
+    const currentAccountId = searchParams.account ?? ''
+    const memberId = params.memberId
     const member = await getMemberDettails({ memberId: memberId })
     if (!member)
         notFound()
@@ -126,11 +126,11 @@ const MemberDetails = async ({
                             <Button radius="sm" variant='flat' color='warning'
                                 className="!p-0 !min-w-0 h-max"
                             >
-                                <Link href={`/offices/members/${memberId}/${currentAccountId}`}
+                                <a href={`/offices/members/${memberId}/${currentAccountId}`}
                                     className="flex flex-1 gap-2 items-center px-4 py-2">
                                     <EyeIcon />
                                     <span>Détails du compte</span>
-                                </Link>
+                                </a>
                             </Button>
                             <AddMemberModal
                                 isFirstNode={false}
