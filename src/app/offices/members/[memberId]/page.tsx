@@ -123,7 +123,14 @@ const MemberDetails = async ({
                     <div className="flex gap-2.5 flex-wrap justify-between items-center">
                         <h1>Réseau</h1>
                         <div className="flex flex-wrap gap-3 items-center">
-                            <Button radius="sm" variant='flat' color='warning'
+
+                            <Link href={`/offices/members/${memberId}/${currentAccountId}`}
+                                className="flex flex-1 gap-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-600 rounded-md text-sm duration-500 items-center px-4 py-2">
+                                <EyeIcon />
+                                <span>Détails du compte</span>
+                            </Link>
+
+                            {/* <Button radius="sm" variant='flat' color='warning'
                                 className="!p-0 !min-w-0 h-max"
                             >
                                 <a href={`/offices/members/${memberId}/${currentAccountId}`}
@@ -131,7 +138,7 @@ const MemberDetails = async ({
                                     <EyeIcon />
                                     <span>Détails du compte</span>
                                 </a>
-                            </Button>
+                            </Button> */}
                             <AddMemberModal
                                 isFirstNode={false}
                                 hasRegisterCodeValid={hasRegisterCodeValid}

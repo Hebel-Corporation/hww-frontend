@@ -20,7 +20,7 @@ export default function AdminPanelLayout({
 
 
   return (
-    <main className="flex flex-col flex-1 border-5 min-h-[calc(100vh)]">
+    <main className="flex flex-col flex-1 border-5 min-h-[calc(100dvh)]">
       {
         hideSideBar ? <></> :
           <Sidebar />

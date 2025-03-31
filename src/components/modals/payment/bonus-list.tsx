@@ -55,7 +55,7 @@ function BonusList({
           }
         }}
         classNames={{
-          base: "min-h-[calc(100vh-51.6vh)] max-h-[calc(100vh-51.6vh)] p-0"
+          base: "min-h-[calc(100dvh-51.6dvh)] max-h-[calc(100dvh-51.6dvh)] p-0"
         }}
       >
         {
