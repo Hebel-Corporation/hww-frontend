@@ -13,7 +13,7 @@ const PackageItem = () => {
                         <span className="text-3xl font-extrabold tracking-tight">80</span>
                         <span className="ms-1 text-lg font-normal text-gray-500 dark:text-gray-400">/compte</span>
                     </div>
-                    <ul role="list" className="space-y-3 mt-5">
+                    <ul role="list" className="space-y-3 mt-5 hidden sm:block">
                         <li className="flex">
                             <CircleCheck size={17} className="text-blue-700 dark:text-blue-500" />
                             <span className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">

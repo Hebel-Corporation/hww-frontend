@@ -163,7 +163,7 @@ function PaymentModal({ currentTab, bonusItems, accountId, forPurchase }:
                                                 radius="sm"
                                                 min={5}
                                                 max={totalBonus}
-                                                description={`Le minimum de retrait est de 5$ et le maximum est de ${totalBonus}$ !`}
+                                                description={`Le minimum de retrait est de 5$ et le maximum est le total de tous les bonus d'achat produit !`}
                                                 className="w-[70%]"
                                                 value={paymentAmount}
                                                 onValueChange={setPaymentAmount}
@@ -172,6 +172,7 @@ function PaymentModal({ currentTab, bonusItems, accountId, forPurchase }:
                                                 size="md"
                                                 radius="sm"
                                                 className="flex-1 !h-14"
+                                                isDisabled={isSubmitting || parseFloat(paymentAmount) <= 0} isLoading={isSubmitting}
                                                 onPress={() => {
                                                     if (!paymentAmount || parseFloat(paymentAmount) < 5 || parseFloat(paymentAmount) > totalBonus) {
                                                         toast.error("Montant invalide")

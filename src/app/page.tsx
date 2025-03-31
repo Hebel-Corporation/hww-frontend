@@ -19,7 +19,7 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="min-h-[calc(100vh-57px-97px)] flex-1 w-full">
+      <main className="min-h-[calc(100dvh-57px-97px)] flex-1 w-full">
 
         {/* <!-- HEADER SECTION --> */}
         <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-24 xl:px-40 2xl:px-64">

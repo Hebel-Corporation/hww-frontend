@@ -22,7 +22,7 @@ const LocationItemList = async ({
 
     return (
         <div className='flex flex-col flex-1 gap-2'>
-            <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100vh-35.5vh)] max-h-[calc(100vh-35.5vh)]">
+            <ScrollShadow className="flex flex-col flex-1 min-h-[calc(100dvh-35.5dvh)] max-h-[calc(100dvh-35.5dvh)]">
                 {
                     locations?.count ?
                         <div className='flex flex-wrap gap-5'>

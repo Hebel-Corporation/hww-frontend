@@ -97,7 +97,7 @@ const OfficeDetails = async ({
 
                     {/* Staff list */}
                     <Suspense fallback={
-                        <div className='h-[calc(100vh-41vh)] flex gap-2 items-center justify-center'>
+                        <div className='h-[calc(100dvh-41dvh)] flex gap-2 items-center justify-center'>
                             <Spinner size='md' />
                             <span>Chargement...</span>
                         </div>
