@@ -25,7 +25,7 @@ const breadcrumbItems = [
 
 export default async function AccountPage() {
 
-  const session: SessionType = await getServerSession({ raw: false })
+  const session = await getServerSession({raw: false}) as SessionType | null
   if (!session) {
     notFound()
   }

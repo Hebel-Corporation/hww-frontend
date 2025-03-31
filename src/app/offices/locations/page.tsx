@@ -31,7 +31,7 @@ export default async function LocationPage({
   searchParams: { [key: string]: string | undefined }
 }) {
 
-  const session: SessionType = await getServerSession({ raw: false })
+  const session = await getServerSession({raw: false}) as SessionType | null
   if(!session)
     redirect('/login')
 

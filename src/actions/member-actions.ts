@@ -451,3 +451,27 @@ export const registerMemberPayment = ({
         }
     });
 };
+
+export const processPurchaseBonusPayment = async ({
+    account,
+    amount
+}: {
+    account: string,
+    amount: number
+}, officeId: string): Promise<any> => {
+    try {
+        const result = await serverApi.post(
+            `${ApiEndpoints.MEMBERS.PROCESS_PURCHASE_BONUS_PAYMENT.replace("{{officeID}}", officeId)}`,
+            {
+                account,
+                amount
+            }
+        )
+        
+        revalidatePath('/payments')
+        return result.data
+    } catch (error: any) {
+        const message = error.response?.data?.error || error.message
+        throw new Error(message)
+    }
+};

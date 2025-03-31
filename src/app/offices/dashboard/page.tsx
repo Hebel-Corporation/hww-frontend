@@ -17,7 +17,7 @@ const breadcrumbItems = [
 
 export default async function DashboardPage() {
 
-  const session: SessionType = await getServerSession({ raw: false })
+  const session = await getServerSession({raw: false}) as SessionType | null
 
   return (
     <ContentLayout breadcrumb={

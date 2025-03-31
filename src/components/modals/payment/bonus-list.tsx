@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Chip, Listbox, ListboxItem, Selection } from "@nextui-org/react";
 import { MatchingType, PurchaseType, ReferralType } from '@/types';
 import { DollarSign } from 'lucide-react';
+import { formatDateTime } from '@/utils/utils-fonctions';
 
 function BonusList({
   bonusType,
@@ -54,14 +55,16 @@ function BonusList({
           }
         }}
         classNames={{
-          base: "min-h-[calc(100vh-45vh)] max-h-[calc(100vh-45vh)] p-0"
+          base: "min-h-[calc(100vh-51.6vh)] max-h-[calc(100vh-51.6vh)] p-0"
         }}
       >
         {
           items?.map((item: MatchingType | ReferralType | PurchaseType) => (
             <ListboxItem key={item?.id}>
               <div className='flex gap-3 items-center justify-between'>
-                <p>{item?.created_at}</p>
+                <div className="flex flex-col gap-2">
+                  <p>{formatDateTime(item?.created_at)}</p>
+                </div>
                 <Chip
                   startContent={<DollarSign size={18} />}
                   variant="faded"

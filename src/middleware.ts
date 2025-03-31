@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession, updateSession } from "./utils/server-auth-utils";
+import { updateSession } from "./utils/server-auth-utils";
 // import { hasAuthorization } from "./utils/client-utils";
 
 

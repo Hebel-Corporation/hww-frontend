@@ -32,8 +32,8 @@ export default async function MembersPage({
   searchParams: { [key: string]: string | undefined }
 }) {
 
-  const session: SessionType = await getServerSession({ raw: false })
-  const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id })
+  const session = await getServerSession({raw: false}) as SessionType | null
+  const hasRegisterCodeValid = await checkOfficeRegisterCodeValidity({ officeId: session?.user?.office?.id as string})
 
   const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE

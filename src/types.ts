@@ -16,6 +16,7 @@ export type User = {
     date_joined: string
 }
 
+
 export type UserGroup = {
     id: string,
     name: string
@@ -129,7 +130,8 @@ type BonusBaseType = {
     amount: number,
     is_paid: boolean,
     created_at: string,
-    updated_at: string
+    updated_at: string,
+    amount_to_be_paid?: number
 }
 
 
