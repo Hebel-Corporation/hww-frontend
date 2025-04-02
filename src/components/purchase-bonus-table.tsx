@@ -53,7 +53,7 @@ function PurchaseBonusTable({
                     <TableColumn key="account" className={`${forPayment ? 'hidden' : 'hidden sm:table-cell'} `}>ID du Compte</TableColumn>
                     <TableColumn key="date" className='hidden sm:table-cell'>Date d&apos;achat</TableColumn>
                     <TableColumn key="amount">Montant</TableColumn>
-                    <TableColumn key="amount_to_be_pay">Montant à Payer</TableColumn>
+                    <TableColumn key="amount_to_be_pay" className='text-yellow-500'>Montant restant à payer</TableColumn>
                     <TableColumn key="status" className={`${forPayment ? 'hidden' : 'table-cell'}`}>Statut</TableColumn>
                 </TableHeader>
                 <TableBody emptyContent={
@@ -79,7 +79,7 @@ function PurchaseBonusTable({
                                 <TableCell>
                                     $ {item?.amount}
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className='text-yellow-500'>
                                     $ {item?.amount_to_be_paid}
                                 </TableCell>
                                 <TableCell className={`${forPayment ? 'hidden' : 'table-cell'} px-0 sm:px-3`}>
