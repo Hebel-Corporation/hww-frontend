@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { updateSession } from "./utils/server-auth-utils";
+import { getServerSession, updateSession } from "./utils/server-auth-utils";
+import { SessionType } from "./types";
 // import { hasAuthorization } from "./utils/client-utils";
 
 
@@ -11,9 +12,10 @@ export async function middleware(request: NextRequest) {
     //     return NextResponse.next();
     // }
 
+    const session = await getServerSession({raw: false}) as SessionType | null
     const response = await updateSession(request);
 
-    if (!response) {
+    if (!response || !session) {
         return NextResponse.redirect(new URL('/login', request.url));
     } 
 

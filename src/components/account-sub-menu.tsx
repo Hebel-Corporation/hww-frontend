@@ -54,7 +54,7 @@ function AccountSubMenu({
                 {
                     accountSubMenus?.map(menu => (
                         <Link key={menu?.key} color={menu?.isActive ? 'primary' : 'default'} href={menu?.path} 
-                            className={`${menu?.isActive ? 'bg-zinc-800 text-white dark:bg-white dark:text-zinc-800' : 'bg-inherit'} text-sm flex-1 px-3 py-2.5 first:rounded-l-lg last:rounded-r-lg max-w-max truncate`}>
+                            className={`${menu?.isActive ? 'bg-zinc-800 text-white dark:bg-white dark:text-zinc-800' : 'bg-inherit'} border-r last:border-r-0 text-sm flex-1 px-3 py-2.5 first:rounded-l-lg last:rounded-r-lg max-w-max truncate`}>
                             {menu?.label}
                         </Link>
                     ))
