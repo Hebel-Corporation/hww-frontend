@@ -109,6 +109,7 @@ export default function AddMemberModal({
     }
 
     toast.promise(
+      
       memberRegister({
         uplines: {
           referral_account: realValues?.parrainId || '',
@@ -118,7 +119,7 @@ export default function AddMemberModal({
           first_name: realValues.first_name,
           last_name: realValues.last_name,
           gender: realValues.gender,
-          birthday: realValues.birthday,
+          birthday: realValues.birthday || null,
           phone: realValues?.phone || ''
         }
       }, session?.user?.office?.id), {

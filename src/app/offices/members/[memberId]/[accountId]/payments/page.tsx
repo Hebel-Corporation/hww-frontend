@@ -1,6 +1,7 @@
 import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountPurchases, getMemberAccountReferrals } from '@/actions/member-actions'
 import PaymentModal from '@/components/modals/payment/payment-modal'
 import PaymentTable from '@/components/payment-table'
+import HasOfficePermission from '@/components/wrappers/auth/has-office-permission'
 import { constantVars } from '@/lib/constants'
 import { SessionType } from '@/types'
 import { hasGroupAuthorization, hasOfficeAuthorization } from '@/utils/client-utils'
@@ -74,13 +75,13 @@ async function PaymentPage({
     <main className='flex flex-col flex-1 gap-3'>
       <div className='flex gap-4 items-center justify-between'>
         <h1>Liste des transactions</h1>
-        {
-          hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'], userOffice: session?.user.office }) &&
-          hasGroupAuthorization({ authorizedGroups: ['technicien'], userGroups: session?.user.groups }) && (
 
-            <PaymentModal currentTab={currentTab} bonusItems={bonuses?.results} accountId={accountId} forPurchase={currentTab === 'purchase'} />
-          )
-        }
+        <HasOfficePermission 
+          offices={['head_office']}
+        >
+          <PaymentModal currentTab={currentTab} bonusItems={bonuses?.results} accountId={accountId} forPurchase={currentTab === 'purchase'} />
+        </HasOfficePermission>
+
       </div>
 
       <PaymentTable payments={payments?.results}

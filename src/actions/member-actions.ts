@@ -234,10 +234,11 @@ export const memberRegister = (formData: {
         first_name: string,
         last_name: string,
         gender: string,
-        birthday: Date,
+        birthday: Date | null,
         phone?: string
     }
 }, officeId: string): Promise<any> => {
+    
     return new Promise(async (resolve, reject) => {
         try {
             const result: any = await serverApi.post(
@@ -245,7 +246,7 @@ export const memberRegister = (formData: {
                 ...formData,
                 member: {
                     ...formData.member,
-                    birthday: format(formData.member.birthday, "yyyy-MM-dd"),
+                    birthday: formData.member.birthday ? format(formData.member.birthday, "yyyy-MM-dd") : null,
                     user_type: 'member'
                 }
             });

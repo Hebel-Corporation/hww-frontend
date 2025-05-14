@@ -21,6 +21,7 @@ import { constantVars } from '@/lib/constants'
 import NetworkNodeItem from '@/components/network-node-item'
 import EmptyData from '@/components/common/empty-data'
 import PurchaseBonusModal from '@/components/modals/add-purchase-bonus'
+import HasOfficePermission from '@/components/wrappers/auth/has-office-permission'
 
 
 
@@ -90,15 +91,22 @@ const MemberDetails = async ({
                             </div>
                         </div>
                         <div className='flex flex-wrap gap-4'>
-                            <PurchaseBonusModal accounts={
-                                member?.accounts?.map((acc: any) => { return acc.company_id })
-                            } />
-                            <AddAccountModal memberId={member?.id} accounts={
-                                member?.accounts?.map((acc: any) => { return acc.company_id })
-                            }
-                            referralAccounts={member?.accounts}
-                                hasRegisterCodeValid={hasRegisterCodeValid}
-                            />
+                        <HasOfficePermission 
+                            offices={['sub_office']}
+                        >
+                            <>
+                                <PurchaseBonusModal accounts={
+                                    member?.accounts?.map((acc: any) => { return acc.company_id })
+                                } />
+                                <AddAccountModal memberId={member?.id} accounts={
+                                    member?.accounts?.map((acc: any) => { return acc.company_id })
+                                }
+                                referralAccounts={member?.accounts}
+                                    hasRegisterCodeValid={hasRegisterCodeValid}
+                                />
+                            </>
+                        </HasOfficePermission>
+                           
                         </div>
                     </div>
 
@@ -139,11 +147,15 @@ const MemberDetails = async ({
                                     <span>Détails du compte</span>
                                 </a>
                             </Button> */}
-                            <AddMemberModal
-                                isFirstNode={false}
-                                hasRegisterCodeValid={hasRegisterCodeValid}
-                                referralAccounts={member?.accounts}
-                            />
+                            <HasOfficePermission  
+                                offices={['sub_office']}
+                            >
+                                <AddMemberModal
+                                    isFirstNode={false}
+                                    hasRegisterCodeValid={hasRegisterCodeValid}
+                                    referralAccounts={member?.accounts}
+                                />
+                            </HasOfficePermission>
                         </div>
                     </div>
 
