@@ -251,3 +251,19 @@ export const editOffice = async ({
         revalidatePath('/offices/point-of-sale')
     }
 }
+
+
+
+export const getOfficeStats = async ({
+    officeId
+}: { officeId: string }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_STATS.replace("{{officeID}}", officeId)}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
