@@ -26,7 +26,7 @@ export default async function DashboardPage() {
 
       {
         session?.user?.user_type === 'staff' ? 
-        <StaffDashboard />
+        <StaffDashboard officeId={session?.user?.office.id} />
         : session?.user?.user_type === 'member' &&
         <MemberDashboard memberId={session?.user_id} />
       }

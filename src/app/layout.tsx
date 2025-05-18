@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { ThemeProvider } from "@/providers/theme-provider";
+import QueryProvider from "@/providers/query-provider";
 import { Toaster } from 'sonner';
 
  
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`${GeistSans.className} min-h-[calc(100dvh)] `}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          {children}
+          <QueryProvider>
+            {children}
+          </QueryProvider>
           <Toaster position="top-right" richColors  />
         </ThemeProvider>
       </body>
