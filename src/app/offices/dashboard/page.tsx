@@ -15,7 +15,14 @@ const breadcrumbItems = [
   }
 ]
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams
+}: {
+    searchParams: { [key: string]: string | undefined }
+}) {
+
+  const officeId = searchParams?.office || 'all'
+
 
   const session = await getServerSession({raw: false}) as SessionType | null
 
@@ -26,7 +33,7 @@ export default async function DashboardPage() {
 
       {
         session?.user?.user_type === 'staff' ? 
-        <StaffDashboard officeId={session?.user?.office.id} />
+        <StaffDashboard officeId={session?.user?.office.id} officeFilter={officeId} />
         : session?.user?.user_type === 'member' &&
         <MemberDashboard memberId={session?.user_id} />
       }

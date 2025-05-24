@@ -1,5 +1,6 @@
 import { hasGroupAuthorization, hasOfficeAuthorization } from "@/utils/client-utils";
 import {
+  Activity,
   LayoutGrid,
   MapPinnedIcon,
   Settings,
@@ -93,6 +94,17 @@ export function getMenuList(pathname: string): Group[] {
             hasGroupAuthorization({ authorizedGroups: ['technicien'] })
           ),
           icon: Tag,
+          submenus: []
+        },
+        {
+          href: "/offices/activities",
+          label: "Activités",
+          active: pathname.includes("/offices/activities"),
+          authorized: (
+            hasOfficeAuthorization({ authorizedOffices: ['head_office'] }) &&
+            hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+          ),
+          icon: Activity,
           submenus: []
         }
       ]

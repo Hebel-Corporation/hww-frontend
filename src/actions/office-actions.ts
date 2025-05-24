@@ -255,10 +255,11 @@ export const editOffice = async ({
 
 
 export const getOfficeStats = async ({
-    officeId
-}: { officeId: string }) => {
+    officeId,
+    officeFilter
+}: { officeId: string, officeFilter: string }) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_STATS.replace("{{officeID}}", officeId)}`)
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_STATS.replace("{{officeID}}", officeId)}?office_id=${officeFilter}`)
         const data = result.data
 
         return data;
