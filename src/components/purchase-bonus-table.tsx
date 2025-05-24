@@ -26,7 +26,7 @@ function PurchaseBonusTable({
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: `${forPayment ? 'min-h-[calc(100dvh-56dvh)] max-h-[calc(100dvh-56dvh)]' : 'min-h-[calc(100dvh-46dvh)] max-h-[calc(100dvh-46dvh)]'} p-0`,
+                    wrapper: `${forPayment ? 'min-h-[calc(100dvh-56dvh)] max-h-[calc(100dvh-56dvh)]' : 'min-h-[64dvh] max-h-[64dvh]'} p-0`,
                     thead: 'rounded-sm'
                 }}
                 bottomContent={

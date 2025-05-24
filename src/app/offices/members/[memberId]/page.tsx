@@ -160,7 +160,7 @@ const MemberDetails = async ({
                     </div>
 
                     {/* Member network */}
-                    <div className='flex flex-col sm:flex-row flex-1 gap-5 justify-between overflow-x-auto'>
+                    <div className='flex flex-col sm:flex-row flex-1 gap-5 pb-4 justify-between overflow-x-auto'>
                         <div className='flex flex-col flex-1 gap-5 border rounded-lg p-4 md:p-7 bg-zinc-100 dark:bg-zinc-800'>
                             <h2 className='border-b pb-2'>Parrents</h2>
                             <NetworkNodeItem account={network?.referral} tag='Parrain' />

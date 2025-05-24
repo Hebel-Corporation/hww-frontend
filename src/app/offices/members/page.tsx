@@ -75,7 +75,7 @@ export default async function MembersPage({
           </div>
         </div>
 
-        <ScrollShadow className="flex flex-col flex-1 max-h-[calc(100dvh-37dvh)] min-h-[calc(100dvh-37dvh)]">
+        <ScrollShadow className="flex flex-col flex-1 max-h-[70dvh] min-h-[70dvh]">
           {
             members?.count ?
               <div className='flex flex-col'>
