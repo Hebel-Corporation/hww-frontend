@@ -1,5 +1,4 @@
 import GlobalLoader from '@/components/common/global-loader'
-import React from 'react'
 
 const loading = () => {
   return (

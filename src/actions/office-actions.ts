@@ -268,3 +268,20 @@ export const getOfficeStats = async ({
         return e?.message;
     }
 }
+
+
+
+export const getOfficeActivities = async ({
+    officeId,
+    filterSlug
+}: { officeId: string, filterSlug: string }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_ACTIVITIES.replace("{{officeID}}", officeId)}?filter=${filterSlug}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}

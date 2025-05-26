@@ -7,6 +7,7 @@ import React from 'react'
 import StatisticChart from './statistic-chart'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Selection } from "@nextui-org/react";
 import { useRouter } from 'next/navigation'
+import GlobalLoader from '@/components/common/global-loader'
 
 
 
@@ -46,8 +47,8 @@ function StaffDashboard({ officeId, officeFilter }: { officeId: string, officeFi
     }, [selectedKey]);
 
 
-    if (isLoading) return <div className='flex flex-1 justify-center items-center'><p>Chargement...</p></div>;
-    if (isError) return <p>Error: {(error as Error).message}</p>;
+    if (isLoading) return <GlobalLoader />;
+    if (isError) return <div className='flex flex-1 justify-center items-center'><p className='text-lg font-medium'>Error: {(error as Error).message}</p></div>;
 
     return (
         <div className='flex flex-col'>
