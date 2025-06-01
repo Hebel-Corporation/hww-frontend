@@ -1,9 +1,6 @@
-import { getMemberAccountDownlines, getMemberAccountReferrals } from '@/actions/member-actions';
 import SuspenseFallback from '@/components/common/suspense-fallback';
 import MemberDownlineList from '@/components/member-downline-list';
-import ReferralTable from '@/components/referral-table';
 import { constantVars } from '@/lib/constants';
-import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 

@@ -27,7 +27,6 @@ export default function StatisticChart({ data }: { data: any[] }) {
             {
                 getValue: datum => datum.value,
                 elementType: 'line',
-                scaleType: 'linear',
             },
         ],
         []

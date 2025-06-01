@@ -14,10 +14,11 @@ import { useEffect, useState } from "react";
 import PaymentTable from "./payment-table";
 import PurchaseBonusTable from "@/components/purchase-bonus-table";
 
-export default function PaymentDrawer({ isOpen, onOpenChange, item }: {
+export default function PaymentDrawer({ isOpen, onOpenChange, item, periodFilter }: {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   item: any;
+  periodFilter: 'all' | 'dayly' | 'weekly' | 'monthly';
 }) {
 
   const [bonusItems, setBonusItems] = useState<any>([])
@@ -32,7 +33,7 @@ export default function PaymentDrawer({ isOpen, onOpenChange, item }: {
             search: '',
             is_paid: false,
             bonusType: item?.bonus_type_code,
-            periodFilter: 'all'
+            periodFilter: periodFilter
           })
           setBonusItems(bonusData?.results)
     }

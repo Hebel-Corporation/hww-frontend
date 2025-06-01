@@ -103,7 +103,7 @@ function StaffDashboard({ officeId, officeFilter }: { officeId: string, officeFi
 
             <div className='flex justify-between items-center py-2'>
                 <h2 className="text-sm sm:text-lg text-gray-700 dark:text-slate-100 font-medium">
-                    Graphique de l'année {new Date().getFullYear()}
+                    Graphique de l&apos;année {new Date().getFullYear()}
                 </h2>
                 {
                 items.length > 1 &&

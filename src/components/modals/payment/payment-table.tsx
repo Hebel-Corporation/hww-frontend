@@ -15,7 +15,7 @@ import {
 import { formatDateTime } from "@/utils/utils-fonctions";
 import { getClientSession } from "@/utils/client-utils";
 import { toast } from "sonner";
-import { processPurchaseBonusPayment, registerMemberPayment } from "@/actions/member-actions";
+import { registerMemberPayment } from "@/actions/member-actions";
 import AlertModal from "../alert-modal";
 
 export default function PaymentTable({

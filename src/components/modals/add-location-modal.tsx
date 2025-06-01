@@ -2,7 +2,18 @@
 
 import { CreateLocation, getCountries } from "@/actions/location-actions";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Autocomplete, AutocompleteItem, Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@heroui/react";
+import { 
+  Autocomplete, 
+  AutocompleteItem, 
+  Button, 
+  Input, 
+  Modal, 
+  ModalBody, 
+  ModalContent, 
+  ModalFooter, 
+  ModalHeader, 
+  useDisclosure 
+} from "@heroui/react";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,6 +42,8 @@ export default function AddLocationModal({
     value: string,
     label: string
   }[]>([]);
+
+  const [selectedCountry, setSelectedCountry] = React.useState<string>('');
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const form = useForm<z.infer<typeof locationFormSchema>>({
@@ -114,12 +127,16 @@ export default function AddLocationModal({
                               <Autocomplete {...field} isRequired radius="sm" size="sm"
                                 label="Pays"
                                 description="Sellectionner le pays dans lequel se trouve l'endoit que vous voulez enregistrer."
+                                selectedKey={selectedCountry}
                                 onSelectionChange={(value) => {
+                                  if (value) {
+                                    setSelectedCountry(value as string)
+                                  }
                                   form.setValue('country', value as string || '')
                                 }}
                               >
                                 {countries.map((country: any) => (
-                                  <AutocompleteItem key={country.value} value={country.value}>
+                                  <AutocompleteItem key={country.value}>
                                     {country.label}
                                   </AutocompleteItem>
                                 ))}

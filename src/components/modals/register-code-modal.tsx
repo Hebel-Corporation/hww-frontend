@@ -47,6 +47,7 @@ export default function RegisterCodeModal({
     const [isLoading, setIsLoading] = useState(false);
     const [packages, setPackages] = useState([]);
     const [currentPackage, setCurrentPackage] = useState<Package | undefined>(undefined);
+    const [selectedPackage, setSelectedPackage] = useState<string>("");
 
     const form = useForm<z.infer<typeof memberFormSchema>>({
         resolver: zodResolver(memberFormSchema),
@@ -130,12 +131,15 @@ export default function RegisterCodeModal({
                                                                     if (value) {
                                                                         form.setValue('packageId', value)
                                                                         setCurrentPackage(packages?.find((itm: Package) => itm?.id === value))
+                                                                        setSelectedPackage(value)
                                                                     }
                                                                 }}
+                                                                selectedKeys={[selectedPackage]}
+                                                                // onSelectionChange={(keys) => setSelectedPackage(Array.from(keys)[0])}
                                                             >
                                                                 {
                                                                     packages?.map((pack: any) => (
-                                                                        <SelectItem key={pack?.id} value={pack?.id} textValue={`${pack?.name} ($${pack?.price}/code)`} >
+                                                                        <SelectItem key={pack?.id} textValue={`${pack?.name} ($${pack?.price}/code)`} >
                                                                             {pack?.name} (${pack?.price}/code)
                                                                         </SelectItem>
                                                                     ))

@@ -58,6 +58,7 @@ export default function AddOfficeModal({
   }[]>([]);
   const [userGroups, setUserGroups] = React.useState<UserGroup[]>([]);
   const [isVisible, setIsVisible] = React.useState(false);
+  const [selectedLocation, setSelectedLocation] = React.useState<string>('');
 
 
   const form = useForm<z.infer<typeof officeFormSchema>>({
@@ -174,12 +175,16 @@ export default function AddOfficeModal({
                                 startContent={
                                   <MapPinIcon size={18} />
                                 }
+                                selectedKey={selectedLocation}
                                 onSelectionChange={(value) => {
+                                  if (value) {
+                                    setSelectedLocation(value as string)
+                                  }
                                   form.setValue('location', value as string || '')
                                 }}
                               >
                                 {locations.map((location: any) => (
-                                  <AutocompleteItem key={location.value} value={location.value}>
+                                  <AutocompleteItem key={location.value}>
                                     {location.label}
                                   </AutocompleteItem>
                                 ))}

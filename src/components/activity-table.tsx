@@ -123,9 +123,10 @@ export function ActivityTable({officeId, filterObj, page}:{
             <PaymentDrawer
                 isOpen={isDrawerOpen}
                 onOpenChange={(open) => {
-                if (!open) closeDrawer();
+                    if (!open) closeDrawer();
                 }}
                 item={selectedItem}
+                periodFilter={filterObj?.value}
             />
         </>
     )
