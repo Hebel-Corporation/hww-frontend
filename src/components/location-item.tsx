@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/react'
 import { MapPinnedIcon, MoreHorizontal } from 'lucide-react'
 import React from 'react'
 

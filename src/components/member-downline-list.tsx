@@ -1,4 +1,4 @@
-import { ScrollShadow } from '@nextui-org/react'
+import { ScrollShadow } from '@heroui/react'
 import React from 'react'
 import DownlineItem from './downline-item'
 import { getMemberAccountDownlines } from '@/actions/member-actions'

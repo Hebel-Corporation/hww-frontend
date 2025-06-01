@@ -110,12 +110,36 @@ export const getMemberAccountSponsors = async ({
 
 
 
-export const getMemberAccountReferrals = async ({
-    accountId, page, limit, search, is_paid
-}: { accountId: string, page: number, limit: number, search:string, is_paid?: boolean }) => {
+export const getMemberAccountBonus = async ({
+    accountId, page, limit, search, is_paid, bonusType, periodFilter
+}: { 
+    accountId: string, 
+    page: number, 
+    limit: number, 
+    search:string, 
+    is_paid?: boolean,
+    bonusType: 'matching_bonus' | 'referral_bonus' | 'purchase_bonus',
+    periodFilter?: 'all' | 'dayly' | 'weekly' | 'monthly' 
+}) => {
+
+    let url = ''
+    switch (bonusType) {
+        case 'matching_bonus':
+            url = ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_MATCHINGS
+            break;
+        case 'referral_bonus':
+            url = ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_REFERRALS
+            break;
+        case 'purchase_bonus':
+            url = ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_PURCHASES
+            break;
+        default:
+            break;
+    }
+
+
     try {
-        const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_REFERRALS.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}&is_paid=${is_paid}`)
+        const result = await serverApi.get(`${url.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}&is_paid=${is_paid}&period_filter=${periodFilter}`)
         const data = result.data
 
         return data;
@@ -126,38 +150,6 @@ export const getMemberAccountReferrals = async ({
 }
 
 
-export const getMemberAccountPurchases = async ({
-    accountId, page, limit, search, is_paid
-}: { accountId: string, page: number, limit: number, search:string, is_paid?: boolean }) => {
-    try {
-        const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_PURCHASES.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}&is_paid=${is_paid}`)
-        const data = result.data
-
-        return data;
-    } catch (e: any) {
-        console.error(e?.message)
-        return e?.message;
-    }
-}
-
-
-
-
-export const getMemberAccountMatchings = async ({
-    accountId, page, limit, search, is_paid
-}: { accountId: string, page: number, limit: number, search: string, is_paid?: boolean }) => {
-    try {
-        const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_MATCHINGS.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}&is_paid=${is_paid}`)
-        const data = result.data
-
-        return data;
-    } catch (e: any) {
-        console.error(e?.message)
-        return e?.message;
-    }
-}
 
 
 export const getMemberAccountpayments = async ({

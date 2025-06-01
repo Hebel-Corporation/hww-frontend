@@ -1,4 +1,4 @@
-import { getMemberAccountMatchings } from '@/actions/member-actions'
+import { getMemberAccountBonus } from '@/actions/member-actions'
 import MatchingTable from '@/components/matching-table'
 import { constantVars } from '@/lib/constants'
 import { notFound } from 'next/navigation'
@@ -16,11 +16,12 @@ async function MatchingPage({
   const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
-  const matchings = await getMemberAccountMatchings({
+  const matchings = await getMemberAccountBonus({
     accountId: accountId,
     page: page,
     limit: limit,
-    search: search
+    search: search,
+    bonusType: 'matching_bonus'
   })
   if (matchings == undefined)
     notFound()

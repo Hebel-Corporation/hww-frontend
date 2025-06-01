@@ -3,7 +3,7 @@
 import { createMemberAccount, getMemberAccountSponsors, uplinesVerificationIDs } from "@/actions/member-actions";
 import { getClientSession } from "@/utils/client-utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Autocomplete, AutocompleteItem, Avatar, Button, Chip, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, Avatar, Button, Chip, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@heroui/react";
 import { PlusCircle } from "lucide-react";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";

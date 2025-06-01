@@ -1,4 +1,4 @@
-import { Badge, Chip } from '@nextui-org/react'
+import { Badge, Chip } from '@heroui/react'
 import Link from 'next/link'
 import React from 'react'
 

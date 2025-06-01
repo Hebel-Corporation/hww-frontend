@@ -1,7 +1,7 @@
 'use client'
 
 import { SubscriptionCode } from "@/types";
-import { Button, Chip, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import { Button, Chip, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@heroui/react";
 import { View } from "lucide-react";
 import EmptyData from "../common/empty-data";
 import RegisterCodeModal from "./register-code-modal";

@@ -4,7 +4,7 @@ import { getMemberAccountSponsors, memberRegister, uplinesVerificationIDs } from
 import { getClientSession } from "@/utils/client-utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarDate, CalendarDateTime, ZonedDateTime } from "@internationalized/date";
-import { Autocomplete, AutocompleteItem, Avatar, Button, Chip, DatePicker, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, Avatar, Button, Chip, DatePicker, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@heroui/react";
 import { PlusCircle, TriangleAlert } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

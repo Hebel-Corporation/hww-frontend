@@ -1,5 +1,5 @@
 import { getInitialChar } from '@/utils/utils-fonctions'
-import { Avatar, Chip } from '@nextui-org/react'
+import { Avatar, Chip } from '@heroui/react'
 import React from 'react'
 
 function NetworkNodeItem({

@@ -1,10 +1,10 @@
 import { getOfficeActivities } from "@/actions/office-actions";
-import ActivityTable from "@/components/activity-table";
+import { ActivityTable } from "@/components/activity-table";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
 import CustomBreadcrumb from "@/components/custom-breadcrumb";
 import { SessionType } from "@/types";
 import { getServerSession } from "@/utils/server-auth-utils";
-import { Button, Link } from '@nextui-org/react';
+import { Button, Link } from '@heroui/react';
 import { notFound } from "next/navigation";
 
 import React from 'react';
@@ -46,13 +46,16 @@ export default async function ActivityPage({
 }) {
 
   const filterSlug = searchParams?.filter || 'dayly'
+  const page = searchParams?.page || 1
 
   const session = await getServerSession({raw: false}) as SessionType | null
-  if(!session) notFound()
+
+  if (!session) notFound()
 
   const data = await getOfficeActivities({
     officeId: session?.user?.office?.id,
-    filterSlug: filterSlug
+    filterSlug: filterSlug,
+    activity_type: 'TOTALS'
   })
 
 
@@ -85,7 +88,7 @@ export default async function ActivityPage({
           </div>
 
           {/* Section Aujourd'hui */}
-          <ActivitySection title={filters?.find(fl => fl.value === filterSlug)?.label as string} titleSize="xl">
+          <ActivitySection title={filters?.find(fl => fl.value === filterSlug)?.label || "Activités"} titleSize="xl">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <ActivityCard
                 key={"purchase"}
@@ -137,7 +140,7 @@ export default async function ActivityPage({
 
 
             <div className="w-full">
-              <ActivityTable officeId={session?.user?.office?.id} filterSlug={filterSlug} />
+              <ActivityTable officeId={session?.user?.office?.id} filterObj={filters?.find(fl => fl.value === filterSlug)} page={Number(page)} />
             </div>
           </div>
         </div>

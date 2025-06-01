@@ -2,7 +2,7 @@
 
 import React from 'react'
 import EmptyData from '@/components/common/empty-data';
-import { Chip, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import { Chip, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import { formatDateTime } from '@/utils/utils-fonctions';
 
@@ -83,9 +83,9 @@ function MatchingTable({
                                 <TableCell className='px-0 sm:px-3'>
                                     {
                                         item?.is_paid ?
-                                            <Chip variant='faded' size='sm' color='danger'>Payé</Chip>
+                                            <Chip variant='faded' size='sm' color='success'>Payé</Chip>
                                             :
-                                            <Chip variant='faded' size='sm' color='success'>Non Payé</Chip>
+                                            <Chip variant='faded' size='sm' color='danger'>Non Payé</Chip>
                                     }
                                 </TableCell>
                             </TableRow>

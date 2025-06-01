@@ -5,7 +5,7 @@ import SearchBar from '@/components/common/search-bar'
 import CustomBreadcrumb from '@/components/custom-breadcrumb'
 import PurchaseBonusModal from '@/components/modals/add-purchase-bonus'
 import PaymentModal from '@/components/modals/payment/payment-modal'
-import { Chip } from '@nextui-org/react'
+import { Chip } from '@heroui/react'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 

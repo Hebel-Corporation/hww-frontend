@@ -5,7 +5,7 @@ import { Award, BadgeCheck, ChevronDown, TrendingUp, UsersRound } from 'lucide-r
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import StatisticChart from './statistic-chart'
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Selection } from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Selection } from "@heroui/react";
 import { useRouter } from 'next/navigation'
 import GlobalLoader from '@/components/common/global-loader'
 

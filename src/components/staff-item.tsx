@@ -1,6 +1,6 @@
 import { User, UserGroup } from '@/types'
 import { getInitialChar, toCapitalize } from '@/utils/utils-fonctions'
-import { Avatar, Button } from '@nextui-org/react'
+import { Avatar, Button } from '@heroui/react'
 import { ChevronRight, PenSquare } from 'lucide-react'
 import React from 'react'
 

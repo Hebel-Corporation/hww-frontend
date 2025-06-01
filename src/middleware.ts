@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession, updateSession } from "./utils/server-auth-utils";
 import { SessionType } from "./types";
+import { hasOfficeAuthorization } from "./utils/client-utils";
 // import { hasAuthorization } from "./utils/client-utils";
 
 
@@ -12,12 +13,7 @@ export async function middleware(request: NextRequest) {
     //     return NextResponse.next();
     // }
 
-    const session = await getServerSession({raw: false}) as SessionType | null
-    const response = await updateSession(request);
 
-    if (!response || !session) {
-        return NextResponse.redirect(new URL('/login', request.url));
-    } 
 
     // if (pathname === '/login' && response) {
     //     const session = await getServerSession({raw: false})
@@ -30,14 +26,23 @@ export async function middleware(request: NextRequest) {
 
 
     try {
-        // Define the paths that require admin access
-        // const adminPaths = ['/offices/point-of-sale', '/offices/rewards', '/officeslocations'];
 
-        // if (
-        //     adminPaths.some(path => request.nextUrl.pathname.startsWith(path)) && 
-        //     !hasAuthorization(['Administrateur'], response.cookies.get('session')?.value)) {
-        //     return NextResponse.redirect(new URL('/unauthorized', request.url));
-        // }
+        const session = await getServerSession({raw: false}) as SessionType | null
+        const response = await updateSession(request);
+        if (!session || !response) {
+            return NextResponse.redirect(new URL('/login', request.url));
+        } 
+
+        
+        // Define the paths that require admin access
+        const adminPaths = ['/offices/point-of-sale', '/offices/activities', '/offices/locations'];
+
+        if (
+            adminPaths.some(path => request.nextUrl.pathname.startsWith(path)) && 
+            !hasOfficeAuthorization({authorizedOffices: ['head_office'], userOffice: session?.user?.office})) {
+            return NextResponse.redirect(new URL('/unauthorized', request.url));
+        }
+
 
         return response;
     } catch (err) {
@@ -49,7 +54,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/offices'
+        '/offices/:path*'
     ],
 };
 

@@ -1,6 +1,6 @@
 import { getOfficeStaffs } from '@/actions/office-actions'
 import { User } from '@/types'
-import { ScrollShadow } from '@nextui-org/react'
+import { ScrollShadow } from '@heroui/react'
 import EmptyData from './common/empty-data'
 import StaffItem from './staff-item'
 

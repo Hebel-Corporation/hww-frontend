@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useEffect } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Autocomplete, AutocompleteItem, Select, SelectItem } from "@nextui-org/react";
-import { useDisclosure } from '@nextui-org/react';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Autocomplete, AutocompleteItem, Select, SelectItem } from "@heroui/react";
+import { useDisclosure } from '@heroui/react';
 import { getLocations } from "@/actions/location-actions";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

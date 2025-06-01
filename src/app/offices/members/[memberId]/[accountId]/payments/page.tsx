@@ -1,4 +1,4 @@
-import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountPurchases, getMemberAccountReferrals } from '@/actions/member-actions'
+import { getMemberAccountBonus, getMemberAccountpayments } from '@/actions/member-actions'
 import PaymentModal from '@/components/modals/payment/payment-modal'
 import PaymentTable from '@/components/payment-table'
 import HasOfficePermission from '@/components/wrappers/auth/has-office-permission'
@@ -40,30 +40,33 @@ async function PaymentPage({
 
   switch (currentTab) {
     case 'matching':
-      bonuses = await getMemberAccountMatchings({
+      bonuses = await getMemberAccountBonus({
         accountId: accountId,
         page: page,
         limit: limit,
         search: search,
-        is_paid: false
+        is_paid: false,
+        bonusType: 'matching_bonus'
       })
       break;
     case 'referral':
-      bonuses = await getMemberAccountReferrals({
+      bonuses = await getMemberAccountBonus({
         accountId: accountId,
         page: page,
         limit: limit,
         search: search,
-        is_paid: false
+        is_paid: false,
+        bonusType: 'referral_bonus'
       })
       break;
     case 'purchase':
-      bonuses = await getMemberAccountPurchases({
+      bonuses = await getMemberAccountBonus({
         accountId: accountId,
         page: page,
         limit: limit,
         search: search,
-        is_paid: false
+        is_paid: false,
+        bonusType: 'purchase_bonus'
       })
       break;
 
@@ -79,7 +82,7 @@ async function PaymentPage({
         <HasOfficePermission 
           offices={['head_office']}
         >
-          <PaymentModal currentTab={currentTab} bonusItems={bonuses?.results} accountId={accountId} forPurchase={currentTab === 'purchase'} />
+          <PaymentModal currentTab={currentTab} bonusItems={bonuses?.results} accountId={accountId} />
         </HasOfficePermission>
 
       </div>

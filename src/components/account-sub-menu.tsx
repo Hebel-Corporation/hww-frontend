@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, ButtonGroup } from '@nextui-org/react'
+import { Button, ButtonGroup } from '@heroui/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'

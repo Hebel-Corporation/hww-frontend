@@ -1,4 +1,4 @@
-import { ScrollShadow } from '@nextui-org/react'
+import { ScrollShadow } from '@heroui/react'
 import EmptyData from './common/empty-data'
 import LocationItem from './location-item'
 import { Location } from '@/types'

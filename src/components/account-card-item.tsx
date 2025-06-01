@@ -1,4 +1,4 @@
-import { Badge } from '@nextui-org/react'
+import { Badge } from '@heroui/react'
 import Link from 'next/link'
 import React from 'react'
 
