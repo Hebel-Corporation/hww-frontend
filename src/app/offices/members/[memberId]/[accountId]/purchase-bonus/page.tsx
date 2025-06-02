@@ -1,5 +1,4 @@
-import { getMemberAccountMatchings, getMemberAccountpayments, getMemberAccountPurchases, getMemberAccountReferrals } from '@/actions/member-actions'
-import PurchaseBonusModal from '@/components/modals/add-purchase-bonus'
+import { getMemberAccountBonus } from '@/actions/member-actions'
 import PurchaseBonusTable from '@/components/purchase-bonus-table'
 import { constantVars } from '@/lib/constants'
 import { notFound } from 'next/navigation'
@@ -18,11 +17,12 @@ async function PurchasePage({
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
 
-    const purchaseBonuses = await getMemberAccountPurchases({
+    const purchaseBonuses = await getMemberAccountBonus({
         accountId: accountId,
         page: page,
         limit: limit,
-        search: search
+        search: search,
+        bonusType: 'purchase_bonus'
     })
     if (purchaseBonuses == undefined)
         notFound()
@@ -39,6 +39,9 @@ async function PurchasePage({
                 page={page}
                 pages={purchaseBonuses?.total_pages}
                 forPayment={false}
+                accountId={accountId}
+                heightSize="min-h-[calc(100dvh-36dvh)] max-h-[calc(100dvh-36dvh)]"
+                
             />
         </main>
     )

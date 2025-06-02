@@ -27,7 +27,6 @@ export default function StatisticChart({ data }: { data: any[] }) {
             {
                 getValue: datum => datum.value,
                 elementType: 'line',
-
             },
         ],
         []
@@ -38,7 +37,7 @@ export default function StatisticChart({ data }: { data: any[] }) {
         <div className="flex flex-col gap-2">
             <div className="flex flex-wrap gap-6 justify-between">
                 {/* Légende */}
-                <div className="mt-4 flex gap-6">
+                <div className="mt-4 flex flex-wrap gap-6">
                     {data.map((series, i) => (
                         <div key={series.label} className="flex items-center gap-2">
                             <span

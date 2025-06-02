@@ -1,6 +1,6 @@
 'use client'
 
-import { Badge, Button, Checkbox, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
+import { Badge, Button, Checkbox, Popover, PopoverContent, PopoverTrigger } from "@heroui/react";
 import { Filter } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Input } from '../ui/input'
-import { Button } from '@nextui-org/react'
+import { Button } from '@heroui/react'
 import { Search } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 

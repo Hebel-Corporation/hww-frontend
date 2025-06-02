@@ -22,6 +22,7 @@ export const ApiEndpoints = {
             CHECK_OFFICE_REGISTER_CODE_VALIDITY: "/members/offices/{{officeID}}/check-register-code-validity/",
             CREATE_OFFICE_REGISTER_CODE: "/members/offices/{{officeID}}/generate-register-code/",
             GET_OFFICE_STATS: "/members/offices/{{officeID}}/statistics/",
+            GET_OFFICE_ACTIVITIES: "/members/offices/{{officeID}}/activities/",
         },
         
         MEMBERS: {

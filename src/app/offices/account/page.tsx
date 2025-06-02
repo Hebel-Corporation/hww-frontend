@@ -5,7 +5,7 @@ import CommingSoon from "@/components/common/comming-soon";
 import CustomBreadcrumb from "@/components/custom-breadcrumb";
 import { SessionType, User, UserGroup } from "@/types";
 import { getServerSession } from "@/utils/server-auth-utils";
-import { Avatar, Button, Chip } from "@nextui-org/react";
+import { Avatar, Button, Chip } from "@heroui/react";
 import { Edit, Pencil } from "lucide-react";
 import { notFound } from "next/navigation";
 import { differenceInDays, format } from 'date-fns'

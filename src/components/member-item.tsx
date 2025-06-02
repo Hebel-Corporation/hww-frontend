@@ -2,7 +2,7 @@
 
 import { User } from '@/types'
 import { getInitialChar } from '@/utils/utils-fonctions'
-import { Avatar, Chip } from '@nextui-org/react'
+import { Avatar, Chip } from '@heroui/react'
 import { ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Chip, Listbox, ListboxItem, Selection } from "@nextui-org/react";
+import { Chip, Listbox, ListboxItem, Selection } from "@heroui/react";
 import { MatchingType, PurchaseType, ReferralType } from '@/types';
 import { DollarSign } from 'lucide-react';
 import { formatDateTime } from '@/utils/utils-fonctions';

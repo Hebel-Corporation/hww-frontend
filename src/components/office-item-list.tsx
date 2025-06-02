@@ -1,6 +1,6 @@
 import { getOffices } from '@/actions/office-actions'
 import { Office } from '@/types'
-import { ScrollShadow } from '@nextui-org/react'
+import { ScrollShadow } from '@heroui/react'
 import EmptyData from './common/empty-data'
 import ServerPaginationControls from './common/server-pagination-controls'
 import OfficeItem from './office-item'

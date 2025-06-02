@@ -40,7 +40,6 @@ export async function setServerCookie(name: string, token: string) {
 
 export async function updateSession(request: NextRequest) {
     const session = await getServerSession({raw: false}) as SessionType | null
-
     if (session) {
         const res = NextResponse.next();
         const authToken = request.cookies.get('session')?.value

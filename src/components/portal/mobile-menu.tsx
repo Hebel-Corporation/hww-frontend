@@ -1,6 +1,6 @@
 'use client'
 
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@heroui/react";
 import { Menu } from "lucide-react";
 
 export default function MobileMenu({

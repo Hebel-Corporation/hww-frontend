@@ -7,7 +7,7 @@ import PageTitle from "@/components/common/page-title";
 import SearchBar from "@/components/common/search-bar";
 import CustomBreadcrumb from "@/components/custom-breadcrumb";
 import MemberItem from "@/components/member-item";
-import { Button, Pagination, ScrollShadow } from "@nextui-org/react";
+import { Button, Pagination, ScrollShadow } from "@heroui/react";
 import { Filter } from "lucide-react";
 import { SessionType } from "@/types";
 import { getServerSession } from "@/utils/server-auth-utils";

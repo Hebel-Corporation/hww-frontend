@@ -1,4 +1,4 @@
-import { getMemberAccountReferrals } from '@/actions/member-actions';
+import { getMemberAccountBonus } from '@/actions/member-actions';
 import ReferralTable from '@/components/referral-table';
 import { constantVars } from '@/lib/constants';
 import { notFound } from 'next/navigation';
@@ -17,11 +17,12 @@ const ReferralPage = async ({
   const search = searchParams?.search || ''
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION
-  const referrals = await getMemberAccountReferrals({
+  const referrals = await getMemberAccountBonus({
     accountId: accountId,
     page: page,
     limit: limit,
-    search: search
+    search: search,
+    bonusType: 'referral_bonus'
   })
   if (referrals == undefined)
     notFound()

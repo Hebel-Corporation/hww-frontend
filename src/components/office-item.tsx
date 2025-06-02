@@ -1,5 +1,5 @@
 import { Office } from '@/types'
-import { Divider } from '@nextui-org/react'
+import { Divider } from '@heroui/react'
 import { StoreIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'

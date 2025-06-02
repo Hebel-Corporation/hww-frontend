@@ -2,7 +2,7 @@
 
 import React from 'react'
 import EmptyData from '@/components/common/empty-data';
-import { Chip, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import { Chip, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import { formatDateTime } from '@/utils/utils-fonctions';
 

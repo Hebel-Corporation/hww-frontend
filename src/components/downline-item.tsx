@@ -1,5 +1,5 @@
 import { getInitialChar } from '@/utils/utils-fonctions'
-import { Avatar } from '@nextui-org/react'
+import { Avatar } from '@heroui/react'
 
 const DownlineItem = ({ downline }: { downline: any }) => {
     return (

@@ -1,7 +1,7 @@
 'use client'
 
 import { DotIcon, XIcon } from 'lucide-react'
-import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+import { Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
 
 export default function RegisterBanner() {
     return (

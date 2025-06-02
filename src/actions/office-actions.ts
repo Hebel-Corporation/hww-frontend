@@ -255,10 +255,32 @@ export const editOffice = async ({
 
 
 export const getOfficeStats = async ({
-    officeId
-}: { officeId: string }) => {
+    officeId,
+    officeFilter
+}: { officeId: string, officeFilter: string }) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_STATS.replace("{{officeID}}", officeId)}`)
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_STATS.replace("{{officeID}}", officeId)}?office_id=${officeFilter}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
+export const getOfficeActivities = async ({
+    officeId, filterSlug, activity_type, page
+}: { 
+    officeId: string, 
+    filterSlug: string,
+    activity_type: 'TOTALS' | 'DETAILS',
+    page?: number
+ }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_ACTIVITIES.replace("{{officeID}}", officeId)}?filter=${filterSlug}&activity_type=${activity_type}&page=${page}`)
         const data = result.data
 
         return data;
