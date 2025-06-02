@@ -17,6 +17,7 @@ export default function StatisticChart({ data }: { data: any[] }) {
     const primaryAxis = React.useMemo<AxisOptions<any>>(
         () => ({
             getValue: datum => datum.month,
+            scaleType: 'band',
         }),
         []
     )
