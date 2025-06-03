@@ -12,7 +12,7 @@ import { Filter } from "lucide-react";
 import { SessionType } from "@/types";
 import { getServerSession } from "@/utils/server-auth-utils";
 import { checkOfficeRegisterCodeValidity } from "@/actions/office-actions";
-import ServerPaginationControls from "@/components/common/server-pagination-controls";
+import PaginationControls from "@/components/common/pagination-controls";
 import { constantVars } from "@/lib/constants";
 
 const breadcrumbItems = [
@@ -90,11 +90,13 @@ export default async function MembersPage({
           }
         </ScrollShadow>
 
-        <ServerPaginationControls
+        <PaginationControls
           limit={limit}
           page={page}
           total_pages={members?.total_pages}
         />
+
+        {/* <MemberItemList page={page} limit={limit} search={search}  /> */}
       </div>
     </ContentLayout>
   );

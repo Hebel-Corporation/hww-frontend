@@ -2,7 +2,7 @@ import { getOffices } from '@/actions/office-actions'
 import { Office } from '@/types'
 import { ScrollShadow } from '@heroui/react'
 import EmptyData from './common/empty-data'
-import ServerPaginationControls from './common/server-pagination-controls'
+import PaginationControls from './common/server-pagination-controls'
 import OfficeItem from './office-item'
 
 
@@ -44,7 +44,7 @@ const OfficeItemList = async ({
             </ScrollShadow>
             {
                 offices?.count > 0 &&
-                <ServerPaginationControls page={page} limit={limit} total_pages={offices?.total_pages} />
+                <PaginationControls page={page} limit={limit} total_pages={offices?.total_pages} />
             }
         </div>
     )

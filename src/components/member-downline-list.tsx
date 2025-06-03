@@ -3,7 +3,7 @@ import React from 'react'
 import DownlineItem from './downline-item'
 import { getMemberAccountDownlines } from '@/actions/member-actions'
 import EmptyData from './common/empty-data'
-import ServerPaginationControls from './common/server-pagination-controls'
+import PaginationControls from './common/pagination-controls'
 
 const MemberDownlineList = async ({
     accountId,
@@ -31,7 +31,7 @@ const MemberDownlineList = async ({
             </ScrollShadow>
             {
                 downlines?.count > 0 &&
-                <ServerPaginationControls page={page} limit={limit} total_pages={downlines?.total_pages} />
+                <PaginationControls page={page} limit={limit} total_pages={downlines?.total_pages} />
             }
         </div>
     )
