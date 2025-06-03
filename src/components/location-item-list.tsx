@@ -3,7 +3,7 @@ import EmptyData from './common/empty-data'
 import LocationItem from './location-item'
 import { Location } from '@/types'
 import { getLocations } from '@/actions/location-actions'
-import PaginationControls from './common/server-pagination-controls'
+import PaginationControls from './common/pagination-controls'
 
 type locationResultType = {
     count: number,

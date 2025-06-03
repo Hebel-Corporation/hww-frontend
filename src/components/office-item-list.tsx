@@ -2,8 +2,8 @@ import { getOffices } from '@/actions/office-actions'
 import { Office } from '@/types'
 import { ScrollShadow } from '@heroui/react'
 import EmptyData from './common/empty-data'
-import PaginationControls from './common/server-pagination-controls'
 import OfficeItem from './office-item'
+import PaginationControls from './common/pagination-controls'
 
 
 type oficeResultType = {
