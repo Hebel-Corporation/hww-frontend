@@ -28,11 +28,9 @@ function PurchaseBonusTable({
     onClose?: null | (() => void)
 }) {
 
-
-    const [amount, setAmount] = useState<number>(0)
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
     const [showAlert, setShowAlert] = useState(false)
-    const [paymentAmount, setPaymentAmount] = useState<string>("")
+    const [paymentAmount, setPaymentAmount] = useState<number | null>(null)
 
     const router = useRouter()
 
@@ -46,7 +44,7 @@ function PurchaseBonusTable({
         toast.promise(
             processPurchaseBonusPayment({
                 account: accountId,
-                amount: amount,
+                amount: paymentAmount || 0,
             }, session.user.office.id), 
             {
                 loading: 'Traitement du paiement en cours...',
@@ -105,18 +103,22 @@ function PurchaseBonusTable({
                                     description={`Le minimum de retrait est de 5$ et le maximum est de ${totalBonus} !`}
                                     className="w-full"
                                     step={0.01}
-                                    value={paymentAmount}
+                                    value={paymentAmount?.toString()}
                                     isDisabled={isSubmitting || !totalBonus}
-                                    onValueChange={setPaymentAmount}
+                                    onValueChange={
+                                        (value) => {
+                                            setPaymentAmount(typeof(value) == "string" ? parseFloat(value) : value)
+                                        }
+                                    }
                                 />
                             </div>
-                            <Button isDisabled={isSubmitting || !paymentAmount || parseFloat(paymentAmount) <= 0} isLoading={isSubmitting}
+                            <Button isDisabled={isSubmitting || !paymentAmount || paymentAmount <= 0} isLoading={isSubmitting}
                                 size="md"
                                 radius="sm"
                                 variant="flat"
                                 color="success"
                                 onPress={() => {
-                                    if (!paymentAmount || parseFloat(paymentAmount) < 5 || parseFloat(paymentAmount) > totalBonus) {
+                                    if (!paymentAmount || paymentAmount < 5 || paymentAmount > totalBonus) {
                                         toast.error("Montant invalide")
                                         return
                                     }
@@ -191,7 +193,7 @@ function PurchaseBonusTable({
                 onClose={() => setShowAlert(false)}
                 onConfirm={handlePurchaseSubmit}
                 title="Confirmation de paiement"
-                description={`Êtes-vous sûr de vouloir effectuer le paiement de ${amount}$ ?`}
+                description={`Êtes-vous sûr de vouloir effectuer le paiement de ${paymentAmount}$ ?`}
                 loading={isSubmitting}
             />
         </>

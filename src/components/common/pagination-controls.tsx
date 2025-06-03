@@ -4,7 +4,7 @@ import React from 'react'
 import { Pagination } from '@heroui/react';
 import { useRouter, useSearchParams } from 'next/navigation'
 
-const ServerPaginationControls = ({
+const PaginationControls = ({
     total_pages,
     page,
     limit
@@ -41,4 +41,4 @@ const ServerPaginationControls = ({
     )
 }
 
-export default ServerPaginationControls
+export default PaginationControls

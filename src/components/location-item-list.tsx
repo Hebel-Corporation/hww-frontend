@@ -3,7 +3,7 @@ import EmptyData from './common/empty-data'
 import LocationItem from './location-item'
 import { Location } from '@/types'
 import { getLocations } from '@/actions/location-actions'
-import ServerPaginationControls from './common/server-pagination-controls'
+import PaginationControls from './common/server-pagination-controls'
 
 type locationResultType = {
     count: number,
@@ -38,7 +38,7 @@ const LocationItemList = async ({
             </ScrollShadow>
             {
                 locations?.count > 0 &&
-                <ServerPaginationControls page={page} limit={limit} total_pages={locations?.total_pages} />
+                <PaginationControls page={page} limit={limit} total_pages={locations?.total_pages} />
             }
         </div>
     )
