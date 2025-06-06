@@ -9,6 +9,7 @@ import AlertModal from './modals/alert-modal';
 import { getClientSession } from '@/utils/client-utils';
 import { toast } from 'sonner';
 import { processPurchaseBonusPayment } from '@/actions/member-actions';
+import GlobalLoader from './common/global-loader';
 
 function PurchaseBonusTable({
     purchaseBonuses,
@@ -17,6 +18,7 @@ function PurchaseBonusTable({
     forPayment,
     heightSize,
     accountId,
+    isLoading,
     onClose,
 }: {
     purchaseBonuses: any[],
@@ -25,6 +27,7 @@ function PurchaseBonusTable({
     heightSize?: string,
     forPayment: boolean,
     accountId: string,
+    isLoading: boolean,
     onClose?: null | (() => void)
 }) {
 
@@ -150,7 +153,10 @@ function PurchaseBonusTable({
                 </TableHeader>
                 <TableBody emptyContent={
                     <EmptyData description="Aucun bonus sur achat des produits n'est enregistrer pour le moment." />
-                } >
+                    }
+                    isLoading={isLoading}
+                    loadingContent={<GlobalLoader />}
+                 >
                     {
                         purchaseBonuses?.map((item: any) => (
                             <TableRow key={item?.id}>

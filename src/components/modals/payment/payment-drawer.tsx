@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import PaymentTable from "./payment-table";
 import PurchaseBonusTable from "@/components/purchase-bonus-table";
+import { useQuery } from "@tanstack/react-query";
 
 export default function PaymentDrawer({ isOpen, onOpenChange, item, periodFilter }: {
   isOpen: boolean;
@@ -20,28 +21,23 @@ export default function PaymentDrawer({ isOpen, onOpenChange, item, periodFilter
   item: any;
   periodFilter: 'all' | 'dayly' | 'weekly' | 'monthly';
 }) {
+  
 
-  const [bonusItems, setBonusItems] = useState<any>([])
+  const { data: bonusItems, error, isLoading, isError } = useQuery({  
+      queryKey: ['bonusItems', item?.grantee__id, periodFilter],
+      queryFn: () => getMemberAccountBonus({
+        accountId: item?.grantee__id,
+        page: 1,
+        limit: 20,
+        search: '',
+        is_paid: false,
+        bonusType: item?.bonus_type_code,
+        periodFilter: periodFilter
+      }),
+      enabled: !!item?.grantee__id
+  })
 
-  const fetchDetails = async () => {        
-    if (item) {
 
-        const bonusData = await getMemberAccountBonus({
-            accountId: item?.grantee__id,
-            page: 1,
-            limit: 20,
-            search: '',
-            is_paid: false,
-            bonusType: item?.bonus_type_code,
-            periodFilter: periodFilter
-          })
-          setBonusItems(bonusData?.results)
-    }
-  }
-
-  useEffect(() => {
-    fetchDetails();
-  }, [item]);
 
   return (
     <Drawer
@@ -65,7 +61,8 @@ export default function PaymentDrawer({ isOpen, onOpenChange, item, periodFilter
                         item?.bonus_type_code === 'purchase_bonus' ?
                             <div className="px-3">
                               <PurchaseBonusTable 
-                                  purchaseBonuses={bonusItems} 
+                                  purchaseBonuses={bonusItems?.results} 
+                                  isLoading={isLoading}
                                   page={1} 
                                   pages={1} 
                                   forPayment={true} 
@@ -77,7 +74,8 @@ export default function PaymentDrawer({ isOpen, onOpenChange, item, periodFilter
                         :
                         <div className="px-3">
                           <PaymentTable 
-                              items={bonusItems} 
+                              items={bonusItems?.results} 
+                              isLoading={isLoading}
                               onClose={onClose} 
                               bonusType={item?.bonus_type_code} 
                               accountId={item?.grantee__id}

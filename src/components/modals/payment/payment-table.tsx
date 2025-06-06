@@ -17,18 +17,21 @@ import { getClientSession } from "@/utils/client-utils";
 import { toast } from "sonner";
 import { registerMemberPayment } from "@/actions/member-actions";
 import AlertModal from "../alert-modal";
+import GlobalLoader from "@/components/common/global-loader";
 
 export default function PaymentTable({
     items,
     heightSize,
     bonusType,
     accountId,
+    isLoading,
     onClose
 }: {
     items: any[],
     heightSize?: string,
     bonusType: 'matching_bonus' | 'referral_bonus' | 'purchase_bonus',
     accountId: string,
+    isLoading: boolean,
     onClose: () => void
 }) {
 
@@ -111,7 +114,7 @@ export default function PaymentTable({
         
         bottomContent={
             <div className="flex flex-col flex-1 relative bottom-0 gap-3">
-                <div className="mb-2 flex flex-col gap-1">
+                <div className="my-2 flex flex-col gap-1">
                     <h1 className="text-xl font-semibold">
                         Total : {totalAmount} $ 
                     </h1>
@@ -155,7 +158,7 @@ export default function PaymentTable({
           <TableColumn>Montant</TableColumn>
           <TableColumn>Statut</TableColumn>
         </TableHeader>
-        <TableBody className="flex flex-col flex-1 h-grow">
+        <TableBody className="flex flex-col flex-1 h-grow" isLoading={isLoading} loadingContent={<GlobalLoader />}>
           {items?.map((item: any) => (
             <TableRow key={item?.id}>
             <TableCell>{formatDateTime(item?.created_at)}</TableCell>
