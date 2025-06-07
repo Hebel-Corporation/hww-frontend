@@ -272,15 +272,16 @@ export const getOfficeStats = async ({
 
 
 export const getOfficeActivities = async ({
-    officeId, filterSlug, activity_type, page
+    officeId, filterSlug, activity_type, page, officeFilter
 }: { 
     officeId: string, 
     filterSlug: string,
     activity_type: 'TOTALS' | 'DETAILS',
-    page?: number
+    page?: number,
+    officeFilter?: string
  }) => {
     try {
-        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_ACTIVITIES.replace("{{officeID}}", officeId)}?filter=${filterSlug}&activity_type=${activity_type}&page=${page}`)
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_ACTIVITIES.replace("{{officeID}}", officeId)}?filter=${filterSlug}&activity_type=${activity_type}&page=${page}&office_filter=${officeFilter}`)
         const data = result.data
 
         return data;

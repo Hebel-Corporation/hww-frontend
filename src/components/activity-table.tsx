@@ -11,16 +11,16 @@ import PaymentDrawer from './modals/payment/payment-drawer';
 import { useState } from 'react';
 
 
-export function ActivityTable({officeId, filterObj, page}:{
-    officeId: string, filterObj: any, page: number | undefined
+export function ActivityTable({officeId, filterObj, page, officeFilter}:{
+    officeId: string, filterObj: any, page: number | undefined, officeFilter?: string
 }) {
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const { data, error, isLoading, isError } = useQuery({  
-        queryKey: ['officeActivities', officeId, filterObj?.value, page],
-        queryFn: () => getOfficeActivities({ officeId: officeId, filterSlug: filterObj?.value, activity_type: 'DETAILS', page: page }),
+        queryKey: ['officeActivities', officeId, filterObj?.value, page, officeFilter],
+        queryFn: () => getOfficeActivities({ officeId: officeId, filterSlug: filterObj?.value, activity_type: 'DETAILS', page: page, officeFilter: officeFilter }),
         enabled: !!officeId
     })
 
@@ -55,7 +55,7 @@ export function ActivityTable({officeId, filterObj, page}:{
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[59dvh] max-h-[59dvh] p-0",
+                    wrapper: "min-h-[58dvh] max-h-[58dvh] p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={

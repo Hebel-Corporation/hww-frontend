@@ -1,10 +1,11 @@
 import { getOfficeActivities } from "@/actions/office-actions";
 import { ActivityTable } from "@/components/activity-table";
 import { ContentLayout } from "@/components/admin-panel/content-layout";
+import OfficeFilter from "@/components/common/office-filter";
+import PeriodicFilter from "@/components/common/periodic-filter";
 import CustomBreadcrumb from "@/components/custom-breadcrumb";
 import { SessionType } from "@/types";
 import { getServerSession } from "@/utils/server-auth-utils";
-import { Button, Link } from '@heroui/react';
 import { notFound } from "next/navigation";
 
 import React from 'react';
@@ -46,6 +47,7 @@ export default async function ActivityPage({
 }) {
 
   const filterSlug = searchParams?.filter || 'dayly'
+  const officeFilter = searchParams?.office || 'all'
   const page = searchParams?.page || 1
 
   const session = await getServerSession({raw: false}) as SessionType | null
@@ -55,6 +57,7 @@ export default async function ActivityPage({
   const data = await getOfficeActivities({
     officeId: session?.user?.office?.id,
     filterSlug: filterSlug,
+    officeFilter: officeFilter,
     activity_type: 'TOTALS'
   })
 
@@ -75,20 +78,13 @@ export default async function ActivityPage({
                 placeholder="Rechercher..."
                 className="border border-gray-300 px-4 py-2 rounded-xl text-sm shadow-sm"
               /> */}
-              <div className="flex flex-wrap gap-2">
-                {filters.map((filter) => (
-                  <Link key={filter?.value} href={`?filter=${filter?.value}`}
-                    className={`px-3 py-1.5 rounded-full hover:bg-opacity-50 text-sm ${filterSlug === filter?.value ? 'bg-primary text-slate-50 dark:text-zinc-800' : 'border border-zinc-500 dark:border-zinc-400'}`}
-                  >
-                    {filter?.label}
-                  </Link>
-                ))}
-              </div>
+              
+              <PeriodicFilter filters={filters} filterSlug={filterSlug} />
             </div>
           </div>
 
           {/* Section Aujourd'hui */}
-          <ActivitySection title={filters?.find(fl => fl.value === filterSlug)?.label || "Activités"} titleSize="xl">
+          <ActivitySection title={filters?.find(fl => fl.value === filterSlug)?.label || "Activités"} titleSize="xl" officeFilter={officeFilter}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <ActivityCard
                 key={"purchase"}
@@ -140,7 +136,12 @@ export default async function ActivityPage({
 
 
             <div className="w-full">
-              <ActivityTable officeId={session?.user?.office?.id} filterObj={filters?.find(fl => fl.value === filterSlug)} page={Number(page)} />
+              <ActivityTable 
+                officeId={session?.user?.office?.id} 
+                filterObj={filters?.find(fl => fl.value === filterSlug)} 
+                page={Number(page)} 
+                officeFilter={officeFilter}
+              />
             </div>
           </div>
         </div>
@@ -151,14 +152,18 @@ export default async function ActivityPage({
 }
 
 
-function ActivitySection({ title, titleSize, children }: {
+function ActivitySection({ title, titleSize, children, officeFilter }: {
   title: string,
   titleSize: "sm" | "base" | "lg" | "xl" | "2xl",
-  children: React.ReactNode
+  children: React.ReactNode,
+  officeFilter: string
 }) {
   return (
     <div className="space-y-2">
-      <h2 className={`text-${titleSize} font-medium text-gray-700 dark:text-slate-200`}>{title}</h2>
+      <div className="flex flex-wrap items-center justify-between">
+        <h2 className={`text-${titleSize} font-medium text-gray-700 dark:text-slate-200`}>{title}</h2>
+        <OfficeFilter officeFilter={officeFilter} />
+      </div>
       {children}
     </div>
   );

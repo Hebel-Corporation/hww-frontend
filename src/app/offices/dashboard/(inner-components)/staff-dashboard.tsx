@@ -1,13 +1,11 @@
 "use client"
 
 import { getOfficeStats } from '@/actions/office-actions'
-import { Award, BadgeCheck, ChevronDown, TrendingUp, UsersRound } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
-import React from 'react'
-import StatisticChart from './statistic-chart'
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Selection } from "@heroui/react";
-import { useRouter } from 'next/navigation'
 import GlobalLoader from '@/components/common/global-loader'
+import OfficeFilter from '@/components/common/office-filter'
+import { useQuery } from '@tanstack/react-query'
+import { Award, BadgeCheck, TrendingUp, UsersRound } from 'lucide-react'
+import StatisticChart from './statistic-chart'
 
 
 
@@ -19,32 +17,6 @@ function StaffDashboard({ officeId, officeFilter }: { officeId: string, officeFi
         enabled: !!officeId
     })
 
-
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set([officeFilter]));
-
-    const router = useRouter()
-
-
-    const items: any[] = [
-        {
-            name: "Tous les bureaux",
-            id: "all"
-        },
-        ...(data?.offices || []).map((office: any) => ({
-            name: office.name,
-            id: office.id,
-            office_code: office.office_code,
-            location: office.location__name
-        }))
-    ]
-    
-
-    const selectedKey = Array.from(selectedKeys)[0];
-
-    const selectedLabel = React.useMemo(() => {
-      const found = items.find((item: any) => item.id === selectedKey);
-      return found ? (found.name || found?.location + ' - ' + found.office_code) : "Sélectionner";
-    }, [selectedKey]);
 
 
     if (isLoading) return <GlobalLoader />;
@@ -105,32 +77,8 @@ function StaffDashboard({ officeId, officeFilter }: { officeId: string, officeFi
                 <h2 className="text-sm sm:text-lg text-gray-700 dark:text-slate-100 font-medium">
                     Graphique de l&apos;année {new Date().getFullYear()}
                 </h2>
-                {
-                items.length > 1 &&
-                <Dropdown>
-                    <DropdownTrigger>
-                        <Button className="capitalize " variant="flat" radius='sm' 
-                            endContent={<ChevronDown size={16} />}
-                        >
-                            {selectedLabel}
-                        </Button>
-                    </DropdownTrigger>
-                    <DropdownMenu
-                        disallowEmptySelection
-                        aria-label="Single selection example"
-                        selectedKeys={selectedKeys}
-                        selectionMode="single"
-                        variant="flat"
-                        onSelectionChange={(keys: Selection) => setSelectedKeys(keys as Set<string>)}
-                    >
-                        {items?.map((item: any) => (
-                        <DropdownItem key={item?.id} onClick={() => router.push(`/offices/dashboard/?office=${item?.id}`)}>
-                            {item.name || item.location + ' - ' + item.office_code}
-                        </DropdownItem>
-                        ))}
-                    </DropdownMenu>
-                </Dropdown>
-                }
+
+                <OfficeFilter officeFilter={officeFilter} />
             </div>
 
             <StatisticChart data={data?.stat_data || []} />
