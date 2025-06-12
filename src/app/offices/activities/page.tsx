@@ -25,7 +25,7 @@ const breadcrumbItems = [
 const filters = [
   {
     label: "Aujourd'hui",
-    value: "dayly",
+    value: "daily",
   },
   {
     label: "Cette semaine",
@@ -46,7 +46,7 @@ export default async function ActivityPage({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
-  const filterSlug = searchParams?.filter || "dayly";
+  const filterSlug = searchParams?.filter || "daily";
   const officeFilter = searchParams?.office || "all";
   const page = searchParams?.page || 1;
 
@@ -55,6 +55,7 @@ export default async function ActivityPage({
   })) as SessionType | null;
 
   if (!session) notFound();
+  const isHeadOffice = session?.user?.office?.office_type === "head_office";
 
   const data = await getOfficeActivities({
     officeId: session?.user?.office?.id,
@@ -87,6 +88,7 @@ export default async function ActivityPage({
 
           {/* Section Aujourd'hui */}
           <ActivitySection
+            isHeadOffice={isHeadOffice}
             title={
               filters?.find((fl) => fl.value === filterSlug)?.label ||
               "Activités"
@@ -164,16 +166,18 @@ function ActivitySection({
   titleSize,
   children,
   officeFilter,
+  isHeadOffice,
   data,
 }: {
   title: string;
   titleSize: "sm" | "base" | "lg" | "xl" | "2xl";
   children: React.ReactNode;
   officeFilter: string;
+  isHeadOffice: boolean;
   data: {
-    total_received: number,
-    sold: number
-    };
+    total_received: number;
+    sold: number;
+  };
 }) {
   return (
     <div className="space-y-2">
@@ -192,7 +196,7 @@ function ActivitySection({
               Solde: $ {data?.sold}
             </Chip>
           </div>
-          <OfficeFilter officeFilter={officeFilter} />
+          {isHeadOffice && <OfficeFilter officeFilter={officeFilter} />}
         </div>
       </div>
       {children}

@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
 
         
         // Define the paths that require admin access
-        const adminPaths = ['/offices/point-of-sale', '/offices/activities', '/offices/locations'];
+        const adminPaths = ['/offices/point-of-sale', '/offices/locations'];
 
         if (
             adminPaths.some(path => request.nextUrl.pathname.startsWith(path)) && 

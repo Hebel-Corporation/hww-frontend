@@ -19,7 +19,7 @@ export default function PaymentDrawer({ isOpen, onOpenChange, item, periodFilter
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   item: any;
-  periodFilter: 'all' | 'dayly' | 'weekly' | 'monthly';
+  periodFilter: 'all' | 'daily' | 'weekly' | 'monthly';
 }) {
   
 
@@ -27,6 +27,7 @@ export default function PaymentDrawer({ isOpen, onOpenChange, item, periodFilter
       queryKey: ['bonusItems', item?.grantee__id, periodFilter],
       queryFn: () => getMemberAccountBonus({
         accountId: item?.grantee__id,
+        officeCode: item?.office__office_code,
         page: 1,
         limit: 20,
         search: '',

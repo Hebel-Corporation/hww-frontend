@@ -6,10 +6,14 @@ import OfficeFilter from '@/components/common/office-filter'
 import { useQuery } from '@tanstack/react-query'
 import { Award, BadgeCheck, TrendingUp, UsersRound } from 'lucide-react'
 import StatisticChart from './statistic-chart'
+import { getClientSession, hasOfficeAuthorization } from '@/utils/client-utils'
+import { SessionType } from '@/types'
 
 
 
 function StaffDashboard({ officeId, officeFilter }: { officeId: string, officeFilter: string }) {
+
+    const session = getClientSession() as SessionType | null;
 
     const { data, error, isLoading, isError } = useQuery({
         queryKey: ['officeStats', officeId, officeFilter],
@@ -77,8 +81,14 @@ function StaffDashboard({ officeId, officeFilter }: { officeId: string, officeFi
                 <h2 className="text-sm sm:text-lg text-gray-700 dark:text-slate-100 font-medium">
                     Graphique de l&apos;année {new Date().getFullYear()}
                 </h2>
-
-                <OfficeFilter officeFilter={officeFilter} />
+                {
+                    hasOfficeAuthorization({
+                        authorizedOffices: ['head_office'],
+                        userOffice: session?.user?.office
+                    }) && (
+                        <OfficeFilter officeFilter={officeFilter} />
+                    )
+                }
             </div>
 
             <StatisticChart data={data?.stat_data || []} />

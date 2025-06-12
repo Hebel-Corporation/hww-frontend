@@ -111,15 +111,16 @@ export const getMemberAccountSponsors = async ({
 
 
 export const getMemberAccountBonus = async ({
-    accountId, page, limit, search, is_paid, bonusType, periodFilter
+    accountId, officeCode, page, limit, search, is_paid, bonusType, periodFilter
 }: { 
     accountId: string, 
+    officeCode?: string,
     page: number, 
     limit: number, 
     search:string, 
     is_paid?: boolean,
     bonusType: 'matching_bonus' | 'referral_bonus' | 'purchase_bonus',
-    periodFilter?: 'all' | 'dayly' | 'weekly' | 'monthly' 
+    periodFilter?: 'all' | 'daily' | 'weekly' | 'monthly' 
 }) => {
 
     let url = ''
@@ -139,7 +140,7 @@ export const getMemberAccountBonus = async ({
 
 
     try {
-        const result = await serverApi.get(`${url.replace("{{accountID}}", accountId)}?page${page}&limit=${limit}&search=${search}&is_paid=${is_paid}&period_filter=${periodFilter}`)
+        const result = await serverApi.get(`${url.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}&is_paid=${is_paid}&period_filter=${periodFilter}&office_code=${officeCode}`)
         const data = result.data
 
         return data;

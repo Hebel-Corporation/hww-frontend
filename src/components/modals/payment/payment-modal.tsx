@@ -23,12 +23,13 @@ function PaymentModal({ currentTab, bonusItems, accountId }:
         {
             id: "referral",
             label: "Parrainages",
-            content: <PaymentTable 
+            content: <PaymentTable
                         items={bonusItems} 
                         onClose={onOpenChange} 
                         bonusType='referral_bonus' 
                         accountId={accountId}
                         heightSize="min-h-[calc(100dvh-48dvh)] max-h-[calc(100dvh-48dvh)]"
+                        isLoading={false}
                     />
             
         },
@@ -41,6 +42,7 @@ function PaymentModal({ currentTab, bonusItems, accountId }:
                         bonusType='matching_bonus' 
                         accountId={accountId}
                         heightSize="min-h-[calc(100dvh-48dvh)] max-h-[calc(100dvh-48dvh)]"
+                        isLoading={false}
                     />
             
         },
@@ -55,6 +57,7 @@ function PaymentModal({ currentTab, bonusItems, accountId }:
                 onClose={onOpenChange} 
                 heightSize="min-h-[calc(100dvh-54.6dvh)] max-h-[calc(100dvh-54.6dvh)]"
                 accountId={accountId}
+                isLoading={false}
             />
         }
     ];

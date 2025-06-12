@@ -3,7 +3,9 @@ import React from 'react'
 
 const loading = () => {
   return (
-    <GlobalLoader />
+    <div className='h-screen flex flex-1 justify-center items-center'>
+      <GlobalLoader />
+    </div>
   )
 }
 

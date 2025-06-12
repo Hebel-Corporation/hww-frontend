@@ -41,7 +41,7 @@ async function PurchasePage({
                 forPayment={false}
                 accountId={accountId}
                 heightSize="min-h-[calc(100dvh-36dvh)] max-h-[calc(100dvh-36dvh)]"
-                
+                isLoading={false}
             />
         </main>
     )

@@ -101,7 +101,7 @@ export function getMenuList(pathname: string): Group[] {
           label: "Activités",
           active: pathname.includes("/offices/activities"),
           authorized: (
-            hasOfficeAuthorization({ authorizedOffices: ['head_office'] }) &&
+            hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'] }) &&
             hasGroupAuthorization({ authorizedGroups: ['technicien'] })
           ),
           icon: Activity,

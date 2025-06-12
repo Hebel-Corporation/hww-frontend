@@ -18,6 +18,8 @@ import GlobalLoader from "./common/global-loader";
 import { useRouter, useSearchParams } from "next/navigation";
 import PaymentDrawer from "./modals/payment/payment-drawer";
 import { useState } from "react";
+import { getClientSession, hasOfficeAuthorization } from "@/utils/client-utils";
+import { SessionType } from "@/types";
 
 export function ActivityTable({
   officeId,
@@ -72,6 +74,9 @@ export function ActivityTable({
     setSelectedItem(null);
   };
 
+
+  const session = getClientSession() as SessionType | null
+
   return (
     <>
       <Table
@@ -113,7 +118,16 @@ export function ActivityTable({
             Nbre des bonus / Type
           </TableColumn>
           <TableColumn key="amount">Montant</TableColumn>
-          <TableColumn key="status">Actions</TableColumn>
+          {
+            hasOfficeAuthorization({
+              authorizedOffices: ['head_office'], 
+              userOffice: session?.user?.office
+            }) ? (
+              <TableColumn key="actions">Actions</TableColumn>
+            ) : (
+              <TableColumn key="actions"> </TableColumn>
+            )
+          }
         </TableHeader>
         <TableBody
           isLoading={isLoading}
@@ -141,8 +155,8 @@ export function ActivityTable({
                 {item?.grantee__company_id}
               </TableCell>
               <TableCell>
-                {item?.grantee__office__name ||
-                  `${item?.grantee__office__location__name} - ${item?.grantee__office__office_code}`}
+                {item?.office__name ||
+                  `${item?.office__location__name} - ${item?.office__office_code}`}
               </TableCell>
               <TableCell className="hidden sm:table-cell">
                 <Chip size="sm" variant="bordered">
@@ -150,11 +164,18 @@ export function ActivityTable({
                 </Chip>
               </TableCell>
               <TableCell>$ {item?.total_bonus}</TableCell>
-              <TableCell className="px-0 sm:px-3">
-                <Button size="sm" onPress={() => openDrawer(item)}>
-                  Payer
-                </Button>
-              </TableCell>
+              {hasOfficeAuthorization({
+                authorizedOffices: ['head_office'],
+                userOffice: session?.user?.office
+              }) ? (
+                <TableCell className="px-0 sm:px-3">
+                  <Button size="sm" onPress={() => openDrawer(item)}>
+                    Payer
+                  </Button>
+                </TableCell>
+              ) : (
+                <TableCell> </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
