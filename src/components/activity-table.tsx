@@ -55,7 +55,7 @@ export function ActivityTable({officeId, filterObj, page, officeFilter}:{
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[58dvh] max-h-[58dvh] p-0",
+                    wrapper: "min-h-[56dvh] max-h-[56dvh] p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={

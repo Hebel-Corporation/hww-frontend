@@ -77,7 +77,7 @@ export default function OfficeFilter({ officeFilter }: OfficeFilterProps) {
     <Dropdown>
       <DropdownTrigger>
         <Button
-          className="capitalize "
+          className="capitalize min-w-52 justify-between"
           variant="flat"
           radius="sm"
           endContent={<ChevronDown size={16} />}

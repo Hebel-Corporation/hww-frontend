@@ -43,6 +43,10 @@ export async function middleware(request: NextRequest) {
             return NextResponse.redirect(new URL('/unauthorized', request.url));
         }
 
+        if (session?.user?.user_type === 'member' && session?.user?.has_default_password) {
+            return NextResponse.redirect(new URL('/offices/account/config-password', request.url));
+        }
+
 
         return response;
     } catch (err) {

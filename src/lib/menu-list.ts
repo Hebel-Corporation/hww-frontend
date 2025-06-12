@@ -87,7 +87,7 @@ export function getMenuList(pathname: string): Group[] {
         },
         {
           href: "/offices/rewards",
-          label: "Rewards",
+          label: "Récompenses",
           active: pathname.includes("/offices/rewards"),
           authorized: (
             hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'] }) &&

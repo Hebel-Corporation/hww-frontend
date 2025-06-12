@@ -106,7 +106,6 @@ const MemberDetails = async ({
                                 />
                             </>
                         </HasOfficePermission>
-                           
                         </div>
                     </div>
 
