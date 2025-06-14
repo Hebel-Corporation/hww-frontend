@@ -140,7 +140,7 @@ export const getMemberAccountBonus = async ({
 
 
     try {
-        const result = await serverApi.get(`${url.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}&is_paid=${is_paid}&period_filter=${periodFilter}&office_code=${officeCode}`)
+        const result = await serverApi.get(`${url.replace("{{accountID}}", accountId)}?page=${page}&limit=${limit}&search=${search}&is_paid=${is_paid}&period_filter=${periodFilter}${officeCode ? `&office_code=${officeCode}` : ''}`)
         const data = result.data
 
         return data;
