@@ -22,7 +22,7 @@ const LocationItemList = async ({
 
     return (
         <div className='flex flex-col flex-1 gap-2'>
-            <ScrollShadow className="flex flex-col flex-1 min-h-[72dvh] max-h-[72dvh]">
+            <ScrollShadow className="flex flex-col flex-1 min-h-[72dvh] max-h-[72dvh] sm:max-h-dvh">
                 {
                     locations?.count ?
                         <div className='flex flex-wrap gap-5'>
@@ -37,7 +37,7 @@ const LocationItemList = async ({
                 }
             </ScrollShadow>
             {
-                locations?.count > 0 &&
+                locations?.total_pages > 1 &&
                 <PaginationControls page={page} limit={limit} total_pages={locations?.total_pages} />
             }
         </div>

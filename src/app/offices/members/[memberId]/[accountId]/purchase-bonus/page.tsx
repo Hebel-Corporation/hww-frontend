@@ -40,7 +40,7 @@ async function PurchasePage({
                 pages={purchaseBonuses?.total_pages}
                 forPayment={false}
                 accountId={accountId}
-                heightSize="min-h-[calc(100dvh-36dvh)] max-h-[calc(100dvh-36dvh)]"
+                heightSize="min-h-[calc(100dvh-36dvh)] max-h-[calc(100dvh-36dvh)] sm:max-h-dvh"
                 isLoading={false}
             />
         </main>

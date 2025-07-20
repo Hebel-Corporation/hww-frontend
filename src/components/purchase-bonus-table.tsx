@@ -77,7 +77,7 @@ function PurchaseBonusTable({
                     thead: 'rounded-md'
                 }}
                 bottomContent={
-                    pages > 0 && !forPayment ? (
+                    pages > 1 && !forPayment ? (
                         <div className="flex w-full justify-start">
                             <Pagination radius='sm'
                                 isCompact

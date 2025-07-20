@@ -24,11 +24,11 @@ function PaymentTable({
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[63dvh] max-h-[63dvh] p-0",
+                    wrapper: "min-h-[63dvh] max-h-[63dvh] sm:max-h-dvh p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={
-                    pages > 0 ? (
+                    pages > 1 ? (
                         <div className="flex w-full justify-start">
                             <Pagination radius='sm'
                                 isCompact

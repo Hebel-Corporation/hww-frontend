@@ -26,7 +26,7 @@ const OfficeItemList = async ({
 
     return (
         <div className='flex flex-col flex-1 gap-2'>
-            <ScrollShadow className="flex flex-col flex-1 min-h-[72dvh] max-h-[72dvh]">
+            <ScrollShadow className="flex flex-col flex-1 min-h-[72dvh] max-h-[70dvh] sm:max-h-dvh">
                 {
                     offices?.count ?
                         <div className='flex flex-wrap gap-5'>
@@ -43,7 +43,7 @@ const OfficeItemList = async ({
                 }
             </ScrollShadow>
             {
-                offices?.count > 0 &&
+                offices?.total_pages > 1 &&
                 <PaginationControls page={page} limit={limit} total_pages={offices?.total_pages} />
             }
         </div>

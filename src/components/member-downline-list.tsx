@@ -15,7 +15,7 @@ const MemberDownlineList = async ({
 
     return (
         <div className='flex flex-col flex-1 gap-2'>
-            <ScrollShadow className="flex flex-col flex-1 min-h-[64dvh] max-h-[64dvh]">
+            <ScrollShadow className="flex flex-col flex-1 min-h-[64dvh] max-h-[64dvh] sm:max-h-dvh">
                 {
                     downlines?.count ?
                         <div className='flex flex-col'>
@@ -30,7 +30,7 @@ const MemberDownlineList = async ({
                 }
             </ScrollShadow>
             {
-                downlines?.count > 0 &&
+                downlines?.total_pages > 1 &&
                 <PaginationControls page={page} limit={limit} total_pages={downlines?.total_pages} />
             }
         </div>

@@ -24,11 +24,11 @@ function MatchingTable({
                 isHeaderSticky
                 bottomContentPlacement="outside"
                 classNames={{
-                    wrapper: "min-h-[64dvh] max-h-[64dvh] p-0",
+                    wrapper: "min-h-[64dvh] max-h-[64dvh] sm:max-h-dvh p-0",
                     thead: 'rounded-sm'
                 }}
                 bottomContent={
-                    pages > 0 ? (
+                    pages > 1 ? (
                         <div className="flex w-full justify-start">
                             <Pagination radius='sm'
                                 isCompact

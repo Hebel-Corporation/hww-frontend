@@ -87,11 +87,11 @@ export function ActivityTable({
         isHeaderSticky
         bottomContentPlacement="outside"
         classNames={{
-          wrapper: "min-h-[56dvh] max-h-[56dvh] p-0",
+          wrapper: "min-h-[56dvh] max-h-[56dvh] sm:max-h-dvh p-0",
           thead: "rounded-sm",
         }}
         bottomContent={
-          data?.total_pages > 0 ? (
+          data?.total_pages > 1 ? (
             <div className="flex w-full justify-start">
               <Pagination
                 radius="sm"

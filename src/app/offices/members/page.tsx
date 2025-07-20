@@ -45,7 +45,7 @@ export default async function MembersPage({
       <CustomBreadcrumb breadcrumbItems={breadcrumbItems} />
     }>
 
-      <div className="relative flex flex-col flex-1 gap-[19px]">
+      <div className="relative flex flex-col flex-1 gap-[19px] pb-5">
 
         <PageTitle
           title='Enregistrement des membres'
@@ -75,7 +75,7 @@ export default async function MembersPage({
           </div>
         </div>
 
-        <ScrollShadow className="flex flex-col flex-1 max-h-[70dvh] min-h-[70dvh]">
+        <ScrollShadow className="flex flex-col flex-1 max-h-[70dvh] sm:max-h-dvh min-h-[70dvh]">
           {
             members?.count ?
               <div className='flex flex-col'>
