@@ -290,3 +290,44 @@ export const getOfficeActivities = async ({
         return e?.message;
     }
 }
+
+
+
+
+export const getOfficePromotions = async ({
+    officeId, page, officeFilter
+}: { 
+    officeId: string, 
+    page?: number,
+    officeFilter?: string
+ }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_PROMOTIONS.replace("{{officeID}}", officeId)}?page=${page}&office_filter=${officeFilter}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
+
+
+export const getOfficeRewards = async ({
+    officeId, page, officeFilter
+}: { 
+    officeId: string, 
+    page?: number,
+    officeFilter?: string
+ }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_REWARDS.replace("{{officeID}}", officeId)}?page=${page}&office_filter=${officeFilter}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}

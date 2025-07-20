@@ -94,7 +94,27 @@ export function getMenuList(pathname: string): Group[] {
             hasGroupAuthorization({ authorizedGroups: ['technicien'] })
           ),
           icon: Tag,
-          submenus: []
+          submenus: [
+
+            // {
+            //   href: "/offices/rewards",
+            //   label: "Rewards",
+            //   active: pathname.includes("/offices/rewards"),
+            //   authorized: (
+            //     hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'] }) &&
+            //     hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+            //   )
+            // },
+            // {
+            //   href: "/offices/rewards/promotions",
+            //   label: "Promotions",
+            //   active: pathname.includes("/offices/rewards/promotions"),
+            //   authorized: (
+            //     hasOfficeAuthorization({ authorizedOffices: ['head_office', 'sub_office'] }) &&
+            //     hasGroupAuthorization({ authorizedGroups: ['technicien'] })
+            //   )
+            // }
+          ]
         },
         {
           href: "/offices/activities",

@@ -93,11 +93,6 @@ export type SessionType = {
 
 
 
-export type RewardType = {
-    id: string
-}
-
-
 
 export type AccountType = {
     id: string,
@@ -151,4 +146,46 @@ export type ReferralType = BonusBaseType & {
 export type PurchaseType = BonusBaseType & {
     sale_detail: SaleDetailType
 }
+
+
+
+export type GiftType = {
+    id: string,
+    name: string,
+    image: string,
+    mark: string | null,
+    created_at: string,
+    updated_at: string
+}
+
+
+export type PromotionType = {
+    id: string,
+    title: string,
+    description: string,
+    start_date: string,
+    end_date: string,
+    is_active: boolean,
+    created_at: string,
+    updated_at: string,
+    qualification_count: number,
+    total_bonus_concerned: number
+}
+
+
+
+export type RewardType = {
+    id: string,
+    gift: GiftType,
+    qualification_count: number,
+    title: string,
+    description: string,
+    is_active: boolean,
+    created_at: string,
+    updated_at: string,
+    equivalent_amount: string,
+    unit_number: number,
+    unit_type: string
+}
+
 

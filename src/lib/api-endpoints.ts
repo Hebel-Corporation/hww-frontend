@@ -23,6 +23,8 @@ export const ApiEndpoints = {
             CREATE_OFFICE_REGISTER_CODE: "/members/offices/{{officeID}}/generate-register-code/",
             GET_OFFICE_STATS: "/members/offices/{{officeID}}/statistics/",
             GET_OFFICE_ACTIVITIES: "/members/offices/{{officeID}}/activities/",
+            GET_OFFICE_PROMOTIONS: "/members/offices/{{officeID}}/promotions/",
+            GET_OFFICE_REWARDS: "/members/offices/{{officeID}}/rewards/",
         },
         
         MEMBERS: {
