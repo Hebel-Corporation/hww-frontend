@@ -35,26 +35,7 @@ import { getOfficePromotions } from "@/actions/office-actions";
 import { AccountType, PromotionItemType, PromotionType } from "@/types";
 import PrintPromotionButton from "./print-promotion-button";
 
-// Type pour un compte qualifié
-// interface QualifiedAccount {
-//   id: string;
-//   member: {
-//     first_name: string;
-//     last_name: string;
-//     company_id: string;
-//     phone: string;
-//   };
-//   office: {
-//     name: string;
-//     office_code: string;
-//     location: {
-//       name: string;
-//     };
-//   };
-//   qualification_count: number;
-//   qualification_type: string;
-//   created_at: string;
-// }
+
 
 interface QualifiedAccountsTableProps {
   promotionId: string;

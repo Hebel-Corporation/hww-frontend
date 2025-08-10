@@ -11,7 +11,7 @@ const PackageItem = () => {
                     <div className="flex items-baseline text-gray-900 dark:text-white">
                         <span className="text-2xl font-semibold">$</span>
                         <span className="text-3xl font-extrabold tracking-tight">80</span>
-                        <span className="ms-1 text-lg font-normal text-gray-500 dark:text-gray-400">/compte</span>
+                        <span className="ms-1 text-lg font-normal text-gray-500 dark:text-gray-400">/adhésion</span>
                     </div>
                     <ul role="list" className="space-y-3 mt-5 hidden sm:block">
                         <li className="flex">
@@ -34,11 +34,15 @@ const PackageItem = () => {
                         </li>
                         <li className="flex">
                             <CircleCheck size={17} className="text-blue-700 dark:text-blue-500" />
-                            <span className="text-sm font-normal leading-tight text-gray-500 ms-3">
+                            <span className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
                                 40% de bonus sur achat de produits.
                             </span>
                         </li>
                     </ul>
+
+                    <p className='mt-3.5 text-gray-500 dark:text-gray-400 hidden sm:block'>
+                        Pour les membres très actifs de la company, vous pouvez gagner beaucoup d&apos;argent et des cadeaux de promotions et recompenses spéciales suite à votre engagement.
+                    </p>
                 </div>
                 <CircleCheck size={23}
                     className="absolute top-2 right-2 text-blue-700 dark:text-blue-500"

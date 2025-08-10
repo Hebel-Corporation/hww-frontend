@@ -1,166 +1,223 @@
-'use client'
+"use client";
 
-import { createMemberAccount, getMemberAccountSponsors, uplinesVerificationIDs } from "@/actions/member-actions";
+import {
+  createMemberAccount,
+  getMemberAccountSponsors,
+  uplinesVerificationIDs,
+} from "@/actions/member-actions";
 import { getClientSession } from "@/utils/client-utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Autocomplete, AutocompleteItem, Avatar, Button, Chip, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Select, SelectItem, useDisclosure } from "@heroui/react";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Avatar,
+  Button,
+  Chip,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Select,
+  SelectItem,
+  useDisclosure,
+} from "@heroui/react";
 import { PlusCircle } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import PackageItem from "../package-item";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
 import { AccountType } from "@/types";
 import { getInitialChar } from "@/utils/utils-fonctions";
+import NetworkPvsDisplay from "../common/network-pvs-display";
 
-
-const memberFormSchema = z.object({
-  parrainId: z.string().min(2, {
-    message: "Veillez entrer l'ID du compte parrain.",
-  }),
-  sponsorId: z.string().min(2, {
-    message: "Veillez entrer l'ID du compte sponsor.",
+const memberFormSchema = z
+  .object({
+    parrainId: z.string().min(2, {
+      message: "Veillez entrer l'ID du compte parrain.",
+    }),
+    sponsorId: z.string().min(2, {
+      message: "Veillez entrer l'ID du compte sponsor.",
+    }),
+    position: z.string({
+      required_error: "Veillez selectionner la position.",
+    }),
   })
-}).refine(async (data) => {
-  const { isValid, path, message } = await uplinesVerificationIDs({
-    parrainId: data.parrainId,
-    sponsorId: data.sponsorId
-  })
-  if (!isValid) {
-    throw new z.ZodError([
-      {
-        path: [path],
-        message: message,
-        code: z.ZodIssueCode.custom
-      }
-    ]);
-  }
-  return isValid;
-});
-
+  .refine(async (data) => {
+    const { isValid, path, message } = await uplinesVerificationIDs({
+      parrainId: data.parrainId,
+      sponsorId: data.sponsorId,
+    });
+    if (!isValid) {
+      throw new z.ZodError([
+        {
+          path: [path],
+          message: message,
+          code: z.ZodIssueCode.custom,
+        },
+      ]);
+    }
+    return isValid;
+  });
 
 export default function AddAccountModal({
   accounts,
   memberId,
   referralAccounts,
-  hasRegisterCodeValid
+  hasRegisterCodeValid,
 }: {
-  accounts: string[],
-  memberId: string,
-  referralAccounts: AccountType[],
-  hasRegisterCodeValid: boolean
+  accounts: string[];
+  memberId: string;
+  referralAccounts: AccountType[];
+  hasRegisterCodeValid: boolean;
 }) {
-
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [isSubmitting, setIsSubmitting] = React.useState(false)
-  const [isFetchingSponsors, setIsFetchingSponsors] = React.useState(false)
-  const [referralID, setReferralID] = React.useState<string | undefined>('')
-  const [sponsorAccounts, setSponsorAccounts] = React.useState<{ id: string, full_name: string, company_id: string, descendant_count: number }[]>([])
-
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isFetchingSponsors, setIsFetchingSponsors] = React.useState(false);
+  const [referralID, setReferralID] = React.useState<string | undefined>("");
+  const [sponsorAccounts, setSponsorAccounts] = React.useState<
+    {
+      id: string;
+      full_name: string;
+      company_id: string;
+      descendant_count: number;
+    }[]
+  >([]);
+  const [position, setPosition] = useState<string>("");
 
   const form = useForm<z.infer<typeof memberFormSchema>>({
     resolver: zodResolver(memberFormSchema),
     defaultValues: {
       parrainId: "",
-      sponsorId: ""
+      sponsorId: "",
     },
-  })
-
+  });
 
   async function onSubmit(values: z.infer<typeof memberFormSchema>) {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
-    const session = await getClientSession()
+    const session = await getClientSession();
 
     toast.promise(
-      createMemberAccount({
-        referral_account: values?.parrainId,
-        sponsor_account: values?.sponsorId,
-        memberId: memberId
-      }, session?.user?.office?.id), {
-      loading: 'Enregistrement en cours...',
-      success: () => {
-        onOpenChange()
-        form.reset()
-        return `Le compte a été ajouté avec succès !`;
-      },
-      error: (err: Error) => {
-        return `${err?.message}`;
-      },
-      finally() {
-        setIsSubmitting(false)
-      },
-    }
-    )
+      createMemberAccount(
+        {
+          referral_account: values?.parrainId,
+          sponsor_account: values?.sponsorId,
+          memberId: memberId,
+        },
+        session?.user?.office?.id
+      ),
+      {
+        loading: "Enregistrement en cours...",
+        success: () => {
+          onOpenChange();
+          form.reset();
+          return `Le compte a été ajouté avec succès !`;
+        },
+        error: (err: Error) => {
+          return `${err?.message}`;
+        },
+        finally() {
+          setIsSubmitting(false);
+        },
+      }
+    );
   }
 
   useEffect(() => {
-
-    async function getSponsors() {
-      setIsFetchingSponsors(true)
-      const sponsors = await getMemberAccountSponsors({ accountId: referralID || '' })
-      setSponsorAccounts(sponsors)
-      setIsFetchingSponsors(false)
+    async function getSponsors(referralID: string, position: string) {
+      setIsFetchingSponsors(true);
+      const sponsors = await getMemberAccountSponsors({
+        accountId: referralID || "",
+        position,
+      });
+      setSponsorAccounts(sponsors);
+      setIsFetchingSponsors(false);
     }
 
-    if (referralID) {
-      getSponsors()
+    if (referralID && position) {
+      getSponsors(referralID, position);
     } else {
-      setSponsorAccounts([])
+      setSponsorAccounts([]);
     }
-
-  }, [referralID])
-
+  }, [referralID, position]);
 
   return (
     <>
-      <Button onPress={onOpen} isDisabled={!hasRegisterCodeValid} radius="sm" color="primary"
+      <Button
+        onPress={onOpen}
+        isDisabled={!hasRegisterCodeValid}
+        radius="sm"
+        color="primary"
         variant="ghost"
-        startContent={
-          <PlusCircle />
-        }
+        startContent={<PlusCircle />}
         className="!min-w-0"
       >
         <span className="">Ajouter un compte</span>
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        isDismissable={false}
+        size="3xl"
+      >
         <ModalContent>
           {(onClose) => (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
-                <ModalHeader className="flex flex-col gap-1">Ajout d&apos;un nouveau compte au membre</ModalHeader>
+                <ModalHeader className="flex flex-col gap-1">
+                  Ajout d&apos;un nouveau compte au membre
+                </ModalHeader>
                 <ModalBody className="transition duration-400 ease-in-out">
-                  <div className="flex flex-col gap-5">
-                    <PackageItem />
-                    <div className="flex flex-col gap-2.5">
-                      <h1 className="text-sm font-light">Infos sur les uplines</h1>
+                  <div className="w-full flex flex-col sm:flex-row gap-5">
+                    <div className="md:min-w-[37%] sm:w-[55%]">
+                      <PackageItem />
+                    </div>
+                    <div className="w-full flex flex-col gap-2.5">
+                      <h1 className="text-sm font-light">
+                        Infos sur les uplines
+                      </h1>
                       <FormField
                         control={form.control}
                         name="parrainId"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Select {...field} radius="sm" size="sm"
+                              <Select
+                                {...field}
+                                radius="sm"
+                                size="sm"
                                 label="Compte parrain"
                                 description="Sellectionner le compte du membre qui parraine le nouveau compte."
                                 className="w-full"
                                 onChange={(e) => {
-                                  const value = e.target.value
-                                  form.setValue("sponsorId", '')
-                                  form.setValue("parrainId", value)
-                                  if (!value) setSponsorAccounts([])
-                                  setReferralID(referralAccounts?.find(acc => acc?.company_id === value)?.id)
-
+                                  const value = e.target.value;
+                                  form.setValue("sponsorId", "");
+                                  form.setValue("parrainId", value);
+                                  if (!value) setSponsorAccounts([]);
+                                  setReferralID(
+                                    referralAccounts?.find(
+                                      (acc) => acc?.company_id === value
+                                    )?.id
+                                  );
                                 }}
                               >
-                                {
-                                  referralAccounts?.map((account: AccountType) => (
+                                {referralAccounts?.map(
+                                  (account: AccountType) => (
                                     <SelectItem key={account.company_id}>
                                       {account.company_id}
                                     </SelectItem>
-                                  ))
-                                }
+                                  )
+                                )}
                               </Select>
                             </FormControl>
                             <FormMessage />
@@ -168,35 +225,88 @@ export default function AddAccountModal({
                         )}
                       />
 
+                      <div className="py-3">
+                        <FormField
+                          control={form.control}
+                          name="position"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <NetworkPvsDisplay
+                                  accountId={referralID || ""}
+                                  mode="CHOICE"
+                                  onChoiceChange={(side) => {
+                                    setPosition(side);
+                                    form.setValue("position", side);
+                                  }}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
                       <FormField
                         control={form.control}
                         name="sponsorId"
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Autocomplete {...field} className="w-full" label="ID du sponsor" radius="sm" size="sm"
-                                isDisabled={isSubmitting || sponsorAccounts?.length === 0}
+                              <Autocomplete
+                                {...field}
+                                className="w-full"
+                                label="ID du sponsor"
+                                radius="sm"
+                                size="sm"
+                                isDisabled={
+                                  isSubmitting || sponsorAccounts?.length === 0
+                                }
                                 isLoading={isFetchingSponsors}
                                 onSelectionChange={(value) => {
                                   if (value) {
-                                    form.setValue("sponsorId", value?.toString())
+                                    form.setValue(
+                                      "sponsorId",
+                                      value?.toString()
+                                    );
                                   } else {
-                                    form.setValue("sponsorId", '')
+                                    form.setValue("sponsorId", "");
                                   }
                                 }}
                               >
                                 {sponsorAccounts.map((account) => (
-                                  <AutocompleteItem key={account.company_id} textValue={account.company_id}>
+                                  <AutocompleteItem
+                                    key={account.company_id}
+                                    textValue={account.company_id}
+                                  >
                                     <div className="w-full flex gap-3 items-center">
-                                      <Avatar alt={account.full_name} className="flex-shrink-0" size="sm" fallback={
-                                        <>{getInitialChar({ first_name: account.full_name.split('')[0], last_name: account.full_name.split('')[1] })}</>
-                                      } />
+                                      <Avatar
+                                        alt={account.full_name}
+                                        className="flex-shrink-0"
+                                        size="sm"
+                                        fallback={
+                                          <>
+                                            {getInitialChar({
+                                              first_name:
+                                                account.full_name.split("")[0],
+                                              last_name:
+                                                account.full_name.split("")[1],
+                                            })}
+                                          </>
+                                        }
+                                      />
                                       <div className="w-full flex gap-2 py-1 justify-between items-center">
                                         <div className="flex flex-col">
-                                          <span className="text-tiny">{account.full_name}</span>
-                                          <span className="text-small text-default-400">{account.company_id}</span>
+                                          <span className="text-tiny">
+                                            {account.full_name}
+                                          </span>
+                                          <span className="text-small text-default-400">
+                                            {account.company_id}
+                                          </span>
                                         </div>
-                                        <Chip size="sm">{account.descendant_count} downline</Chip>
+                                        <Chip size="sm">
+                                          {account.descendant_count} downline
+                                        </Chip>
                                       </div>
                                     </div>
                                   </AutocompleteItem>
@@ -207,19 +317,25 @@ export default function AddAccountModal({
                           </FormItem>
                         )}
                       />
-
                     </div>
                   </div>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" radius="sm" variant="light"
+                  <Button
+                    color="danger"
+                    radius="sm"
+                    variant="light"
                     isDisabled={isSubmitting}
                     onPress={onClose}
                   >
                     Annuler
                   </Button>
-                  <Button type="submit" color="primary" radius="sm"
-                    isLoading={isSubmitting} isDisabled={isSubmitting}
+                  <Button
+                    type="submit"
+                    color="primary"
+                    radius="sm"
+                    isLoading={isSubmitting}
+                    isDisabled={isSubmitting}
                   >
                     Créer le compte
                   </Button>

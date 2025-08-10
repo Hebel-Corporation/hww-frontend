@@ -94,11 +94,12 @@ export const getMemberAccountDownlines = async ({
 
 
 export const getMemberAccountSponsors = async ({
-    accountId
-}: { accountId: string }) => {
+    accountId,
+    position
+}: { accountId: string, position: string }) => {
     try {
         const result = await serverApi.get(
-            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_SPONSORS.replace("{{accountID}}", accountId)}`)
+            `${ApiEndpoints.MEMBERS.GET_MEMBER_ACCOUNT_SPONSORS.replace("{{accountID}}", accountId)}?position=${position}`)
         const data = result.data
 
         return data;
@@ -319,7 +320,7 @@ export const createMemberAccount = ({
 }: {
     referral_account: string,
     sponsor_account: string,
-    memberId: string
+    memberId: string,
 }, officeId: string): Promise<any> => {
     return new Promise(async (resolve, reject) => {
         try {
