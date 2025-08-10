@@ -482,7 +482,7 @@ const QualifiedAccountsTable: React.FC<QualifiedAccountsTableProps> = ({
           </div>
         </div>
       ) : (
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex flex-wrap justify-between items-center gap-4">
           <Input
             placeholder="Rechercher un compte..."
             value={globalFilter}
@@ -491,7 +491,7 @@ const QualifiedAccountsTable: React.FC<QualifiedAccountsTableProps> = ({
             className="max-w-sm"
           />
 
-          <div className="flex gap-3.5">
+          <div className="w-full sm:max-w-max flex justify-between gap-3.5">
             <Dropdown>
               <DropdownTrigger>
                 <Button
@@ -607,7 +607,7 @@ const QualifiedAccountsTable: React.FC<QualifiedAccountsTableProps> = ({
         </Table>
 
         {/* Pagination */}
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap gap-2 justify-between items-center">
           <span className="text-sm text-gray-500">
             {promotion?.members?.count > 0 &&
             promotion?.members?.results?.length > 0 ? (
@@ -635,6 +635,7 @@ const QualifiedAccountsTable: React.FC<QualifiedAccountsTableProps> = ({
               variant="bordered"
               onPress={onPreviousPage}
               isDisabled={pages === 1 || !promotion?.members?.previous}
+              className="hidden md:block"
             >
               Précédent
             </Button>
@@ -651,6 +652,7 @@ const QualifiedAccountsTable: React.FC<QualifiedAccountsTableProps> = ({
               variant="bordered"
               onPress={onNextPage}
               isDisabled={pages === 1 || !promotion?.members?.next}
+              className="hidden md:block"
             >
               Suivant
             </Button>

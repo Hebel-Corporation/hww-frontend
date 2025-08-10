@@ -433,7 +433,7 @@ const PrintPromotionButton = ({
           onPress={handlePrintAll}
           startContent={<Printer className="h-4 w-4" />}
         >
-          Imprimer toutes les pages
+          Imprimer toutes les qualifications
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
