@@ -104,6 +104,7 @@ export type AccountType = {
     pvs: number,
     office: Office,
     rewards: RewardType[],
+    promotions: PromotionItemType[],
     is_active: boolean,
     created_at: string
 }
@@ -159,6 +160,8 @@ export type GiftType = {
 }
 
 
+
+
 export type PromotionType = {
     id: string,
     title: string,
@@ -169,7 +172,31 @@ export type PromotionType = {
     created_at: string,
     updated_at: string,
     qualification_count: number,
-    total_bonus_concerned: number
+    total_bonus_concerned: number,
+    account_qualification_count: number,
+    members?: {
+        count: number,
+        total_pages: number,
+        next?: string,
+        previous?: string,
+        results: AccountType[]
+    }
+}
+
+export type PromotionItemType = {
+    id: string,
+    promotion: PromotionType,
+    gift: GiftType,
+    qualification_count: number,
+    title: string,
+    description: string,
+    is_active: boolean,
+    created_at: string,
+    updated_at: string,
+    equivalent_amount: string,
+    unit_number: number,
+    unit_type: string,
+    unit_type_display: string
 }
 
 

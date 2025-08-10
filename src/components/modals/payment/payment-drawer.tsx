@@ -19,7 +19,7 @@ export default function PaymentDrawer({ isOpen, onOpenChange, item, periodFilter
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   item: any;
-  periodFilter: 'all' | 'daily' | 'weekly' | 'monthly';
+  periodFilter: 'all' | 'daily' | 'weekly' | 'monthly'
 }) {
   
 

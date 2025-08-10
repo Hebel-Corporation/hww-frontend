@@ -295,14 +295,34 @@ export const getOfficeActivities = async ({
 
 
 export const getOfficePromotions = async ({
-    officeId, page, officeFilter
+    officeId, page, officeFilter, promId
 }: { 
     officeId: string, 
     page?: number,
-    officeFilter?: string
+    officeFilter?: string,
+    promId?: string
  }) => {
+
+    // Construire les paramètres de requête dynamiquement
+    const queryParams = new URLSearchParams();
+    
+    if (page !== undefined && page !== null) {
+        queryParams.append('page', page.toString());
+    }
+    
+    if (officeFilter !== undefined && officeFilter !== null && officeFilter !== '') {
+        queryParams.append('office_filter', officeFilter);
+    }
+    
+    if (promId !== undefined && promId !== null && promId !== '') {
+        queryParams.append('prom_id', promId);
+    }
+    
+    const queryString = queryParams.toString();
+    const url = `${ApiEndpoints.OFFICES.GET_OFFICE_PROMOTIONS.replace("{{officeID}}", officeId)}${queryString ? '?' + queryString : ''}`;
+    
     try {
-        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_PROMOTIONS.replace("{{officeID}}", officeId)}?page=${page}&office_filter=${officeFilter}`)
+        const result = await serverApi.get(url)
         const data = result.data
 
         return data;

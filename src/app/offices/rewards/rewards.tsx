@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Lock, Gift } from "lucide-react";
+import { Lock, Gift, ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import {
   getOfficePromotions,
@@ -114,8 +114,9 @@ const RewardCard: React.FC<RewardCardProps> = ({
         </div>
 
         <div className="mt-4">
-          <button className="w-full py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-sm">
+          <button className="w-full flex items-center gap-3 underline py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-sm">
             Voir les détails des qualifications
+            <ArrowRight className="h-4 w-4" />
           </button>
         </div>
       </div>
@@ -142,7 +143,9 @@ export function Rewards({ officeId }: { officeId: string }) {
 
       {isLoading ? (
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          <Skeleton className="w-full flex gap-2 items-center sm:w-80 h-[23.5rem] relative group hover:scale-95 group cursor-pointer duration-500 dark:bg-zinc-900 bg-zinc-100 border border-dashed hover:border-blue-300 p-4 rounded-xl" />
+          <Skeleton className="w-full flex gap-2 items-center sm:w-sm h-[23.5rem] relative group hover:scale-95 group cursor-pointer duration-500 dark:bg-zinc-900 bg-zinc-100 border border-dashed hover:border-blue-300 p-4 rounded-xl" />
+          <Skeleton className="w-full flex gap-2 items-center sm:w-sm h-[23.5rem] relative group hover:scale-95 group cursor-pointer duration-500 dark:bg-zinc-900 bg-zinc-100 border border-dashed hover:border-blue-300 p-4 rounded-xl" />
+          <Skeleton className="w-full flex gap-2 items-center sm:w-sm h-[23.5rem] relative group hover:scale-95 group cursor-pointer duration-500 dark:bg-zinc-900 bg-zinc-100 border border-dashed hover:border-blue-300 p-4 rounded-xl" />
         </div>
       ):(
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">

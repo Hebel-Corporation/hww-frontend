@@ -69,7 +69,7 @@ export default async function ActivityPage({
       breadcrumb={<CustomBreadcrumb breadcrumbItems={breadcrumbItems} />}
     >
       <main className="flex flex-col flex-1 justify-center items-center">
-        <div className="flex flex-col flex-1 gap-6 p-2 max-w-full w-full mx-auto">
+        <div className="flex flex-col flex-1 gap-6 py-2 max-w-full w-full mx-auto">
           {/* Header */}
           <div className="flex flex-wrap gap-2 items-center justify-between">
             <h1 className="text-2xl font-semibold text-gray-800 dark:text-slate-200">
