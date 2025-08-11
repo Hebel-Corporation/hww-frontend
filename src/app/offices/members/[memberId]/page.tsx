@@ -40,7 +40,7 @@ const MemberDetails = async ({
   const memberId = params.memberId;
   const member = await getMemberDettails({ memberId: memberId });
   if (!member) notFound();
-  if (!currentAccountId) redirect(`?account=${member?.accounts[0].id}`);
+  if (!currentAccountId) redirect(`?account=${member?.accounts[0]?.id}`);
 
   const page = Number(searchParams?.page) || constantVars.INIT_PAGINATION_PAGE;
   const limit = Number(searchParams?.limit) || constantVars.LIMIT_PAGINATION;
