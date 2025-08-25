@@ -171,7 +171,7 @@ export type PromotionType = {
     is_active: boolean,
     created_at: string,
     updated_at: string,
-    qualification_count: number,
+    qualification_bonus_count: number,
     total_bonus_concerned: number,
     account_qualification_count: number,
     members?: {

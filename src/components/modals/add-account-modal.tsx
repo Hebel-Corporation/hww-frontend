@@ -179,7 +179,7 @@ export default function AddAccountModal({
                 </ModalHeader>
                 <ModalBody className="transition duration-400 ease-in-out">
                   <div className="w-full flex flex-col sm:flex-row gap-5">
-                    <div className="md:min-w-[37%] sm:w-[55%]">
+                    <div className="md:w-[58%] sm:w-[55%]">
                       <PackageItem />
                     </div>
                     <div className="w-full flex flex-col gap-2.5">

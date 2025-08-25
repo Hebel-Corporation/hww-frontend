@@ -75,8 +75,8 @@ function PromotionItem({ promotion }: { promotion: PromotionType }) {
           maxValue={promotion.total_bonus_concerned}
           showValueLabel={true}
           size="sm"
-          value={promotion.qualification_count}
-          valueLabel={`${promotion.qualification_count} / ${promotion.total_bonus_concerned}`}
+          value={promotion.qualification_bonus_count}
+          valueLabel={`${promotion.qualification_bonus_count} / ${promotion.total_bonus_concerned}`}
           classNames={{
             label: "text-xs font-extralight",
             value: "text-xs font-extralight",
