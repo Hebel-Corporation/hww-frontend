@@ -90,6 +90,7 @@ async function PaymentPage({
       <PaymentTable payments={payments?.results}
         page={page}
         pages={payments?.total_pages}
+        forMember={true}
       />
     </main>
   )

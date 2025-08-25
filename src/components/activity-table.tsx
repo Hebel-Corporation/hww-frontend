@@ -78,7 +78,7 @@ export function ActivityTable({
   const session = getClientSession() as SessionType | null
 
   return (
-    <>
+    <div className="flex flex-col flex-1 justify-between">
       <Table
         isStriped
         aria-label="bonus records"
@@ -87,26 +87,9 @@ export function ActivityTable({
         isHeaderSticky
         bottomContentPlacement="outside"
         classNames={{
-          wrapper: "min-h-[56dvh] max-h-[56dvh] sm:max-h-dvh p-0",
+          wrapper: "flex flex-col flex-1 min-h-[43dvh] p-0",
           thead: "rounded-sm",
         }}
-        bottomContent={
-          data?.total_pages > 1 ? (
-            <div className="flex w-full justify-start">
-              <Pagination
-                radius="sm"
-                isCompact
-                showControls
-                showShadow
-                color="primary"
-                page={page}
-                total={data?.total_pages}
-                onChange={(newPage) => handlePagination({ pageValue: newPage })}
-                className="p-2 -m-3"
-              />
-            </div>
-          ) : null
-        }
       >
         <TableHeader>
           <TableColumn key="downline">Bénéficière</TableColumn>
@@ -181,6 +164,41 @@ export function ActivityTable({
         </TableBody>
       </Table>
 
+      {data?.total_pages > 1 && (
+        <div className="flex flex-wrap gap-2 justify-between items-center mt-4">
+          <span className="text-sm text-gray-500">
+            {data?.count > 0 && data?.results?.length > 0 ? (
+              <>
+                {(() => {
+                  // Calculer les indices corrects basés sur la page actuelle
+                  const currentPage = page || 1;
+                  const pageSize = Math.ceil(data.count / data.total_pages);
+                  const startItem = (currentPage - 1) * pageSize + 1;
+                  const endItem = Math.min(currentPage * pageSize, data.count);
+
+                  return `${startItem} à ${endItem}`;
+                })()}{" "}
+                <span className="text-xs text-gray-500 dark:text-slate-400">
+                  sur {data?.count}
+                </span>
+              </>
+            ) : (
+              "Aucun résultat"
+            )}
+          </span>
+          <Pagination
+            page={page}
+            total={data?.total_pages}
+            onChange={(newPage) => handlePagination({ pageValue: newPage })}
+            showControls
+            showShadow
+            color="primary"
+            radius="sm"
+            isCompact
+          />
+        </div>
+      )}
+
       <PaymentDrawer
         isOpen={isDrawerOpen}
         onOpenChange={(open) => {
@@ -189,6 +207,6 @@ export function ActivityTable({
         item={selectedItem}
         periodFilter={filterObj?.value}
       />
-    </>
+    </div>
   );
 }

@@ -291,6 +291,25 @@ export const getOfficeActivities = async ({
     }
 }
 
+export const getOfficePayments = async ({
+    officeId, filterSlug, page, officeFilter
+}: { 
+    officeId: string, 
+    filterSlug: string,
+    page?: number,
+    officeFilter?: string
+ }) => {
+    try {
+        const result = await serverApi.get(`${ApiEndpoints.OFFICES.GET_OFFICE_ACTIVITIES.replace("{{officeID}}", officeId)}?filter=${filterSlug}&activity_type=PAYMENTS&page=${page}&office_filter=${officeFilter}`)
+        const data = result.data
+
+        return data;
+    } catch (e: any) {
+        console.error(e?.message)
+        return e?.message;
+    }
+}
+
 
 
 
