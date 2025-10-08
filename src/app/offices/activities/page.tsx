@@ -145,7 +145,7 @@ export default async function ActivityPage({
                 <div className="w-full col-span-2 flex flex-wrap gap-7 items-center justify-between bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border  rounded-2xl p-5">
                   <div className="flex flex-1 items-center justify-between">
                     <div className="space-y-1">
-                      <h4 className="text-base opacity-90">Bonus Total</h4>
+                      <h4 className="text-base opacity-90">Bonus à payer</h4>
                       <p className="text-sm opacity-75">À verser aux membres</p>
                     </div>
                     <div className="text-right">
@@ -158,14 +158,14 @@ export default async function ActivityPage({
                         ).toLocaleString()}
                       </span>
                       <div className="text-sm text-blue-400 opacity-75 mt-1">
-                        Total des bonus
+                        Total de bonus
                       </div>
                     </div>
                   </div>
                   <div className="sm:w-1 w-full sm:h-14 bg-gray-600 border"></div>
                   <div className="flex flex-1 items-center justify-between">
                     <div className="space-y-1">
-                      <h4 className="text-base opacity-90">Montant déjà Payé</h4>
+                      <h4 className="text-base opacity-90">Paiements effectués</h4>
                       <Link
                         href={`/offices/activities/payments?filter=${filterSlug}&office=${officeFilter}&page=${page}`}
                         className="text-sm opacity-75 bg-gray-200 hover:underline dark:bg-gray-800 px-2 py-1 rounded-md"
@@ -179,7 +179,7 @@ export default async function ActivityPage({
                         $ {data?.total_payment.toLocaleString()}
                       </span>
                       <div className="text-sm text-red-400 opacity-75 mt-1">
-                        Total des bonus
+                        Total de paiements
                       </div>
                     </div>
                   </div>

@@ -75,7 +75,10 @@ export default async function AccountLayout({ children, params }: AccountLayoutP
                 </Chip>
               </div>
           </div>
-          <div className='flex flex-wrap-reverse gap-3 items-center'>
+          <div className='flex flex-wrap gap-3 items-center'>
+            <Chip variant='flat' size='lg' radius='sm' color='danger' className='p-3 h-10'>
+              Montant déjà payer : <span className='font-bold'>$ {account?.total_payment}</span>
+            </Chip>
             <Chip variant='flat' size='lg' radius='sm' color='success' className='p-3 h-10'>
               Balance : <span className='font-bold'>$ {account?.balance}</span>
             </Chip>
