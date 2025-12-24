@@ -20,6 +20,7 @@ import MobileMenu from "@/components/portal/mobile-menu";
 import { getServerSession } from "@/utils/server-auth-utils";
 import Image from "next/image";
 import { SessionType } from "@/types";
+import CertificateDisplay from "@/components/landing-page/certificate-display";
 
 export default async function HomePage() {
 
@@ -111,8 +112,8 @@ export default async function HomePage() {
               {/* Left content */}
               <div className="text-center lg:text-left space-y-8">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-sm font-medium">
-                  <Sparkles className="w-4 h-4" />
-                  <span>Médecine naturelle asiatique</span>
+                  <Shield className="w-4 h-4" />
+                  <span>Health Winning World</span>
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
@@ -538,6 +539,149 @@ export default async function HomePage() {
                   <Users className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
+            </div>
+          </div>
+        </section>
+
+
+        {/* <!-- CERTIFICATION SECTION --> */}
+        <section id="certification" className="relative py-24 sm:py-32 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 dark:from-zinc-950 dark:via-zinc-900 dark:to-blue-950/20" />
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 right-10 w-96 h-96 bg-blue-200/10 dark:bg-blue-500/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-20 left-10 w-96 h-96 bg-emerald-200/10 dark:bg-emerald-500/5 rounded-full blur-3xl" />
+          </div>
+
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-sm font-medium mb-4">
+                Certification Officielle
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                Autorisé et <span className="text-gradient bg-gradient-to-r from-blue-600 to-emerald-600 dark:from-blue-400 dark:to-emerald-400 bg-clip-text text-transparent">Certifié</span>
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                HWW est officiellement autorisé par Wuhan Wansongtang Health Industry Co Ltd pour la distribution de produits de santé naturels.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Certificate preview */}
+              <div className="relative group">
+                {/* Glow effect */}
+                <div className="absolute -inset-6 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 rounded-3xl blur-3xl opacity-20 group-hover:opacity-30 transition-all duration-500 animate-pulse" />
+
+                {/* Certificate card */}
+                <div className="relative">
+                  {/* Decorative corner badges */}
+                  <div className="absolute -top-4 -left-4 z-10 w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center shadow-xl">
+                    <Shield className="w-10 h-10 text-white" />
+                  </div>
+                  
+                  {/* Main certificate container */}
+                  <div className="relative bg-gradient-to-br from-white to-blue-50 dark:from-zinc-800 dark:to-zinc-900 rounded-2xl p-4 shadow-2xl border-4 border-blue-200 dark:border-blue-900/50 group-hover:border-blue-300 dark:group-hover:border-blue-800 transition-all duration-300">
+                    {/* Inner frame */}
+                    <div className="relative bg-white dark:bg-zinc-950 rounded-xl p-3 shadow-inner">
+                      <CertificateDisplay />
+
+                      {/* Decorative corners */}
+                      <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-blue-400 dark:border-blue-600 rounded-tl-lg" />
+                      <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-blue-400 dark:border-blue-600 rounded-tr-lg" />
+                      <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-emerald-400 dark:border-emerald-600 rounded-bl-lg" />
+                      <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-emerald-400 dark:border-emerald-600 rounded-br-lg" />
+                    </div>
+                  </div>
+
+                  {/* Certificate info badge */}
+                  <div className="mt-6 flex items-center justify-center gap-6 px-4">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30">
+                        <Shield className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">Document Officiel</p>
+                        <p className="text-xs text-muted-foreground">Certification 2023</p>
+                      </div>
+                    </div>
+                    <div className="w-px h-12 bg-zinc-300 dark:bg-zinc-700" />
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">Authentique</p>
+                        <p className="text-xs text-muted-foreground">Vérifié et certifié</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Certificate details */}
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <div className="flex items-start gap-4 p-5 rounded-xl bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm border border-blue-200/50 dark:border-zinc-700/50 hover:border-blue-400 dark:hover:border-blue-600 transition-colors">
+                    <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-900/30 shrink-0">
+                      <Shield className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg mb-1">Autorisation Officielle</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Certificat d&rsquo;autorisation de vente délivré par <span className="font-semibold text-foreground">Wuhan Wansongtang Health Industry Co Ltd</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 p-5 rounded-xl bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm border border-emerald-200/50 dark:border-zinc-700/50 hover:border-emerald-400 dark:hover:border-emerald-600 transition-colors">
+                    <div className="p-3 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 shrink-0">
+                      <Users className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg mb-1">Directeur Général</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Certificat octroyé à <span className="font-semibold text-foreground">Monsieur Kakule Masingo Vamos</span>, Directeur Général de Health Winning World
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 p-5 rounded-xl bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm border border-amber-200/50 dark:border-zinc-700/50 hover:border-amber-400 dark:hover:border-amber-600 transition-colors">
+                    <div className="p-3 rounded-lg bg-amber-100 dark:bg-amber-900/30 shrink-0">
+                      <CheckCircle2 className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg mb-1">Produits Certifiés</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Tous nos produits sont authentiques et proviennent directement du fabricant agréé
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4 p-5 rounded-xl bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm border border-purple-200/50 dark:border-zinc-700/50 hover:border-purple-400 dark:hover:border-purple-600 transition-colors">
+                    <div className="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30 shrink-0">
+                      <Sparkles className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg mb-1">Qualité Garantie</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Engagement envers l&rsquo;excellence et la satisfaction de nos membres partenaires
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <Button
+                    size="lg"
+                    asChild
+                    className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl transition-all"
+                  >
+                    <Link href={hasSession ? '/offices/dashboard' : '/login'}>
+                      Rejoindre HWW
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
