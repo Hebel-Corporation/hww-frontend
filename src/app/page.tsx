@@ -1,11 +1,20 @@
-import { ArrowRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { BadgeDollarSign, HeartPulse, Mail, PhoneCall } from "lucide-react";
-import SectionTitle from "@/components/portal/section-title";
-import ObjectiveItem from "@/components/portal/objective-item";
-import ProducItem from "@/components/portal/product-item";
+import {
+  BadgeDollarSign,
+  HeartPulse,
+  Mail,
+  Phone,
+  MapPin,
+  Leaf,
+  Shield,
+  Users,
+  Sparkles,
+  ChevronRight,
+  CheckCircle2,
+  ArrowRight
+} from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import MobileMenu from "@/components/portal/mobile-menu";
 import { getServerSession } from "@/utils/server-auth-utils";
@@ -14,393 +23,682 @@ import { SessionType } from "@/types";
 
 export default async function HomePage() {
 
-  const session = await getServerSession({raw: false}) as SessionType | null
+  const session = await getServerSession({ raw: false }) as SessionType | null
   const hasSession = session ? true : false
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="min-h-[calc(100dvh-57px-97px)] flex-1 w-full">
+    <div className="flex flex-col min-h-screen overflow-x-hidden">
+      <main className="flex-1 w-full">
 
         {/* <!-- HEADER SECTION --> */}
-        <header className="absolute top-0 left-0 w-full z-50 px-4 sm:px-8 lg:px-24 xl:px-40 2xl:px-64">
+        <header className="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+          <div className="glass border-b border-white/10 dark:border-zinc-800/50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex items-center justify-between h-16 md:h-20">
+                <Link href="/" className="flex items-center gap-3 group">
+                  <Image
+                    width={50}
+                    height={50}
+                    alt='Logo HWW'
+                    src="/images/logo_HWW.png"
+                    className="w-12 h-12 md:w-14 md:h-14 transition-transform group-hover:scale-105"
+                  />
+                  <div className="hidden sm:block">
+                    <span className="font-bold text-lg text-emerald-700 dark:text-emerald-400">HWW</span>
+                    <p className="text-xs text-muted-foreground -mt-1">Health Winning World</p>
+                  </div>
+                </Link>
 
-          <div className="flex flex-wrap items-center justify-between py-3">
-            <a href="index.html" className="">
-              <Image width={100} height={100} alt='Logo HWW' src="/images/logo_HWW.png" className="sm:w-20 w-14 h-auto" />
-            </a>
+                <div className="flex items-center gap-4">
+                  <nav className="hidden lg:flex items-center gap-1">
+                    {[
+                      { href: "#about", label: "À propos" },
+                      { href: "#services", label: "Services" },
+                      { href: "#products", label: "Produits" },
+                      { href: "#rewards", label: "Opportunité" },
+                      { href: "#contact", label: "Contact" },
+                    ].map((item) => (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </nav>
 
-            <div className="flex flex-row sm:flex-row-reverse gap-5 sm:gap-8 items-center">
-              <ModeToggle />
-              <MobileMenu hasSession={hasSession} />
-
-              <div className="hidden md:block w-full md:w-auto" id="menu">
-                <nav className="w-full bg-white md:bg-transparent rounded shadow-lg px-6 py-4 mt-4 text-center md:p-0 md:mt-0 md:shadow-none">
-                  <ul className="md:flex items-center text-white dark:text-inherit">
-                    <li>
-                      <a className="py-2 inline-block  md:hidden lg:block" href="#about">
-                        A propos
-                      </a>
-                    </li>
-                    <li className="md:ml-4">
-                      <a className="py-2 inline-block  md:px-2" href="#rewards">
-                        Rewards
-                      </a>
-                    </li>
-                    <li className="md:ml-4">
-                      <a className="py-2 inline-block  md:px-2" href="#products">
-                        Produits
-                      </a>
-                    </li>
-                    <li className="md:ml-4">
-                      <a className="py-2 inline-block  md:px-2" href="#contact">
-                        Nous contacter
-                      </a>
-                    </li>
-                    <li className="md:ml-2 mt-3 md:mt-0">
-                      <Button variant="default" asChild>
-                        <Link href={`${hasSession ? '/offices/dashboard' : '/login'}`}>
-                          {hasSession ? 'Tableau de bord' : 'Se connecter'}
-                        </Link>
-                      </Button>
-                    </li>
-                  </ul>
-                </nav>
+                  <div className="flex items-center gap-3">
+                    <ModeToggle />
+                    <MobileMenu hasSession={hasSession} />
+                    <Button
+                      asChild
+                      className="hidden md:inline-flex bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/25"
+                    >
+                      <Link href={hasSession ? '/offices/dashboard' : '/login'}>
+                        {hasSession ? 'Tableau de bord' : 'Se connecter'}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </header>
 
 
-        {/* <!-- HERO SECTION--> */}
-        <section className="cover bg-gradient-to-tr relative from-blue-200 to-green-600 dark:from-black dark:to-zinc-800 px-4 sm:px-8 lg:px-24 xl:px-40 2xl:px-64 overflow-hidden flex items-center min-h-screen">
-          <div className="h-full absolute top-0 left-0 z-0">
-            <img src="/images/mlm_network.jpg" alt="" className="w-screen h-full object-cover opacity-15" />
+        {/* <!-- HERO SECTION --> */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+          {/* Background layers */}
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50 dark:from-zinc-950 dark:via-zinc-900 dark:to-emerald-950" />
+
+          {/* MLM Network Pattern Background */}
+          <div
+            className="absolute inset-0 opacity-[0.18] dark:opacity-[0.12]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='network' x='0' y='0' width='200' height='200' patternUnits='userSpaceOnUse'%3E%3Cg fill='none' stroke='%23059669' stroke-width='1.5' opacity='0.6'%3E%3Cline x1='100' y1='20' x2='50' y2='80'/%3E%3Cline x1='100' y1='20' x2='150' y2='80'/%3E%3Cline x1='50' y1='80' x2='30' y2='140'/%3E%3Cline x1='50' y1='80' x2='70' y2='140'/%3E%3Cline x1='150' y1='80' x2='130' y2='140'/%3E%3Cline x1='150' y1='80' x2='170' y2='140'/%3E%3Ccircle cx='100' cy='20' r='6' fill='%23059669' opacity='0.8'/%3E%3Ccircle cx='50' cy='80' r='5' fill='%23059669' opacity='0.7'/%3E%3Ccircle cx='150' cy='80' r='5' fill='%23059669' opacity='0.7'/%3E%3Ccircle cx='30' cy='140' r='4' fill='%23059669' opacity='0.6'/%3E%3Ccircle cx='70' cy='140' r='4' fill='%23059669' opacity='0.6'/%3E%3Ccircle cx='130' cy='140' r='4' fill='%23059669' opacity='0.6'/%3E%3Ccircle cx='170' cy='140' r='4' fill='%23059669' opacity='0.6'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect width='200' height='200' fill='url(%23network)'/%3E%3C/svg%3E")`,
+              backgroundSize: '200px 200px'
+            }}
+          />
+
+          {/* Decorative elements */}
+          <div className="absolute top-20 right-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 left-10 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-pulse delay-1000" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Left content */}
+              <div className="text-center lg:text-left space-y-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-sm font-medium">
+                  <Sparkles className="w-4 h-4" />
+                  <span>Médecine naturelle asiatique</span>
+                </div>
+
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
+                  <span className="text-foreground">Le bonheur commence par</span>
+                  <br />
+                  <span className="text-gradient">une meilleure santé</span>
+                </h1>
+
+                <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0">
+                  Découvrez le pouvoir des compléments alimentaires issus de la médecine traditionnelle asiatique.
+                  <span className="text-emerald-600 dark:text-emerald-400 font-medium"> Prévenez, soignez, vivez mieux.</span>
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <Button
+                    size="lg"
+                    asChild
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-lg px-8 py-6 shadow-xl shadow-emerald-600/30 hover:shadow-emerald-600/40 transition-all hover:-translate-y-0.5"
+                  >
+                    <Link href={hasSession ? '/offices/dashboard' : '/login'}>
+                      {hasSession ? 'Accéder à mon compte' : 'Rejoindre HWW'}
+                      <ChevronRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    asChild
+                    className="text-lg px-8 py-6 border-2 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
+                  >
+                    <a href="#products">
+                      Découvrir nos produits
+                    </a>
+                  </Button>
+                </div>
+
+                {/* Trust indicators */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-4">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                    <span>100% Naturel</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                    <span>Certifié MARA</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                    <span>+1500 membres</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right visual */}
+              <div className="relative hidden lg:block">
+                <div className="relative w-full aspect-square max-w-lg mx-auto">
+                  {/* Decorative ring */}
+                  <div className="absolute inset-0 rounded-full border-2 border-dashed border-emerald-200 dark:border-emerald-800 animate-spin" style={{ animationDuration: '30s' }} />
+                  <div className="absolute inset-4 rounded-full border-2 border-dashed border-amber-200 dark:border-amber-800 animate-spin" style={{ animationDuration: '25s', animationDirection: 'reverse' }} />
+
+                  {/* Center image */}
+                  <div className="absolute inset-12 rounded-full bg-gradient-to-br from-emerald-100 to-amber-100 dark:from-emerald-900/50 dark:to-amber-900/50 flex items-center justify-center overflow-hidden shadow-2xl">
+                    <Image
+                      src="/images/joyful_woman.png"
+                      alt="Santé et bien-être"
+                      width={400}
+                      height={400}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+
+                  {/* Floating cards */}
+                  <div className="absolute -left-4 top-1/4 bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-4 flex items-center gap-3 animate-bounce" style={{ animationDuration: '3s' }}>
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
+                      <Leaf className="w-6 h-6 text-emerald-600" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">Détox naturelle</p>
+                      <p className="text-xs text-muted-foreground">Purifiez votre corps</p>
+                    </div>
+                  </div>
+
+                  <div className="absolute -right-4 bottom-1/4 bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-4 flex items-center gap-3 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '0.5s' }}>
+                    <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
+                      <HeartPulse className="w-6 h-6 text-amber-600" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm">Vitalité</p>
+                      <p className="text-xs text-muted-foreground">Énergie au quotidien</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-xl relative z-10 h-100 lg:mt-16">
-            <div className="flex flex-col md:block">
-              <h1 className="text-yellow-600 md:text-primary3 text-4xl xl:text-5xl font-bold leading-tights">
-                Le bonheur commence par un corps en meilleure santé.
-              </h1>
-              <div className="flex flex-col gap-6">
-                <p className="text-green-700 text-xl md:text-2xl leading-snug mt-8">
-                  Welcome to the Health Winning World !
-                </p>
-                <Button variant="default" size='lg' asChild className="max-w-max px-5">
-                  <Link href={`${hasSession ? '/offices/dashboard' : '/login'}`}>
-                    {hasSession ? 'Mon compte' : 'Commencer'}
-                    <ArrowRightIcon className="ml-2" />
-                  </Link>
-                </Button>
-              </div>
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground animate-bounce">
+            <span className="text-xs">Découvrir</span>
+            <div className="w-6 h-10 rounded-full border-2 border-current flex items-start justify-center p-1">
+              <div className="w-1.5 h-3 rounded-full bg-current animate-pulse" />
             </div>
           </div>
         </section>
 
 
         {/* <!-- ABOUT SECTION --> */}
-        <section id="about" className="relative py-16 sm:py-24 px-4 sm:px-8 lg:px-24 xl:px-40 2xl:px-64">
-          <SectionTitle
-            title="Qui nous sommes ?"
-            description="Découvez l'historique et les objectifs de la société"
-          />
+        <section id="about" className="relative py-24 sm:py-32 overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white to-emerald-50/50 dark:from-zinc-900 dark:to-zinc-950" />
 
-          <div className="flex flex-col lg:flex-col ">
-
-            <div className="max-w-3xl">
-              <p className="font-light">
-                Health Winning World est une entreprise de marketing de réseau crée en 2023 par une association des médecins malaisiens, chinois, thailandais
-                oeuvrant dans la recherche sur le traitement et prise en charge des pathologies chroniques.
-                Cette association dénommée Medecin Advance Research Association (MARA) est représentée par Dr KAMVAM BIN FARVAS.
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section header */}
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-sm font-medium mb-4">
+                Notre histoire
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                Qui sommes-nous ?
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Health Winning World est une entreprise de marketing de réseau créée en 2023 par une association de médecins malaisiens, chinois et thaïlandais œuvrant dans la recherche sur le traitement des pathologies chroniques.
               </p>
             </div>
 
-            <div className="flex flex-col rounded-sm md:flex-row w-full bg-gray-100 dark:bg-zinc-900  p-4 py-10 sm:py-5 sm:p-6 md:p-8 mt-10 gap-8">
+            {/* MARA Badge */}
+            <div className="flex justify-center mb-16">
+              <div className="inline-flex items-center gap-4 px-6 py-4 rounded-2xl bg-white dark:bg-zinc-800 shadow-xl border border-emerald-100 dark:border-zinc-700">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                  <Shield className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <p className="font-bold text-lg">MARA</p>
+                  <p className="text-sm text-muted-foreground">Medecin Advance Research Association</p>
+                  <p className="text-xs text-emerald-600 dark:text-emerald-400">Dr KAMVAM BIN FARVAS</p>
+                </div>
+              </div>
+            </div>
 
-              <ObjectiveItem
-                title="Objectif #1"
-                description="Contribuer à l'amélioration de la santé de la population du monde par la promotion des soins de santé,
-                    l'éducation sanitaire et nutritionnelle."
-              >
-                <HeartPulse size={55} />
-              </ObjectiveItem>
+            {/* Objectives grid */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Objective 1 */}
+              <div className="group relative bg-white dark:bg-zinc-800/50 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 dark:border-zinc-700 hover:-translate-y-1">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-bl-full" />
+                <div className="relative">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/25 group-hover:scale-110 transition-transform">
+                    <HeartPulse className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">Santé mondiale</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Contribuer à l&apos;amélioration de la santé de la population mondiale par la promotion des soins de santé, l&apos;éducation sanitaire et nutritionnelle.
+                  </p>
+                </div>
+              </div>
 
-              <hr />
-
-              <ObjectiveItem
-                title="Objectif #2"
-                description="Améliorer la condition des vies par l'auto-prise en charge, l'entrepreneuriat et le développement personnel."
-              >
-                <BadgeDollarSign size={55} />
-              </ObjectiveItem>
-
+              {/* Objective 2 */}
+              <div className="group relative bg-white dark:bg-zinc-800/50 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-amber-100 dark:border-zinc-700 hover:-translate-y-1">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-500/10 to-transparent rounded-bl-full" />
+                <div className="relative">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-6 shadow-lg shadow-amber-500/25 group-hover:scale-110 transition-transform">
+                    <BadgeDollarSign className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">Autonomisation financière</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Améliorer les conditions de vie par l&apos;auto-prise en charge, l&apos;entrepreneuriat et le développement personnel.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-
         </section>
 
 
-        {/* <!-- REWARDS SECTION --> */}
-        <section id="rewards" className=" bg-yellow-100 dark:bg-zinc-900 bg-fixed py-16 sm:py-24 px-4 sm:px-8 lg:px-24 xl:px-40 2xl:px-64">
+        {/* <!-- SERVICES SECTION --> */}
+        <section id="services" className="relative py-24 sm:py-32 bg-emerald-950 dark:bg-zinc-950 overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-amber-500" />
+          <div className="absolute top-20 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
 
-          <SectionTitle
-            title="Gagnez avec nous !"
-            description="Vous pouvez devenir membre partenaire et être éligible aux différents avantages et bonus de HWW."
-          />
-          {/* <!-- <div className="flex flex-col md:flex-row gap-6">
-            <div className="w-full md:w-1/3 flex flex-col items-center shadow-lg p-6 bg-gray-100">
-              <h4 className="text-xl font-light text-center text-primary1">Devenir membre partenaire</h4>
-              <span className="text-2xl font-bold text-primary1">80PV</span>
-              <p className="text-gray-600 mt-2 font-light text-lg text-justify">
-                En achetant des produits de 80PV, ou 1PV = 1$, vous devenez automatiquement membre partenaire de l'entreprise
-                et vous etes éligible aux différents avantages et bonus de HWW.
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-900/50 text-emerald-300 text-sm font-medium mb-4">
+                Nos services
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
+                Solutions de bien-être complètes
+              </h2>
+              <p className="text-lg text-emerald-100/70">
+                Des traitements naturels issus de la médecine traditionnelle asiatique pour prévenir et soigner.
               </p>
             </div>
 
-            <div className="w-full md:w-1/3 flex flex-col items-center shadow-lg p-6 bg-gray-100">
-              <h4 className="text-xl font-light text-center text-primary1">Construire votre réseau</h4>
-              <span className="text-2xl font-bold text-primary1">2 Personnes</span>
-              <p className="text-gray-600 mt-2 font-light text-lg text-justify">
-                En achetant des produits de 80PV, ou 1PV = 1$, vous devenez automatiquement membre partenaire de l'entreprise
-                et vous etes éligible aux différents avantages et bonus de HWW.
-              </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Leaf,
+                  title: "Détoxification",
+                  description: "Programmes de nettoyage profond pour purifier votre organisme des toxines accumulées.",
+                  color: "emerald"
+                },
+                {
+                  icon: HeartPulse,
+                  title: "Compléments alimentaires",
+                  description: "Suppléments naturels pour combler les carences et renforcer votre système immunitaire.",
+                  color: "teal"
+                },
+                {
+                  icon: Sparkles,
+                  title: "Machine Bioplasm",
+                  description: "Technologie avancée pour l'analyse et le rééquilibrage énergétique du corps.",
+                  color: "amber"
+                }
+              ].map((service, index) => (
+                <div
+                  key={index}
+                  className="group relative bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div className={`w-14 h-14 rounded-xl bg-${service.color}-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                    <service.icon className={`w-7 h-7 text-${service.color}-400`} />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-2">{service.title}</h3>
+                  <p className="text-emerald-100/60 text-sm leading-relaxed">{service.description}</p>
+                </div>
+              ))}
             </div>
-
-          </div> --> */}
-
-          <div className="flex flex-col md:flex-row gap-6 font-light">
-
-            <div className="w-full md:w-1/3 flex flex-col h-max items-center p-3 pb-5 rounded-sm border">
-              <div className="flex flex-1 flex-grow max-h-52 min-h-52">
-                <img src="/images/car.png" className="pt-5 object-contain" alt="" />
-              </div>
-              <p className="text-gray-800 dark:text-slate-200 mt-2 text-lg text-center">
-                Gagnez votre première voiture de <span className="font-bold">6000$</span> en construisant un réseau de 1000 équilibres
-              </p>
-            </div>
-
-            <div className="w-full md:w-1/3 flex flex-col h-max items-center p-3 pb-5 rounded-sm border">
-              <div className="flex flex-1 flex-grow max-h-52 min-h-52">
-                <img src="/images/car-lux.png" className="pt-5 object-contain" alt="" />
-              </div>
-              <p className="text-gray-800 dark:text-slate-200 mt-2 text-lg text-center">
-                Gagnez votre deuxième voiture de <span className="font-bold">10 000$</span> en réalisant un réseau de 2000 équilibres
-              </p>
-            </div>
-
-            <div className="w-full md:w-1/3 flex items-center justify-center">
-              <img src="/images/joyful_lady.png" className="h-60" alt="" />
-              <h2 className="text-2xl text-center leading-tight font-bold text-primary1">Rejoignez-nous <br /> aujourd&apos;hui !</h2>
-            </div>
-
           </div>
-
         </section>
 
 
         {/* <!-- PRODUCTS SECTION --> */}
-        <section id="products" className="relative py-16 sm:py-24 px-4 sm:px-8 lg:px-24 xl:px-40 2xl:px-64">
+        <section id="products" className="relative py-24 sm:py-32 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-emerald-50/50 to-white dark:from-zinc-950 dark:to-zinc-900" />
 
-          <SectionTitle
-            title="Nos différents produits"
-            description="Ces produits sont des suppéments alimentaires pour combler la carence en nutriment nécessaire au fonctionnement de l'organisme.
-              Ils nettoient, reconstruisent, réparent et maintiennent l'organisme."
-          />
-
-          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-5 sm:gap-12">
-
-            {/* <!-- Produit 1 --> */}
-            <ProducItem
-              productName="Chlorophyll"
-              imageUrl="/images/products/chlorophyll-horiz.png"
-              description="Pour le nettoyage et la detoxification."
-            />
-
-            {/* <!-- Produit 2 --> */}
-            <ProducItem
-              productName="Veggies"
-              imageUrl="/images/products/veggies.jpg"
-              description="Ce produit renforce l'immunité et l'énergie du corps."
-            />
-
-            {/* <!-- Produit 3 --> */}
-            <ProducItem
-              productName="Neuro Health"
-              imageUrl="/images/products/neuro_health.jpg"
-              description="Ce produit a un bon pour la santé du cerveau. Il prend en charge la mémoire et la concentration."
-            />
-
-            {/* <!-- Produit 4 --> */}
-            <ProducItem
-              productName="Prosta-Well"
-              imageUrl="/images/products/prosta-well.png"
-              description="Pour le problème de la prostate et infections urinaires."
-            />
-
-          </div>
-        </section>
-
-
-        {/* <!-- CTA SECTION --> */}
-        <section id="contact" className="relative bg-gradient-to-r from-white to-green-500 dark:from-zinc-900 dark:to-zinc-900 bg-opacity-45 dark:bg-opacity-0 py-16 sm:py-24 px-4 sm:px-8 lg:px-24 xl:px-40 2xl:px-64">
-          <SectionTitle
-            title="Contactez-nous !"
-            description="Vous avez des questions ? Nous sommes là pour vous aider. Contactez-nous directement, et nous vous répondrons dans les plus brefs délais."
-          />
-          {/* <div className="flex flex-col sm:flex-row gap-5 items-center">
-
-            <div className="w-full flex items-center gap-3 p-5 border border-slate-400 rounded-sm">
-              <div className=" dark:bg-zinc-700 rounded-sm flex items-center justify-center">
-
-                <svg className="w-12 h-auto" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
-                  <path fill="#fff" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"></path><path fill="#fff" d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z"></path><path fill="#cfd8dc" d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z"></path><path fill="#40c351" d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z"></path><path fill="#fff" fill-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" clip-rule="evenodd"></path>
-                </svg>
-              </div>
-              <h1>+256 788 327 076</h1>
-            </div>
-
-            <div className="w-full flex items-center gap-3 p-5 border border-slate-400 rounded-sm">
-              <div className="p-2 bg-slate-300 dark:bg-zinc-700 rounded-sm flex items-center justify-center">
-                <Mail size={30} />
-              </div>
-              <h1>healthwinningworld@gmail.com</h1>
-            </div>
-
-          </div> */}
-
-          <div className="flex flex-wrap">
-            <div className="mb-5 sm:mb-10 w-full flex items-center shrink-0 grow-0 basis-auto md:w-6/12 md:px-3 lg:px-6 border">
-              <div className="flex items-center">
-                <div className="shrink-0">
-                  <div className="inline-block rounded-md bg-teal-400-100 p-4 text-teal-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                      strokeWidth="2" stroke="currentColor" className="h-6 w-6">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M14.25 9.75v-4.5m0 4.5h4.5m-4.5 0l6-6m-3 18c-8.284 0-15-6.716-15-15V4.5A2.25 2.25 0 014.5 2.25h1.372c.516 0 .966.351 1.091.852l1.106 4.423c.11.44-.054.902-.417 1.173l-1.293.97a1.062 1.062 0 00-.38 1.21 12.035 12.035 0 007.143 7.143c.441.162.928-.004 1.21-.38l.97-1.293a1.125 1.125 0 011.173-.417l4.423 1.106c.5.125.852.575.852 1.091V19.5a2.25 2.25 0 01-2.25 2.25h-2.25z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="ml-2 flex flex-col grow p-2.5">
-                <p className="font-bold ">Téléphone</p>
-                  <p className="font-thin">
-                    +243 895 138 162
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="mb-5 sm:mb-10 w-full flex items-center shrink-0 grow-0 basis-auto md:w-6/12 md:px-3 lg:px-6 border">
-              <div className="flex items-center">
-                <div className="shrink-0">
-                  <div className="inline-block rounded-md bg-teal-400-100 p-4 text-teal-700">
-                    <svg className="w-10 h-auto" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
-                      <path fill="#fff" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"></path><path fill="#fff" d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z"></path><path fill="#cfd8dc" d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z"></path><path fill="#40c351" d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z"></path><path fill="#fff" fill-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" clip-rule="evenodd"></path>
-                    </svg>
-                  </div>
-                </div>
-                <div className="flex flex-col grow p-2.5">
-                  <p className="font-bold ">Whatsapp</p>
-                  <p className="font-thin">
-                    +256 788 327 076
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="mb-5 sm:mb-10 w-full flex items-center shrink-0 grow-0 basis-auto md:w-6/12 md:px-3 lg:px-6 border">
-              <div className="align-start flex">
-                <div className="shrink-0">
-                  <div className="rounded-md bg-teal-400-100 p-4 text-teal-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                      stroke-width="2" stroke="currentColor" className="h-6 w-6">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="ml-2 flex flex-col grow p-2.5">
-                  <p className="font-bold ">Addresse</p>
-                  <p className="font-thin">
-                    Bâtiment Nathalie, Avenue des huilleries, Com. Kishasa croisement Rue Isoki
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="mb-5 sm:mb-10 w-full flex items-center shrink-0 grow-0 basis-auto md:w-6/12 md:px-3 lg:px-6 border">
-              <div className="align-start flex items-center">
-                <div className="shrink-0">
-                  <div className="rounded-md bg-teal-400-100 p-4 text-teal-700">
-                    <Mail size={30} />
-                  </div>
-                </div>
-                <div className="ml-2 flex flex-col grow p-2.5">
-                <p className="font-bold ">Addresse mail</p>
-                  <p className="font-thin">
-                    healthwinningworld@gmail.com
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </section>
-
-
-        {/* <!-- FOOTER SECCTION --> */}
-        <footer className="relative bg-gray-900 text-white py-16 sm:py-24 px-4 sm:px-8 lg:px-24 xl:px-40 2xl:px-64">
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full flex flex-col gap-2 lg:w-2/6 lg:mx-4 lg:pr-8">
-              <a href="index.html" className="">
-                <img src="/images/logo_HWW.png" className="sm:w-18 w-14 h-auto" />
-              </a>
-              <h3 className="font-bold text-2xl">HWW</h3>
-              <p className="text-gray-400">Health Winning World</p>
-            </div>
-
-            <div className="w-full lg:w-1/6 mt-8 lg:mt-0 lg:mx-4">
-              <h5 className="uppercase tracking-wider font-semibold text-gray-500">Traitements</h5>
-              <ul className="mt-4">
-                <li className="mt-2"><a href="#" title="" className="opacity-75 hover:opacity-100">Santé interne</a></li>
-                <li className="mt-2"><a href="#" title="" className="opacity-75 hover:opacity-100">Santé réproductive</a></li>
-                <li className="mt-2"><a href="#" title="" className="opacity-75 hover:opacity-100">Santé nerveuse</a></li>
-              </ul>
-            </div>
-
-            <div className="w-full lg:w-2/6 mt-8 lg:mt-0 lg:mx-4 lg:pr-8">
-              <h5 className="uppercase tracking-wider font-semibold text-gray-500">Nous contacter</h5>
-              <ul className="mt-4">
-                <li className="mt-4">
-                  <a href="#" title="" className="flex items-center opacity-75 hover:opacity-100">
-                    <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        className="fill-current">
-                        <path
-                          d="M12,2C6.486,2,2,6.486,2,12s4.486,10,10,10c5.514,0,10-4.486,10-10S17.514,2,12,2z M12,20c-4.411,0-8-3.589-8-8 s3.589-8,8-8s8,3.589,8,8S16.411,20,12,20z" />
-                        <path d="M13 7L11 7 11 13 17 13 17 11 13 11z" /></svg>
-                    </span>
-                    <span className="ml-3">
-                      Aux bureaux du Lundi au Samedi de 8h00 à 16h00<br />
-                    </span>
-                  </a>
-                </li>
-                <li className="mt-4">
-                  <a href="#" title="" className="flex items-center opacity-75 hover:opacity-100">
-                    <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        className="fill-current">
-                        <path
-                          d="M20,4H4C2.896,4,2,4.896,2,6v12c0,1.104,0.896,2,2,2h16c1.104,0,2-0.896,2-2V6C22,4.896,21.104,4,20,4z M20,8.7l-8,5.334 L4,8.7V6.297l8,5.333l8-5.333V8.7z" />
-                      </svg>
-                    </span>
-                    <span className="ml-3">
-                      healthwinningworld@gmail.com
-                    </span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="w-full lg:w-1/6 mt-8 lg:mt-0 lg:mx-4">
-              <p className="text-sm text-gray-400 mt-12">© 2024 hww <br className="hidden lg:block" />All Rights Reserved.
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-sm font-medium mb-4">
+                Nos produits
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                Compléments alimentaires naturels
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Des suppléments issus de la médecine traditionnelle asiatique pour nettoyer, reconstruire, réparer et maintenir votre organisme.
               </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  name: "Chlorophyll",
+                  image: "/images/products/chlorophyll-horiz.png",
+                  description: "Pour le nettoyage et la détoxification de l'organisme.",
+                  benefit: "Détox"
+                },
+                {
+                  name: "Veggies",
+                  image: "/images/products/veggies.jpg",
+                  description: "Renforce l'immunité et l'énergie du corps.",
+                  benefit: "Immunité"
+                },
+                {
+                  name: "Neuro Health",
+                  image: "/images/products/neuro_health.jpg",
+                  description: "Pour la santé du cerveau, la mémoire et la concentration.",
+                  benefit: "Cerveau"
+                },
+                {
+                  name: "Prosta-Well",
+                  image: "/images/products/prosta-well.png",
+                  description: "Pour les problèmes de prostate et infections urinaires.",
+                  benefit: "Prostate"
+                }
+              ].map((product, index) => (
+                <div
+                  key={index}
+                  className="group bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-emerald-100 dark:border-zinc-700"
+                >
+                  <div className="relative h-48 bg-gradient-to-br from-emerald-50 to-white dark:from-zinc-700 dark:to-zinc-800 overflow-hidden">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      width={300}
+                      height={200}
+                      className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-emerald-500 text-white text-xs font-medium">
+                      {product.benefit}
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-lg font-bold mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {product.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <Button
+                size="lg"
+                variant="outline"
+                asChild
+                className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white dark:border-emerald-400 dark:text-emerald-400"
+              >
+                <Link href={hasSession ? '/offices/dashboard' : '/login'}>
+                  Voir tous nos produits
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+
+        {/* <!-- REWARDS SECTION --> */}
+        <section id="rewards" className="relative py-24 sm:py-32 overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-white to-emerald-50 dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-950" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-yellow-500 to-emerald-500" />
+
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-sm font-medium mb-4">
+                Opportunité MLM
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                Gagnez avec <span className="text-gradient-gold">HWW</span>
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Devenez membre partenaire et accédez à des avantages exclusifs et des bonus exceptionnels.
+              </p>
+            </div>
+
+            {/* Steps */}
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+              {[
+                { step: "01", title: "Inscrivez-vous", desc: "Achetez des produits de 80 USD et devenez membre partenaire" },
+                { step: "02", title: "Construisez", desc: "Développez votre réseau en parrainant de nouveaux membres" },
+                { step: "03", title: "Gagnez", desc: "Recevez des commissions et des bonus sur vos ventes" }
+              ].map((item, index) => (
+                <div key={index} className="relative text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 text-white text-2xl font-bold mb-4 shadow-lg shadow-amber-500/30">
+                    {item.step}
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.desc}</p>
+                  {index < 2 && (
+                    <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-amber-300 to-transparent" />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Rewards cards */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Car reward 1 */}
+              <div className="group relative bg-white dark:bg-zinc-800 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border border-amber-200 dark:border-zinc-700 overflow-hidden">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-amber-500/20 to-transparent rounded-bl-full" />
+                <div className="flex flex-col lg:flex-row items-center gap-6">
+                  <div className="relative w-full lg:w-1/2">
+                    <Image
+                      src="/images/car.png"
+                      alt="Voiture bonus"
+                      width={300}
+                      height={200}
+                      className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <div className="inline-block px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-xs font-medium mb-3">
+                      1000 équilibres
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">Première voiture</h3>
+                    <p className="text-4xl font-bold text-gradient-gold mb-3">6 000$</p>
+                    <p className="text-sm text-muted-foreground">
+                      Construisez un réseau de 1000 équilibres et gagnez votre première voiture !
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Car reward 2 */}
+              <div className="group relative bg-gradient-to-br from-amber-500 to-orange-600 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-bl-full" />
+                <div className="flex flex-col lg:flex-row items-center gap-6">
+                  <div className="relative w-full lg:w-1/2">
+                    <Image
+                      src="/images/car-lux.png"
+                      alt="Voiture luxe bonus"
+                      width={300}
+                      height={200}
+                      className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="text-center lg:text-left text-white">
+                    <div className="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-xs font-medium mb-3">
+                      2000 équilibres
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">Voiture de luxe</h3>
+                    <p className="text-4xl font-bold mb-3">10 000$</p>
+                    <p className="text-sm text-white/80">
+                      Atteignez 2000 équilibres et roulez dans une voiture de luxe !
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="text-center mt-12">
+              <Button
+                size="lg"
+                asChild
+                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white text-lg px-10 py-6 shadow-xl shadow-amber-500/30"
+              >
+                <Link href={hasSession ? '/offices/dashboard' : '/login'}>
+                  Rejoindre HWW aujourd&apos;hui
+                  <Users className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+
+        {/* <!-- CONTACT SECTION --> */}
+        <section id="contact" className="relative py-24 sm:py-32 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-white to-emerald-50 dark:from-zinc-900 dark:to-zinc-950" />
+
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 text-sm font-medium mb-4">
+                Contact
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                Contactez-nous
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Vous avez des questions ? Nous sommes là pour vous aider. Contactez-nous directement.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  icon: Phone,
+                  title: "Téléphone",
+                  value: "+243 895 138 162",
+                  color: "emerald"
+                },
+                {
+                  icon: Mail,
+                  title: "Email",
+                  value: "healthwinningworld@gmail.com",
+                  color: "teal"
+                },
+                {
+                  icon: MapPin,
+                  title: "Adresse",
+                  value: "Bâtiment Nathalie, Avenue des huilleries, Kinshasa",
+                  color: "amber"
+                },
+                {
+                  icon: Users,
+                  title: "WhatsApp",
+                  value: "+256 788 327 076",
+                  color: "green"
+                }
+              ].map((contact, index) => (
+                <div
+                  key={index}
+                  className="group bg-white dark:bg-zinc-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-emerald-100 dark:border-zinc-700 text-center"
+                >
+                  <div className="w-14 h-14 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <contact.icon className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
+                  </div>
+                  <h3 className="font-bold mb-2">{contact.title}</h3>
+                  <p className="text-sm text-muted-foreground">{contact.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+        {/* <!-- FOOTER SECTION --> */}
+        <footer className="relative bg-zinc-900 dark:bg-zinc-950 text-white overflow-hidden">
+          {/* Top gradient line */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-amber-500" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+              {/* Brand */}
+              <div className="lg:col-span-1">
+                <Link href="/" className="flex items-center gap-3 mb-6">
+                  <Image
+                    src="/images/logo_HWW.png"
+                    alt="HWW Logo"
+                    width={60}
+                    height={60}
+                    className="w-14 h-14"
+                  />
+                  <div>
+                    <span className="font-bold text-xl text-emerald-400">HWW</span>
+                    <p className="text-xs text-zinc-400">Health Winning World</p>
+                  </div>
+                </Link>
+                <p className="text-zinc-400 text-sm leading-relaxed">
+                  Votre partenaire santé pour une vie meilleure grâce à la médecine traditionnelle asiatique.
+                </p>
+              </div>
+
+              {/* Quick links */}
+              <div>
+                <h4 className="font-semibold text-lg mb-4">Navigation</h4>
+                <ul className="space-y-3">
+                  {[
+                    { href: "#about", label: "À propos" },
+                    { href: "#services", label: "Services" },
+                    { href: "#products", label: "Produits" },
+                    { href: "#rewards", label: "Opportunité" },
+                  ].map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        className="text-zinc-400 hover:text-emerald-400 transition-colors text-sm"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Treatments */}
+              <div>
+                <h4 className="font-semibold text-lg mb-4">Traitements</h4>
+                <ul className="space-y-3">
+                  {[
+                    "Santé interne",
+                    "Santé reproductive",
+                    "Santé nerveuse",
+                    "Détoxification"
+                  ].map((item) => (
+                    <li key={item}>
+                      <span className="text-zinc-400 text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Contact */}
+              <div>
+                <h4 className="font-semibold text-lg mb-4">Contact</h4>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <Phone className="w-5 h-5 text-emerald-400 mt-0.5" />
+                    <span className="text-zinc-400 text-sm">+243 895 138 162</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Mail className="w-5 h-5 text-emerald-400 mt-0.5" />
+                    <span className="text-zinc-400 text-sm">healthwinningworld@gmail.com</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-emerald-400 mt-0.5" />
+                    <span className="text-zinc-400 text-sm">Kinshasa, RDC</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Bottom bar */}
+            <div className="border-t border-zinc-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-zinc-500 text-sm">
+                © {new Date().getFullYear()} Health Winning World. Tous droits réservés.
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="text-zinc-500 text-sm">Fait avec</span>
+                <HeartPulse className="w-4 h-4 text-red-500" />
+                <span className="text-zinc-500 text-sm">pour votre santé</span>
+              </div>
             </div>
           </div>
         </footer>
