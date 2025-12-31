@@ -98,13 +98,17 @@ const QualifiedAccountsTable: React.FC<QualifiedAccountsTableProps> = ({
           const office = info.getValue();
           return (
             <div className="flex flex-col">
-              <span className="font-medium text-sm">{office.name || "-"}</span>
+              {office?.name && <span className="font-medium text-sm">{office.name}</span>}
               <span className="text-xs text-gray-500">
                 {office.office_code} - {office.location.name}
               </span>
             </div>
           );
         },
+      }),
+      columnHelper.accessor("current_promotion_item_count", {
+        header: "Qualifications",
+        cell: (info) => info.getValue() ? <Chip size="sm">{info.getValue()} <span className="text-xs">Qulifiés</span></Chip> : '-',
       }),
       columnHelper.accessor("promotions", {
         header: "Condition",
@@ -160,6 +164,7 @@ const QualifiedAccountsTable: React.FC<QualifiedAccountsTableProps> = ({
   });
 
   const pages = promotion?.members?.total_pages || 0;
+  console.log("Members ================+>>>> : ", promotion?.members)
 
   const onNextPage = React.useCallback(() => {
     if (currentPage < pages) {

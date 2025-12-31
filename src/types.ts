@@ -105,6 +105,7 @@ export type AccountType = {
     office: Office,
     rewards: RewardType[],
     promotions: PromotionItemType[],
+    current_promotion_item_count?: number,
     is_active: boolean,
     created_at: string
 }
